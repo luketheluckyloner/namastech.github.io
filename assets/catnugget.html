@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>HakCat Wifi Nugget - Namastech</title>
+	<!-- css files -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+	<link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+	<meta name="author" content="Hassan Ali">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+	<body>
+		<!-- Navbar -->
+		<nav class="nav container void-background">
+			<!-- This "nav-menu" is hidden on mobile -->
+			<!-- Add the modifier "is-active" to display it on mobile -->
+			<div class="nav-left">
+				<a href="http://medium.com/@hassanhelfi/" class="nav-item">
+					<span class="icon">
+						<i class="fa fa-medium"></i>
+					</span>
+				</a>
+				<a href="http://github.com/helfi92" class="nav-item">
+					<span class="icon">
+						<i class="fa fa-github"></i>
+					</span>
+				</a>
+				<a href="https://twitter.com/hassanhelfi" class="nav-item">
+					<span class="icon">
+						<i class="fa fa-twitter"></i>
+					</span>
+				</a>				
+			</div>
+
+			<div class="nav-right nav-menu">
+				<a class="nav-item" href="#about">About</a>
+				<a class="nav-item" href="#projects">Projects</a>
+				<a class="nav-item" href="#social">Social</a>
+			</div>
+
+			<!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+			<!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+			<span class="nav-toggle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+		</nav>
+				
+		<section id="about" class="section section-1" style="position: relative; overflow: hidden;">
+    
+    <!-- Video de fondo -->
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assets/banner.mp4" type="video/mp4">
+        Tu navegador no soporta video en HTML5.
+    </video>
+    
+    <!-- Contenido encima del video -->
+    <div class="container has-text-centered" style="position: relative; z-index: 1;">
+        <img class="avatar" src="assets/img/profile2.png">
+    </div>
+    
+<div class="container" style="position: relative; z-index: 1; text-align: center;">
+    <br>
+    <p style="
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #00ffcc;
+        text-shadow: 0px 0px 12px rgba(0, 255, 200, 0.8);
+        letter-spacing: 2px;
+        ">
+        Bienvenido a Namastech<br>
+        Ciberseguridad, gadgets y hardware al alcance de tu mano.
+    </p>
+</div>
+
+<!-- Fuente robótica desde Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+</section>
+
+<!-- Estilos integrados -->
+<style>
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  opacity: 0.7; /* Cambia la transparencia si quieres */
+}
+</style>
+		<!-- TERMINA EL HEADER -->		
+
+		<!-- AQUI IRA UNA PAGINA INDIVIDUAL PARA CADA PRODUCTO -->
+<section class="section section-product">
+  <div class="container">
+    <div class="columns is-vcentered">
+
+      <!-- Carrusel de imágenes + precio y pago -->
+      <div class="column is-6">
+        <div class="carousel">
+          <div class="carousel-images">
+            <img src="assets/img/products/catnugget.jpg" class="active">
+            <img src="assets/img/products/catnugget2.png">
+            <img src="assets/img/products/catnugget3.webp">
+            <img src="assets/img/products/catnugget4.webp">
+            <img src="assets/img/products/catnugget5.webp">
+          </div>
+          <button class="carousel-btn prev">&#10094;</button>
+          <button class="carousel-btn next">&#10095;</button>
+        </div>
+
+        <!-- Precio y Envío -->
+        <div class="product-price" style="text-align: center; margin-top: 15px;">
+          <h2 class="title is-4" style="margin-bottom: 5px;">$159.000 CLP</h2>
+          <p style="font-size: 0.9em; color: #666;">Envío gratis a todo Chile*</p>
+        </div>
+
+        <!-- Botón de pago -->
+        <div class="centered-button" style="text-align: center; margin-top: 15px;">
+         <script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+data-preference-id="2646395895-3a0ac64d-35f0-4e2c-a82a-470d24f13d1a" data-source="button">
+</script>
+        </div>
+      </div>
+
+      <!-- Información del producto -->
+      <div class="column is-6">
+        <h1 class="title is-2 product-title">HakCat WiFI Nugget</h1>
+        <p class="product-presentation">
+          El <strong>Wi-Fi Nugget</strong> es un microcontrolador basado en ESP8266,
+          completamente ensamblado y probado. Incluye pantalla, botones, headers y
+          placa D1 mini, listo para usar con Arduino IDE o MicroPython.
+          Preinstalado con <em>Nugget Deauther Firmware</em>.
+        </p>
+
+        <h2 class="title is-4 product-subtitle">Incluye</h2>
+        <ul class="product-features">
+          <li>Microcontrolador Wi-Fi Nugget con pantalla y botones</li>
+          <li>Cable Micro USB de alta calidad</li>
+          <li>Acceso al curso "Wi-Fi Self Defense" en Udemy</li>
+          <li>Guía de inicio rápido en <a href="https://www.nugget.dev" target="_blank">nugget.dev</a></li>
+        </ul>
+
+        <h2 class="title is-4 product-subtitle">Aprende y explora</h2>
+        <ul class="product-features">
+          <li>Crear redes falsas y páginas de phishing (con fines educativos)</li>
+          <li>Analizar e investigar redes Wi-Fi</li>
+          <li>Proyectos prácticos como Deauther, SSDP Phisher y detección de ataques</li>
+        </ul>
+
+        <h2 class="title is-4 product-subtitle">Comunidad y soporte</h2>
+        <ul class="product-features">
+          <li>Actualizaciones de firmware desde el navegador</li>
+          <li>Acceso a la comunidad en Discord</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+		<!-- AQUI COMIENZA EL FOOTER -->
+		<section id="social" class="section section-3">
+			<div class="container">
+				<div class="has-text-centered">					
+					<h3 class="title is-3">Let's Socialize</h3>
+				</div>
+				<div class="social-container columns">
+					<div class="column is-6 has-text-centered">
+						<a target="_blank" href="https://ca.linkedin.com/in/hassan-ali-6132468a"><img class="" src="assets/img/linkedin.png"></a>
+					</div>
+					<div class="column is-6 has-text-centered">
+						<a target="_blank" href="https://www.facebook.com/Hassan.Helfi"><img class="" src="assets/img/facebook.png"></a>
+					</div>
+				</div>
+			</div>
+		</section>	
+		
+		<!-- Footer -->
+		<section class="section-4 has-text-centered container">
+			<a href="http://www.hassanali.me/about">Hassan Ali</a>
+		</section>
+		
+		<!-- Scripts  -->
+		<script src="controller.js"></script>	
+        <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const carousels = document.querySelectorAll(".carousel");
+
+  carousels.forEach(carousel => {
+    const images = carousel.querySelectorAll("img");
+    const prevBtn = carousel.querySelector(".prev");
+    const nextBtn = carousel.querySelector(".next");
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle("active", i === index);
+      });
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    });
+
+    showImage(currentIndex);
+  });
+});
+</script>	
+	</body>	
+</html>

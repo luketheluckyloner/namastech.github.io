@@ -1,0 +1,75 @@
+/* Fondo general negro */
+body {
+  background-color: #000;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Área central con fondo azul verdoso */
+.product-wrapper {
+  background-color: #0a3d46; /* Azul verdoso oscuro */
+  border-radius: 12px;
+  padding: 30px;
+  margin: 20px auto;
+  width: 80%; /* Ajusta el ancho de la franja */
+  color: #ddd; /* Texto base */
+}
+
+/* Títulos principales */
+.product-wrapper .product-title {
+  color: #00ffcc; /* Verde cian */
+}
+
+/* Textos destacados */
+.product-wrapper strong {
+  color: #ff6600; /* Naranja fluorescente */
+  font-weight: bold;
+}
+
+/* Ajustes de presentación */
+.product-wrapper .product-presentation {
+  line-height: 1.6;
+}
+
+/* Carousel (reutilizable) */
+.product-wrapper .carousel {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.product-wrapper .carousel-images {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.product-wrapper .carousel-images img {
+  width: 100%;
+  flex-shrink: 0;
+  display: none;
+}
+
+.product-wrapper .carousel-images img.active {
+  display: block;
+}
+
+.product-wrapper .carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.product-wrapper .carousel-btn.prev {
+  left: 10px;
+}
+
+.product-wrapper .carousel-btn.next {
+  right: 10px;
+}
