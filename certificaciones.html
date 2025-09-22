@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Namastech | Cursos Gratuitos</title>
+
+  <!-- Fonts / Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <style>
+    /* ============ THEME TOKENS (match index.html) ============ */
+    :root{
+      --bg:#011019;
+      --panel:#0c0c0c;
+      --ink:#e8f7f7;
+      --muted:#b9c7c7;
+      --cyan:#00ffe7;
+      --cyan-dim:#00ffcc55;
+      --magenta:#ff00cc;
+      --glow:0 0 15px var(--cyan);
+      --radius:14px;
+      --shadow:0 0 18px rgba(0,255,231,.35);
+    }
+
+    /* ============ BASE ============ */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      line-height:1.35;
+    }
+    a{color:var(--cyan);text-decoration:none}
+    a:hover{color:var(--magenta)}
+    img{max-width:100%;height:auto;display:block}
+    .container{width:min(1100px,100% - 2rem);margin:0 auto}
+
+    :where(a,button,[role="button"],[tabindex]):focus-visible{
+      outline:2px solid var(--magenta);outline-offset:2px;border-radius:8px;
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important;transition:none!important}
+    }
+
+    /* ============ PRODUCTS WRAPPER (neon) ============ */
+    .neon-box{
+      border:2px solid var(--cyan);
+      border-radius:var(--radius);
+      padding:clamp(20px,4vw,40px);
+      margin:clamp(16px,4vw,40px) auto;
+      background:#000;
+      box-shadow:0 0 30px var(--cyan);
+      width:min(1100px,100% - 2rem);
+    }
+    .main-title{
+      text-align:center;
+      font-size:clamp(1.5rem,5.5vw,3rem);
+      letter-spacing:.1em;margin:0 0 28px;color:#fff;
+      text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+    }
+    .category-wrapper{text-align:center}
+    .category-title{
+      display:inline-block;margin:40px auto 18px;padding:10px 18px;background:#011f2b;
+      border:2px solid var(--cyan);border-radius:10px;font-size:clamp(1rem,3.5vw,1.4rem);
+    }
+
+    /* ============ PRODUCT GRID (cards) ============ */
+    .product-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+      gap:18px;margin-bottom:36px;
+    }
+    @media (min-width:520px){ .product-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));} }
+
+    .product-card{
+      background:var(--panel);
+      border:2px solid var(--cyan);
+      border-radius:10px;padding:14px;text-align:center;
+      box-shadow:0 0 15px var(--cyan);
+      transition:transform .25s ease,filter .25s ease,box-shadow .25s ease;
+      position:relative;overflow:hidden;
+    }
+    .product-card:hover{transform:translateY(-4px);filter:brightness(1.08);box-shadow:0 0 20px rgba(0,255,231,.7)}
+    .image-wrapper{position:relative;overflow:hidden;border-radius:8px}
+    .image-wrapper img{width:100%;display:block;border-radius:8px;aspect-ratio:16/10;object-fit:cover}
+    .image-overlay{
+      position:absolute;inset:0;display:grid;place-items:center;
+      background:rgba(0,255,231,.2);color:var(--cyan);
+      font-weight:700;font-size:1rem;text-shadow:0 0 10px var(--cyan);
+      opacity:0;transition:opacity .25s ease;pointer-events:none;
+    }
+    .product-card:hover .image-overlay{opacity:1}
+    .product-description{color:var(--cyan);font-weight:700;margin:10px 0 6px;font-size:1.05rem}
+    .product-text{font-size:.92rem;color:#cfcfcf;min-height:42px}
+    .product-price{margin:10px 0;color:var(--magenta);font-weight:700}
+    .cyber-blink{
+      display:inline-block;margin-top:8px;font-weight:700;color:var(--magenta);
+      text-shadow:0 0 5px var(--magenta),0 0 10px var(--cyan);
+      animation:blink 1.2s infinite alternate;
+    }
+    @keyframes blink{
+      0%{opacity:1;text-shadow:0 0 5px var(--magenta),0 0 15px var(--cyan)}
+      50%{opacity:.35;text-shadow:0 0 2px var(--magenta)}
+      100%{opacity:1;text-shadow:0 0 8px var(--cyan),0 0 20px var(--magenta)}
+    }
+  </style>
+
+  <!-- ============ Namastech UI (Header + Footer as Web Components) ============ -->
+  <script type="module">
+    // ------- Header (with cyber bar inside) -------
+    class NamastechHeader extends HTMLElement {
+      connectedCallback(){
+        this.innerHTML = `
+<header class="cyber-header">
+  <style>
+    .cyber-header{background:#000;color:var(--cyan);border-bottom:2px solid var(--cyan-dim);position:relative;z-index:10}
+    .nav-wrap{display:flex;align-items:center;justify-content:center;gap:.75rem;padding:.75rem 1rem;border-bottom:1px solid #00ffcc33}
+    .nav-toggle{display:none;background:transparent;color:var(--cyan);border:1px solid var(--cyan-dim);padding:.5rem .75rem;border-radius:10px;font-weight:700}
+    nav.primary{display:flex;gap:clamp(.75rem,2.2vw,2rem);align-items:center;justify-content:center;flex-wrap:wrap}
+    nav.primary a{text-transform:uppercase;font-weight:700;letter-spacing:.04em;transition:color .25s ease,text-shadow .25s ease}
+    nav.primary a:hover{text-shadow:0 0 5px var(--magenta)}
+    @media (max-width:768px){
+      .nav-wrap{justify-content:space-between}
+      .nav-toggle{display:inline-flex;align-items:center;gap:.5rem}
+      nav.primary{width:100%;display:grid;grid-template-columns:1fr;gap:.5rem;margin-top:.5rem}
+      nav.primary[data-collapsed="true"]{display:none}
+    }
+    .cyber-banner{position:relative;width:100%;aspect-ratio:16/9;max-height:420px;min-height:200px;overflow:hidden;background:#000}
+    .cyber-banner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.6;z-index:1}
+    .cyber-banner .overlay{position:absolute;inset:0;display:grid;place-items:center;text-align:center;z-index:2;padding:1rem}
+    .logo-img{max-height:clamp(70px,12vw,120px);width:auto;margin-bottom:.5rem;opacity:.6;filter:drop-shadow(0 0 10px var(--cyan))}
+    .slogan-text{font-weight:700;color:var(--cyan);text-shadow:0 0 12px rgba(0,255,200,.8);letter-spacing:.04em;margin:0;font-size:clamp(1rem,3.3vw,1.6rem)}
+    .cyber-bar{background:#000;border-top:2px solid var(--cyan);border-bottom:2px solid var(--cyan);padding:.5rem 0;text-align:center;box-shadow:var(--glow)}
+    .cyber-bar ul{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:clamp(16px,6vw,60px);flex-wrap:wrap}
+    .cyber-bar li{position:relative}
+    .cyber-bar a{color:var(--cyan);font-weight:700;text-transform:uppercase;text-shadow:0 0 8px var(--cyan);transition:color .25s ease,text-shadow .25s ease}
+    .cyber-bar a:hover{color:var(--magenta);text-shadow:0 0 10px var(--magenta)}
+    .dropdown-content{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#0c0c0c;padding:12px;border:2px solid var(--cyan);border-radius:8px;box-shadow:var(--glow);width:min(90vw,300px);color:#ddd;font-size:.95rem;text-align:left;display:none;z-index:1000}
+    .dropdown.open .dropdown-content,.dropdown:focus-within .dropdown-content,.dropdown:hover .dropdown-content{display:block}
+    @media (max-width:768px){ .cyber-bar ul{gap:16px} .dropdown-content{left:0;transform:none;width:92vw} }
+  </style>
+
+  <div class="container nav-wrap">
+    <button id="navToggle" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false">☰ Menú</button>
+    <nav id="primary-nav" class="primary" data-collapsed="true">
+      <a href="/index.html">Inicio</a>
+      <a href="/about.html">Quienes Somos</a>
+      <a href="/contacto.html">Contáctanos</a>
+      <a href="/envios.html">Envíos</a>
+      <a href="/productos.html">Productos</a>
+      <a href="/cursos.html" aria-current="page">Cursos</a>
+    </nav>
+  </div>
+
+  <div class="cyber-banner">
+    <video autoplay muted loop playsinline>
+      <source src="/assets/banner.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay">
+      <img src="/assets/img/profile2.png" alt="Namastech Logo" class="logo-img" />
+      <h1 class="slogan-text">Namastech: Ciberseguridad, gadgets y hardware al alcance de tu mano.</h1>
+    </div>
+  </div>
+
+  <div class="cyber-bar" role="navigation" aria-label="Atajos">
+    <ul class="container">
+      <li class="dropdown">
+        <a href="/cursos.html" aria-haspopup="true" aria-expanded="false">Cursos</a>
+        <div class="dropdown-content" role="region" aria-label="Información de Cursos">
+          <p>📚 Aprende desde casa con cursos prácticos y materiales descargables.</p>
+        </div>
+      </li>
+      <li><a href="/hackbox.html">Caja-Hacker Mensual</a></li>
+      <li class="dropdown">
+        <a href="/certificaciones.html" aria-haspopup="true" aria-expanded="false">Certificaciones</a>
+        <div class="dropdown-content" role="region" aria-label="Información de Certificaciones">
+          <p>🛡️ Burp Suite, Pentesting Web, hardware hacking, Wi-Fi, cripto aplicada y más.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</header>`;
+        // behavior
+        const root = this;
+        // touch class for hover fallbacks
+        if ('ontouchstart' in window || navigator.maxTouchPoints>0){ document.documentElement.classList.add('is-touch'); }
+        // nav toggle
+        const navToggle = root.querySelector('#navToggle');
+        const primaryNav = root.querySelector('#primary-nav');
+        if(navToggle && primaryNav){
+          navToggle.addEventListener('click', ()=>{
+            const collapsed = primaryNav.getAttribute('data-collapsed') === 'true';
+            primaryNav.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+            navToggle.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
+          });
+        }
+        // cyber bar dropdown on mobile (tap to open)
+        root.querySelectorAll('.cyber-bar .dropdown > a').forEach(link=>{
+          const container = link.parentElement;
+          const panel = container.querySelector('.dropdown-content');
+          if(!panel) return;
+          link.addEventListener('click',(e)=>{
+            if (window.matchMedia('(max-width: 768px)').matches){
+              e.preventDefault();
+              const isOpen = container.classList.contains('open');
+              root.querySelectorAll('.cyber-bar .dropdown.open').forEach(d=>d.classList.remove('open'));
+              container.classList.toggle('open', !isOpen);
+              link.setAttribute('aria-expanded', (!isOpen).toString());
+            }
+          });
+        });
+      }
+    }
+    customElements.define('namastech-header', NamastechHeader);
+
+    // ------- Footer -------
+    class NamastechFooter extends HTMLElement {
+      connectedCallback(){
+        const mapSrc = this.getAttribute('map-src') || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl';
+        this.innerHTML = `
+<footer class="cyberpunk-footer">
+  <style>
+    footer.cyberpunk-footer{background:#0b0b0b;color:var(--cyan);padding:2.5rem 0 2rem;border-top:2px solid var(--cyan-dim)}
+    .footer-columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin-bottom:.5rem}
+    .footer-columns h4{font-size:1.15rem;margin:0 0 .75rem;color:var(--cyan);text-shadow:0 0 6px #00ffcc88}
+    .footer-columns p,.footer-columns a{color:#ccc;font-size:.95rem;line-height:1.6}
+    .footer-columns a:hover{color:var(--magenta);text-shadow:0 0 5px var(--magenta)}
+    .product-dropdown{background:#111;border:1px solid var(--cyan-dim);padding:.5rem;margin-top:.5rem;border-radius:8px;display:none}
+    .product-dropdown.open{display:block}
+    .map-container{border:2px solid #00ffcc44;border-radius:10px;overflow:hidden;box-shadow:0 0 15px #00ffcc22}
+    .footer-bottom{text-align:center;font-size:.9rem;margin-top:1.25rem;color:#93a1a1}
+    .footer-button{background:none;border:1px solid var(--cyan-dim);color:var(--cyan);cursor:pointer;font-weight:700;padding:.4rem .7rem;border-radius:8px;text-shadow:0 0 3px var(--cyan)}
+    .footer-button:hover{color:var(--magenta);border-color:var(--magenta)}
+    .container{width:min(1100px,100% - 2rem);margin:0 auto}
+  </style>
+
+  <div class="container">
+    <div class="footer-columns">
+      <div>
+        <h4>QUIÉNES SOMOS</h4>
+        <p>En Namastech acercamos la ciberseguridad, gadgets y hardware al alcance de todos, combinando innovación con aprendizaje.</p>
+      </div>
+      <div>
+        <h4>CONTÁCTANOS</h4>
+        <p><a href="/contacto.html">📧 contacto@namastech.studio</a></p>
+        <p>📱 +56 9 3558 4876</p>
+      </div>
+      <div>
+        <h4>PRODUCTOS</h4>
+        <button id="footerProductsBtn" class="footer-button" aria-controls="productDropdown" aria-expanded="false">Ver Lista</button>
+        <div id="productDropdown" class="product-dropdown" aria-hidden="true">
+          <ul style="list-style:none;padding-left:0;margin:0;">
+            <li><a href="/flipper.html">Flipper Zero</a></li>
+            <li><a href="/catnugget.html">HakCat WiFi Nugget</a></li>
+            <li><a href="/ducky.html">USB Rubber Ducky</a></li>
+            <li><a href="/pineapple.html">WiFi Pineapple</a></li>
+            <li><a href="/cydmarauder.html">CYD WiFi Marauder</a></li>
+            <li><a href="/m5stick.html">M5Stick Plus C</a></li>
+            <li><a href="/dstike.html">DSTIKE Deauther V3</a></li>
+            <li><a href="/watch.html">DSTIKE Reloj Deauther</a></li>
+            <li><a href="/pwnagotchi.html">Pwnagotchi</a></li>
+            <li><a href="/evilcrow.html">Evil Crow RF V2</a></li>
+            <li><a href="/hackrf.html">HackRF PortaPack</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-container">
+      <iframe src="${mapSrc}" width="100%" height="300" style="border:0;" loading="lazy" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="footer-bottom">© 2025 Namastech. Todos los derechos reservados.</div>
+  </div>
+</footer>`;
+        // toggle list
+        const btn = this.querySelector('#footerProductsBtn');
+        const dd = this.querySelector('#productDropdown');
+        if(btn && dd){
+          btn.addEventListener('click',()=>{
+            const open = dd.classList.toggle('open');
+            btn.setAttribute('aria-expanded', open.toString());
+            dd.setAttribute('aria-hidden', (!open).toString());
+          });
+        }
+      }
+    }
+    customElements.define('namastech-footer', NamastechFooter);
+  </script>
+</head>
+<body>
+
+  <!-- ======= HEADER (Web Component with Cyber Bar) ======= -->
+  <namastech-header></namastech-header>
+
+  <!-- ======= CURSOS (as products grid inside neon frame) ======= -->
+  <main class="neon-box" id="cursos">
+    <h1 class="main-title">CERTIFICACIONES</h1>
+
+    <div class="category-wrapper">
+      <h2 class="category-title">PENTESTING - NETWORKING - CODING</h2>
+    </div>
+
+    <section class="product-grid" aria-label="Cursos Gratuitos">
+      <!-- 1 -->
+      <article class="product-card">
+        <a href="/cursos/cloud-intro.html" aria-label="Ver Introducción práctica a la computación en la nube">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/cloud-intro.png" alt="Introducción práctica a la computación en la nube" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Introducción práctica a la computación en la nube</p>
+        <p class="product-text">Aprende IaaS, PaaS, SaaS y despliegues reales (AWS/IBM) con ejemplos sencillos.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/cloud-intro.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 2 -->
+      <article class="product-card">
+        <a href="/cursos/cybersecurity-business.html" aria-label="Ver Ciberseguridad para empresas">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/cyber-business.png" alt="Ciberseguridad para empresas" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Ciberseguridad para empresas: Edición fundamental</p>
+        <p class="product-text">Protege datos críticos y gestiona riesgos con cultura de seguridad.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/cybersecurity-business.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 3 -->
+      <article class="product-card">
+        <a href="/cursos/android-bug-bounty.html" aria-label="Ver Android Bug Bounty Hunting">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/android-bounty.png" alt="Android Bug Bounty Hunting" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Android Bug Bounty Hunting</p>
+        <p class="product-text">Metodología, laboratorio y técnicas prácticas de caza de bugs en Android.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/android-bug-bounty.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 4 -->
+      <article class="product-card">
+        <a href="/cursos/dark-web-anon-crypto.html" aria-label="Ver Dark Web, anonimato y criptomonedas">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/dark-web.png" alt="Dark Web, anonimato y criptomonedas" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Dark Web, anonimato y criptomonedas</p>
+        <p class="product-text">Navega con Tor/Proxychains y buenas prácticas de anonimato.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/dark-web-anon-crypto.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 5 -->
+      <article class="product-card">
+        <a href="/cursos/netapp-lab.html" aria-label="Ver Construye tu laboratorio NetApp">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/netapp-lab.png" alt="Construye tu laboratorio NetApp ONTAP" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Construye tu laboratorio NetApp ONTAP</p>
+        <p class="product-text">Crea un lab completo (ONTAP 9), configura redes y prueba funciones.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/netapp-lab.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 6 -->
+      <article class="product-card">
+        <a href="/cursos/san-nas.html" aria-label="Ver Introducción a SAN y NAS">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/san-nas.png" alt="Introducción a SAN y NAS" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Introducción a SAN y NAS</p>
+        <p class="product-text">Conceptos clave, diferencias y conexiones CIFS/NFS/iSCSI en práctica.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/san-nas.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 7 -->
+      <article class="product-card">
+        <a href="/cursos/cisco-crash.html" aria-label="Ver Cisco LABS Crash Course">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/cisco-labs.png" alt="Cisco LABS Crash Course" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Cisco LABS Crash Course</p>
+        <p class="product-text">Router a Internet, DHCP y PAT/NAT en Cisco IOS desde cero.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/cisco-crash.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 8 -->
+      <article class="product-card">
+        <a href="/cursos/sql-injection.html" aria-label="Ver Ataques de Inyección SQL">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/sql-injection.png" alt="Ataques de Inyección SQL" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Ataques de Inyección SQL</p>
+        <p class="product-text">Fundamentos, herramientas en Kali y práctica de explotación.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/sql-injection.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 9 -->
+      <article class="product-card">
+        <a href="/cursos/juniper-srx-jweb.html" aria-label="Ver Configurar Juniper SRX con J-Web">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/juniper-srx.png" alt="Configurar Juniper SRX con J-Web" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Configurar Juniper SRX con J-Web</p>
+        <p class="product-text">Acceso por consola, compartir Internet y pruebas desde J-Web.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/juniper-srx-jweb.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+
+      <!-- 10 -->
+      <article class="product-card">
+        <a href="/cursos/python-beginners.html" aria-label="Ver Python para Principiantes Absolutos">
+          <div class="image-wrapper">
+            <img src="assets/img/courses/python-beginners.png" alt="Python para Principiantes Absolutos" loading="lazy" decoding="async">
+            <div class="image-overlay">INSCRIBIRSE</div>
+          </div>
+        </a>
+        <p class="product-description">Python para Principiantes Absolutos</p>
+        <p class="product-text">Instalación, primeros scripts, terminal y PyCharm para empezar hoy.</p>
+        <p class="product-price"></p>
+        <a href="/cursos/python-beginners.html" class="cyber-blink">INSCRIBIRSE</a>
+      </article>
+    </section>
+  </main>
+
+  <!-- ======= FOOTER (Web Component) ======= -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ESP32 DIV Marauder: Escaneo y Captura – Tutorial | Namastech</title>
+  <meta name="description" content="Guía paso a paso para instalar y usar ESP32 DIV Marauder: flasheo, escaneo de redes, captura de handshakes y exportación de resultados." />
+  <link rel="icon" type="image/x-icon" href="assets/img/favicon.png" />
+
+  <!-- Bulma + estilos del sitio -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/product-style.css" />
+
+  <!-- Estilos personalizados -->
+  <style>
+    /* Fondo negro de los lados */
+    html, body { 
+      background:#000 !important; 
+      color:#ddd; 
+      margin:0; 
+    }
+
+    /* Evitar fondos blancos de Bulma */
+    .section, .hero, .container, .columns, .column { 
+      background: transparent !important; 
+    }
+
+    /* Franja central */
+    .band {
+      background:#0a3d46;          /* verde/azulado oscuro */
+      border-radius:12px;
+      width:min(1100px, 88%);
+      margin:24px auto;
+      padding:28px 24px;
+      color:#ddd;
+    }
+
+    /* Títulos en verde cian */
+    h1,h2,h3,h4,h5,h6,.product-title { color:#00ffcc !important; }
+
+    /* Texto claro y links */
+    p, .content, .product-presentation, li { color:#ddd !important; }
+    a { color:#00ffcc; }
+
+    /* Hero-panel dentro de la franja */
+    .tutorial-hero { 
+      background: rgba(255,255,255,0.04); 
+      border: 1px solid rgba(255,255,255,0.08); 
+      border-radius:12px; 
+      padding: 1rem; 
+    }
+
+    /* Footer oscuro */
+    footer.footer { background:#0a3d46 !important; color:#ddd !important; }
+    footer.footer h3, footer.footer a { color:#00ffcc !important; }
+
+    /* Imágenes del tutorial */
+    .tutorial-img { margin: 2rem 0; border-radius: 12px; overflow: hidden; }
+    .media-frame video, .media-frame img { width:100%; height:100%; object-fit:cover; display:block; }
+    .image.is-21by9 { padding-top: 42.8571%; }
+  </style>
+</head>
+<body>
+
+  <!-- Franja 1 -->
+  <div class="band">
+    <!-- Migas de pan -->
+    <section class="section" style="padding-top: 1.25rem; padding-bottom: .5rem;">
+      <div class="container">
+        <nav class="breadcrumb has-succeeds-separator" aria-label="breadcrumbs">
+          <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="tutoriales.html">Tutoriales</a></li>
+            <li class="is-active"><a aria-current="page">ESP32 DIV Marauder</a></li>
+          </ul>
+        </nav>
+      </div>
+    </section>
+
+    <!-- Hero -->
+    <section class="section">
+      <div class="tutorial-hero">
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <h1 class="title is-2 product-title">ESP32 DIV Marauder: Escaneo y Captura</h1>
+            <p class="product-presentation" style="opacity:.9;">
+              Desde preparar el firmware hasta tus primeros resultados: perfiles de escaneo,
+              captura de <strong>handshakes</strong> y exportación a PC.
+            </p>
+            <div class="tags" style="margin-top:.5rem;">
+              <span class="tag is-dark">ESP32</span>
+              <span class="tag is-warning">Nivel: Intermedio</span>
+              <span class="tag">Tiempo: ~25 min</span>
+            </div>
+          </div>
+          <div class="column is-6">
+            <figure class="image is-21by9 media-frame">
+              <video autoplay muted loop playsinline>
+                <source src="assets/tutoriales/esp32_DIV3.mp4" type="video/mp4" />
+              </video>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Franja 2 -->
+  <div class="band">
+    <section class="section">
+      <div class="columns is-variable is-6">
+        <!-- Índice -->
+        <aside class="column is-3 toc">
+          <p class="menu-label">Contenido</p>
+          <ul class="menu-list">
+            <li><a href="#prerrequisitos">Prerrequisitos</a></li>
+            <li><a href="#materiales">Materiales</a></li>
+            <li><a href="#instalacion">1) Flasheo e instalación</a></li>
+            <li><a href="#escanear">2) Primeros escaneos</a></li>
+            <li><a href="#captura">3) Captura de handshakes</a></li>
+            <li><a href="#exportar">4) Exportar resultados</a></li>
+            <li><a href="#buenas-practicas">Buenas prácticas</a></li>
+          </ul>
+        </aside>
+
+        <!-- Contenido -->
+        <div class="column is-9 content">
+          <h2 id="prerrequisitos" class="title is-4">Prerrequisitos</h2>
+          <p>Necesitas tener un <strong>ESP32 DIV</strong>, cable USB de datos y drivers instalados en tu PC.</p>
+          <div class="tutorial-img"><img src="assets/tutoriales/esp32_DIV.jpeg" alt="ESP32 abierto" /></div>
+
+          <h2 id="materiales" class="title is-4">Materiales</h2>
+          <p>Firmware Marauder, herramienta de flasheo (<em>esptool.py</em>) y opcionalmente un power bank.</p>
+          <div class="tutorial-img"><img src="assets/tutoriales/esp32_DIV6.jpg" alt="ESP32 con display" /></div>
+
+          <h2 id="instalacion" class="title is-4">1) Flasheo e instalación</h2>
+          <p>Conecta tu dispositivo y flashea el firmware con los comandos proporcionados.</p>
+          <div class="tutorial-img"><img src="assets/tutoriales/esp32_DIV1.webp" alt="Pantalla ESP32" /></div>
+
+          <h2 id="escanear" class="title is-4">2) Primeros escaneos</h2>
+          <p>Usa el menú <strong>WiFi Scan</strong> para detectar redes disponibles.</p>
+          <div class="tutorial-img"><img src="assets/tutoriales/esp32_DIV7.jpg" alt="Escaneo de redes" /></div>
+
+          <h2 id="captura" class="title is-4">3) Captura de handshakes</h2>
+          <p>Desde el menú de ataques selecciona <em>Handshake</em> y guarda los resultados en la tarjeta SD.</p>
+          <div class="tutorial-img"><img src="assets/tutoriales/esp32_DIV4.avif" alt="Captura de handshakes" /></div>
+
+          <h2 id="exportar" class="title is-4">4) Exportar resultados</h2>
+          <p>Conecta el dispositivo al PC y copia los archivos <strong>.pcap</strong>.</p>
+          <div class="tutorial-img"><img src="assets/tutoriales/esp32_DIV5.webp" alt="Archivos exportados" /></div>
+
+          <h2 id="buenas-practicas" class="title is-4">Buenas prácticas</h2>
+          <ul>
+            <li>Actualiza siempre el firmware a la última versión.</li>
+            <li>Haz pruebas únicamente en redes autorizadas.</li>
+            <li>Guarda bitácoras de tus experimentos.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container has-text-centered">
+      <p>&copy; 2025 Namastech - Todos los derechos reservados</p>
+    </div>
+  </footer>
+
+</body>
+</html>

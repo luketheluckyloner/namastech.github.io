@@ -1,0 +1,49 @@
+<!-- =================================================================== -->
+<!-- File: about.html                                                    -->
+<!-- =================================================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Quiénes Somos | Namastech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#011019;--panel:#0c0c0c;--ink:#e8f7f7;--muted:#b9c7c7;--cyan:#00ffe7;--cyan-dim:#00ffcc55;--magenta:#ff00cc;--radius:14px}
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:'Orbitron',system-ui,Segoe UI,Roboto,sans-serif}
+    a{color:var(--cyan)} a:hover{color:var(--magenta)}
+    .nx-container{width:min(1100px,100% - 2rem);margin:0 auto;padding:clamp(16px,4vw,32px)}
+    .grid{display:grid;gap:clamp(16px,3vw,28px)}
+    .panel{background:#000;border:2px solid var(--cyan);border-radius:var(--radius);padding:clamp(18px,3vw,32px);box-shadow:0 0 30px rgba(0,255,231,.25)}
+    h1{margin:0 0 .5rem;font-size:clamp(1.6rem,5vw,2.6rem);text-shadow:0 0 10px var(--cyan)}
+    h2{margin:1rem 0 .5rem;font-size:clamp(1.1rem,3.5vw,1.4rem);color:var(--cyan)}
+    p{margin:.4rem 0;color:#dfe}
+    ul{margin:.2rem 0 .6rem 1.1rem;color:#cfe}
+  </style>
+  <script type="module" src="/assets/js/namastech.ui.js"></script>
+</head>
+<body>
+  <namastech-header active="about"></namastech-header>
+
+  <main class="nx-container">
+    <section class="grid">
+      <article class="panel">
+        <h1>Quiénes Somos</h1>
+        <p>En <strong>Namastech</strong> acercamos ciberseguridad, gadgets y hardware al alcance de todos, combinando innovación con aprendizaje.</p>
+        <p>Creemos en el <em>DIY</em>, el conocimiento abierto y la comunidad. Nuestro catálogo prioriza herramientas reales para pruebas éticas y educación.</p>
+        <h2>Nuestros pilares</h2>
+        <ul>
+          <li>Transparencia y educación continua.</li>
+          <li>Productos curados y soporte postventa.</li>
+          <li>Respeto por la seguridad y el uso responsable.</li>
+        </ul>
+        <p>¿Quieres colaborar? Escríbenos a <a href="mailto:contacto@namastech.studio">contacto@namastech.studio</a>.</p>
+      </article>
+    </section>
+  </main>
+
+  <namastech-footer></namastech-footer>
+</body>
+</html>

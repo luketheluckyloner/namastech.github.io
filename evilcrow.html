@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>EvilCrow RF V2 | Namastech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================= THEME (unificado) ================= */
+    :root{
+      --bg:#011019;--panel:#0c0c0c;--ink:#e8f7f7;--muted:#b9c7c7;
+      --cyan:#00ffe7;--cyan-dim:#00ffcc55;--magenta:#ff00cc;
+      --radius:14px;--glow:0 0 15px var(--cyan);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--ink);
+      font-family:'Orbitron',system-ui,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      line-height:1.4;
+    }
+    a{color:var(--cyan);text-decoration:none} a:hover{color:var(--magenta)}
+    .nx-container{width:min(1100px,100% - 2rem);margin:0 auto;padding:clamp(16px,4vw,32px)}
+    .stack{display:grid;gap:clamp(14px,2.8vw,22px)}
+
+    /* ================= PANEL PRODUCTO ================= */
+    .panel{
+      background:#000;border:2px solid var(--cyan);border-radius:var(--radius);
+      padding:clamp(18px,3.5vw,32px);box-shadow:0 0 30px rgba(0,255,231,.25)
+    }
+    h1{margin:0 0 .6rem;font-size:clamp(1.6rem,5vw,2.4rem);text-shadow:0 0 10px var(--cyan)}
+    h2{margin:1rem 0 .4rem;color:var(--cyan);font-size:clamp(1.1rem,3.5vw,1.3rem)}
+    p,li{color:#dfe}
+    .muted{color:var(--muted)}
+    .center{display:grid;place-items:center}
+    .section{margin-top:clamp(8px,2vw,12px)}
+
+    /* ================= PRECIO ================= */
+    .price{text-align:center;margin-top:10px}
+    .price h3{margin:.2rem 0;font-size:clamp(1.1rem,3.6vw,1.4rem);color:#fff}
+    .note{font-size:.9rem;color:#a9bcbc}
+
+    /* ================= CARRUSEL (alto fijo) ================= */
+    .carousel{position:relative;margin:auto;border-radius:10px;overflow:hidden;background:#000}
+    .carousel-rail{display:grid;place-items:center}
+    .carousel img{
+      display:none;max-width:100%;max-height:360px;
+      object-fit:contain;background:#000;border-radius:10px
+    }
+    .carousel img.active{display:block}
+    .cbtn{
+      position:absolute;top:50%;transform:translateY(-50%);
+      border:none;background:rgba(0,0,0,.55);color:#fff;
+      font-size:2rem;cursor:pointer;border-radius:6px;padding:.15rem .55rem
+    }
+    .cbtn.prev{left:8px} .cbtn.next{right:8px}
+
+    /* ================= LISTAS ================= */
+    ul.features{margin:.25rem 0 .75rem 1.1rem}
+    ul.features li{margin:.25rem 0}
+  </style>
+
+  <!-- Web Components (header + footer + cyber bar) -->
+  <script type="module" src="/assets/js/namastech.ui.js"></script>
+</head>
+<body>
+  <!-- Header unificado -->
+  <namastech-header active="productos"></namastech-header>
+
+  <main class="nx-container">
+    <article class="panel stack" aria-labelledby="product-title">
+      <header>
+        <h1 id="product-title">EvilCrow RF V2</h1>
+      </header>
+
+      <!-- Carrusel + Precio + Pago -->
+      <section class="section" aria-label="Galería de imágenes del producto">
+        <div class="carousel" id="crs-evilcrow">
+          <div class="carousel-rail">
+            <img src="assets/img/products/evilcrow.jpg" class="active" alt="EvilCrow RF V2 vista principal">
+            <img src="assets/img/products/evilcrow3.webp" alt="EvilCrow RF V2 accesorios y componentes">
+            <img src="assets/img/products/evilcrow2.jpg" alt="EvilCrow RF V2 detalle de placa">
+          </div>
+          <button class="cbtn prev" aria-label="Anterior">❮</button>
+          <button class="cbtn next" aria-label="Siguiente">❯</button>
+        </div>
+
+        <div class="price">
+          <h3>$74.990 CLP</h3>
+          <div class="note">Envío gratis a todo Chile*</div>
+        </div>
+
+        <!-- Botón de pago (EXACTO, separado del precio) -->
+        <div class="center" style="margin-top:12px;">
+<script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+data-preference-id="2646395895-1f266c33-c76b-4dfe-8537-5e65f516f88f" data-source="button">
+</script>
+        </div>
+      </section>
+
+      <!-- Descripción (una columna) -->
+      <section class="section">
+        <p>
+          El <strong>EvilCrow RF V2</strong> es un dispositivo de <strong>radiofrecuencia</strong> para
+          profesionales y entusiastas de la <strong>ciberseguridad</strong>. Permite recibir y transmitir
+          en <strong>300-348MHz, 387-464MHz, 779-928MHz y 2.4GHz</strong>. Incorpora
+          <strong>dos módulos CC1101</strong> configurables y un <strong>NRF24L01</strong> para ataques y pruebas adicionales.
+          Ideal para <strong>pentesting</strong>, operaciones de Red Team, aprendizaje y experimentación en RF.
+        </p>
+      </section>
+
+      <!-- Bloques informativos (una sola columna) -->
+      <section class="section">
+        <h2>Incluye</h2>
+        <ul class="features">
+          <li>1× EvilCrow RF V2 (firmware básico preinstalado)</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Características principales</h2>
+        <ul class="features">
+          <li>Recepción y transmisión de señales RF</li>
+          <li>Soporte para ataques de replay</li>
+          <li>Módulos CC1101 duales configurables</li>
+          <li>Módulo NRF24L01 para funciones adicionales</li>
+          <li>Control mediante panel web vía Wi-Fi</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Aplicaciones</h2>
+        <ul class="features">
+          <li>Pruebas de penetración (Pentest)</li>
+          <li>Operaciones Red Team</li>
+          <li>Educación en ciberseguridad</li>
+          <li>Experimentación y testing de RF</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Funciones destacadas</h2>
+        <ul class="features">
+          <li>Recepción de señales RF</li>
+          <li>Transmisión de señales RF</li>
+          <li>Replay attack</li>
+          <li>Parseo URH</li>
+          <li>Mouse-jacking</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Especificaciones</h2>
+        <ul class="features">
+          <li><strong>Tipo:</strong> Adaptador / Placa de radiofrecuencia</li>
+          <li><strong>Material:</strong> PCB</li>
+          <li><strong>Bandas:</strong> 300-348MHz, 387-464MHz, 779-928MHz, 2.4GHz</li>
+          <li><strong>Módulos:</strong> 2× CC1101, 1× NRF24L01</li>
+          <li><strong>MicroSD recomendada:</strong> ≤ 32GB</li>
+          <li><strong>Nota:</strong> Firmware básico preinstalado; batería y tarjeta mostradas en fotos no incluidas</li>
+        </ul>
+      </section>
+    </article>
+  </main>
+
+  <!-- Footer unificado -->
+  <namastech-footer></namastech-footer>
+
+  <!-- JS del carrusel (alto estable, autoplay, accesible) -->
+  <script>
+    (function(id){
+      const root = document.getElementById(id);
+      if(!root) return;
+      const imgs = [...root.querySelectorAll('img')];
+      const prev = root.querySelector('.prev');
+      const next = root.querySelector('.next');
+      let i = 0;
+
+      const show = idx => imgs.forEach((im,k)=>im.classList.toggle('active', k===idx));
+
+      prev.addEventListener('click', ()=>{ i = (i-1+imgs.length)%imgs.length; show(i); });
+      next.addEventListener('click', ()=>{ i = (i+1)%imgs.length; show(i); });
+
+      setInterval(()=>{ i = (i+1)%imgs.length; show(i); }, 4000);
+      show(i);
+    })('crs-evilcrow');
+  </script>
+</body>
+</html>

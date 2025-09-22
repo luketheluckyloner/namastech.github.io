@@ -1,0 +1,248 @@
+<!-- File: flipper_zero.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NAMASTECH | Flipper Zero</title>
+
+  <!-- Fuente para el contenido fuera del Shadow DOM -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Web Components (header + footer con cyber bar) -->
+  <script type="module" src="/assets/js/namastech-ui.js"></script>
+
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <style>
+    /* ======= THEME (igual a pineapple_kit) ======= */
+    :root{
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#cbd5d6;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc; --accent:#ff6600;
+      --radius:14px; --glow:0 0 15px var(--cyan);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height:1.35;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+    /* ======= LAYOUT ======= */
+    .page-container{width:min(1100px,100% - 2rem); margin:0 auto}
+
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(18px,3.5vw,32px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
+    }
+
+    .product-layout{
+      display:grid; gap:clamp(14px,3vw,24px);
+      grid-template-columns:1fr;
+    }
+    @media (min-width: 900px){
+      .product-layout{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .title-main{
+      text-align:center; color:#fff; margin:0 0 12px;
+      font-size:clamp(1.5rem,5.5vw,2rem);
+      text-shadow:0 0 15px var(--magenta), 0 0 10px var(--cyan);
+      letter-spacing:.05em;
+    }
+    .sub-note{
+      text-align:center; color:var(--accent); margin:4px 0 16px;
+      font-size:clamp(1rem,3vw,1.15rem);
+    }
+
+    /* ======= GALLERY / CARRUSEL ======= */
+    .gallery{display:flex; flex-direction:column; gap:12px}
+    .carousel{
+      position:relative; width:100%; overflow:hidden;
+      border-radius:10px; background:#000; text-align:center;
+      box-shadow:0 0 18px rgba(0,255,231,.25);
+    }
+    .carousel-viewport{
+      width:100%; aspect-ratio: 4 / 3; /* why: tamaño uniforme entre imágenes */
+      display:grid; place-items:center;
+    }
+    .carousel-images{position:relative; width:100%; height:100%}
+    .carousel-images img{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:contain; background:#000;
+      display:none;
+    }
+    .carousel-images img.active{ display:block; }
+
+    .carousel-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(0,0,0,.5); color:#fff; border:none; font-size:2rem; cursor:pointer;
+      padding:2px 10px; border-radius:6px;
+    }
+    .carousel-btn.prev{ left:10px }
+    .carousel-btn.next{ right:10px }
+
+    .price-box{
+      text-align:center;
+      border:1px solid var(--cyan-dim);
+      border-radius:10px; padding:10px 12px; background:#0a0a0a;
+      box-shadow:0 0 12px rgba(0,255,231,.2);
+    }
+    .price-box .price{
+      font-weight:800; color:var(--magenta); margin:6px 0;
+      font-size:clamp(1.2rem,4vw,1.6rem);
+    }
+    .price-box .meta{ color:#93a1a1; font-size:.9rem; margin:2px 0 }
+
+    .pay-wrap{ display:flex; justify-content:center; margin:14px 0 0; text-align:center; }
+
+    /* ======= INFO (1 SOLO FRAME) ======= */
+    .product-info{
+      border:1px solid var(--cyan-dim); border-radius:12px; padding:14px 16px; background:#0b0b0b;
+      box-shadow:0 0 12px rgba(0,255,231,.15);
+    }
+    .product-title{ margin:0 0 8px; color:var(--cyan); font-size:clamp(1.4rem,4.5vw,1.8rem) }
+    .product-text{ color:#ddd; line-height:1.7; font-size:clamp(.98rem,2.6vw,1.05rem); margin:8px 0 16px }
+    .block-title{ color:var(--accent); font-size:clamp(1.05rem,3.2vw,1.2rem); margin:14px 0 8px }
+    .feature-list{ margin:0 0 12px 0; padding-left: 1rem; }
+    .feature-list li{ color:#cfeeee; margin-bottom:6px }
+
+    /* EXTRA media */
+    .extra-media{
+      display:grid; gap:12px; margin-top:12px;
+      justify-items:center;
+    }
+    .extra-media img{ max-width:360px; width:100%; border-radius:10px; border:1px solid var(--cyan-dim) }
+
+  </style>
+</head>
+<body>
+
+  <!-- ======= HEADER (Web Component con Cyber Bar) ======= -->
+  <namastech-header
+    logo-src="/assets/img/profile2.png"
+    video-src="/assets/banner.mp4"
+    poster-src="/assets/img/profile2.png">
+    <!-- Ítems extra del menú principal (opcional)
+    <a slot="nav" href="/blog.html">Blog</a> -->
+    <!-- Ítems extra Cyber Bar (opcional)
+    <li slot="quicklinks"><a class="cb-link" href="/tienda.html">Tienda</a></li> -->
+  </namastech-header>
+
+  <!-- ======= PRODUCTO ======= -->
+  <main class="page-container">
+    <section class="neon-box">
+      <h1 class="title-main">Flipper Zero</h1>
+      <p class="sub-note">Multiherramienta para pruebas y exploración de radio, RFID y NFC.</p>
+
+      <div class="product-layout">
+        <!-- LEFT: Galería + Precio + Pago -->
+        <aside class="gallery">
+          <div class="carousel" aria-label="Galería del producto">
+            <div class="carousel-viewport">
+              <div class="carousel-images">
+                <img class="active" loading="lazy" decoding="async" src="assets/img/products/flipperzero.jpg" alt="Flipper Zero vista frontal" />
+                <img loading="lazy" decoding="async" src="assets/img/products/flipperzero2.jpg" alt="Flipper Zero accesorios" />
+                <img loading="lazy" decoding="async" src="assets/img/products/flipperzero3.jpg" alt="Flipper Zero en uso" />
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Imagen anterior">❮</button>
+            <button class="carousel-btn next" aria-label="Imagen siguiente">❯</button>
+          </div>
+
+          <div class="price-box">
+            <div class="price">$214.990 CLP</div>
+            <div class="meta">Envío gratis a todo Chile*</div>
+            <div class="meta">Solo 12 unidades restantes*</div>
+          </div>
+
+          <!-- Snippet de pago (intacto) -->
+          <div class="pay-wrap">
+            <script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+              data-preference-id="2646395895-a3616df0-5fea-48d8-aeb4-2cd3dc2dc4b2" data-source="button">
+            </script>
+          </div>
+        </aside>
+
+        <!-- RIGHT: 1 solo frame/columna con toda la info -->
+        <article class="product-info">
+          <h2 class="product-title">Flipper Zero</h2>
+          <p class="product-text">
+            El <strong>Flipper Zero</strong> es un dispositivo portátil multifunción para exploración y pruebas de seguridad.
+            Interactúa con sistemas reales: control de accesos, RFID, radiofrecuencia y más.
+          </p>
+
+          <h3 class="block-title">Incluye</h3>
+          <ul class="feature-list">
+            <li>Pantalla LCD monocroma de 1.4"</li>
+            <li>Control total con pad direccional</li>
+            <li>Puerto USB-C, Bluetooth, MicroSD</li>
+          </ul>
+
+          <h3 class="block-title">Funciones principales</h3>
+          <ul class="feature-list">
+            <li>Transceptor Sub-1 GHz (alcance aprox. 50 m)</li>
+            <li>Emulación/clonación RFID 125 kHz</li>
+            <li>Módulo NFC para lectura y escritura</li>
+            <li>Puerto GPIO para proyectos</li>
+            <li>Transceptor infrarrojo universal</li>
+          </ul>
+
+          <h3 class="block-title">Explora y aprende</h3>
+          <ul class="feature-list">
+            <li>Pruebas en IoT y domótica</li>
+            <li>Análisis de protocolos y creación de apps</li>
+            <li>Flujos con credenciales RFID/NFC</li>
+          </ul>
+
+          <!-- Opcional: medios adicionales en el mismo frame -->
+          <div class="extra-media">
+            <img loading="lazy" decoding="async" src="assets/img/products/flipper2.png" alt="Diseño del Flipper Zero" />
+            <img loading="lazy" decoding="async" src="assets/img/products/flipper3.png" alt="Funciones de radio del Flipper Zero" />
+            <!-- Si usas model-viewer, agrega el script de soporte:
+            <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+            <model-viewer src="assets/img/products/flipper.glb" alt="Flipper Zero 3D" camera-controls auto-rotate ar style="width:100%;max-width:600px;height:360px;"></model-viewer>
+            -->
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- ======= FOOTER (Web Component) ======= -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
+
+  <script>
+    // Carrusel simple con tamaño estable + autoplay opcional
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.querySelector(".carousel");
+      if (!root) return;
+      const imgs = root.querySelectorAll(".carousel-images img");
+      const prev = root.querySelector(".carousel-btn.prev");
+      const next = root.querySelector(".carousel-btn.next");
+      let i = 0, timer;
+
+      const show = idx => imgs.forEach((img,k)=> img.classList.toggle("active", k === idx));
+      const goNext = () => { i = (i + 1) % imgs.length; show(i); }
+      const goPrev = () => { i = (i - 1 + imgs.length) % imgs.length; show(i); }
+
+      prev?.addEventListener("click", ()=>{ goPrev(); restart(); });
+      next?.addEventListener("click", ()=>{ goNext(); restart(); });
+
+      const restart = () => { clearInterval(timer); timer = setInterval(goNext, 4500); };
+
+      show(i); restart();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!-- File: m5stick-plus.html (refactor con namastech-ui) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wifi Pineapple Tetra | Namastech</title>
+
+  <!-- Fuente para contenido fuera del Shadow DOM -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <!-- Web Components (Header + Footer con Cyber Bar) -->
+  <script type="module" src="/assets/js/namastech-ui.js"></script>
+
+  <style>
+    /* ======= THEME (alineado a pineapple_kit) ======= */
+    :root{
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#b9c7c7;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc; --accent:#ff6600;
+      --radius:14px; --glow:0 0 15px var(--cyan);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.35;
+    }
+    a{color:var(--cyan); text-decoration:none} a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+    /* ======= LAYOUT ======= */
+    .page{width:min(1100px,100% - 2rem); margin:0 auto}
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(18px,3.5vw,32px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
+    }
+    .title-main{
+      text-align:center; color:#fff; margin:0 0 10px;
+      font-size:clamp(1.5rem,5.5vw,2rem);
+      text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+      letter-spacing:.05em;
+    }
+    .sub-note{ text-align:center; color:var(--accent); margin:6px 0 18px; font-size:clamp(1rem,3vw,1.1rem) }
+
+    .product-layout{
+      display:grid; gap:clamp(14px,3vw,24px);
+      grid-template-columns:1fr;
+    }
+    @media (min-width: 900px){ .product-layout{ grid-template-columns: 1fr 1fr; } }
+
+    /* ======= GALLERY / CARRUSEL ======= */
+    .gallery{display:flex; flex-direction:column; gap:12px}
+    .carousel{ position:relative; overflow:hidden; border-radius:12px; background:#000; box-shadow:0 0 18px rgba(0,255,231,.25); }
+    .carousel-viewport{ width:100%; aspect-ratio:4/3; display:grid; place-items:center; }
+    .carousel-images{ position:relative; width:100%; height:100%; }
+    .carousel-images img{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:contain; background:#000; display:none;
+    }
+    .carousel-images img.active{ display:block; }
+    .carousel-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(0,0,0,.5); color:#fff; border:none; font-size:2rem; cursor:pointer;
+      padding:2px 10px; border-radius:6px;
+    }
+    .carousel-btn.prev{ left:10px } .carousel-btn.next{ right:10px }
+
+    /* ======= PRICE + PAGO ======= */
+    .price-box{
+      text-align:center; border:1px solid var(--cyan-dim); border-radius:12px;
+      padding:12px 14px; background:#0a0a0a; box-shadow:0 0 12px rgba(0,255,231,.2);
+    }
+    .price{ color:var(--magenta); font-weight:800; font-size:clamp(1.2rem,4vw,1.6rem); margin:2px 0 6px }
+    .meta{ color:#93a1a1; font-size:.92rem; margin:2px 0 }
+    .pay-wrap{ display:flex; justify-content:center; margin-top:12px; text-align:center }
+
+    /* ======= INFO (1 SOLO FRAME) ======= */
+    .product-info{
+      border:1px solid var(--cyan-dim); border-radius:12px; padding:16px 16px; background:#0b0b0b;
+      box-shadow:0 0 12px rgba(0,255,231,.15);
+    }
+    .product-title{ margin:0 0 8px; color:var(--cyan); font-size:clamp(1.4rem,4.5vw,1.8rem) }
+    .product-text{ color:#ddd; line-height:1.7; font-size:clamp(.98rem,2.6vw,1.05rem); margin:8px 0 14px }
+    .block-title{ color:var(--accent); font-size:clamp(1.05rem,3.2vw,1.2rem); margin:14px 0 8px }
+    .list{ margin:0 0 12px; padding-left: 1rem; }
+    .list li{ color:#cfeeee; margin-bottom:6px }
+
+  </style>
+</head>
+<body>
+
+  <!-- ======= HEADER (Web Component con Cyber Bar) ======= -->
+  <namastech-header
+    logo-src="/assets/img/profile2.png"
+    video-src="/assets/banner.mp4"
+    poster-src="/assets/img/profile2.png">
+    <!-- slots opcionales:
+    <a slot="nav" href="/blog.html">Blog</a>
+    <li slot="quicklinks"><a class="cb-link" href="/kits.html">Kits</a></li> -->
+  </namastech-header>
+
+  <!-- ======= PRODUCTO ======= -->
+
+    <!-- ======= PRODUCTO ======= -->
+  <main class="page">
+    <section class="neon-box">
+      <h1 class="title-main">WiFi Pineapple Tetra</h1>
+      <p class="sub-note">Herramienta de ciberseguridad para pentesting Wi-Fi — Reconocimiento, ataques MITM y recolección de credenciales.</p>
+
+      <div class="product-layout">
+        <!-- LEFT: Galería + Precio + Pago -->
+        <aside class="gallery">
+          <div class="carousel" aria-label="Galería del producto">
+            <div class="carousel-viewport">
+              <div class="carousel-images">
+                <img class="active" loading="lazy" decoding="async" src="assets/img/products/pineapplenano/pineapplenano01.jpeg"  alt="WiFi Pineapple vista 1" />
+                <img loading="lazy" decoding="async" src="assets/img/products/pineapplenano/pineapplenano02.jpeg" alt="WiFi Pineapple vista 2" />
+                <img loading="lazy" decoding="async" src="assets/img/products/pineapplenano/pineapplenano03.jpeg" alt="WiFi Pineapple vista 3" />
+                <img loading="lazy" decoding="async" src="assets/img/products/pineapplenano/pineapplenano04.jpeg" alt="WiFi Pineapple vista 4" />
+                <img loading="lazy" decoding="async" src="assets/img/products/pineapplenano/pineapplenano05.jpeg" alt="WiFi Pineapple vista 5" />
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Imagen anterior">❮</button>
+            <button class="carousel-btn next" aria-label="Imagen siguiente">❯</button>
+          </div>
+
+          <div class="price-box">
+            <div class="price">$129.990 CLP</div>
+            <div class="meta">Envío gratis a todo Chile*</div>
+          </div>
+
+          <!-- Botón de pago (idéntico, sin cambios) -->
+          <div class="pay-wrap">
+<script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+data-preference-id="2646395895-1c38967d-4e98-4ab3-b023-46e6807df553" data-source="button">
+</script>
+          </div>
+        </aside>
+
+        <!-- RIGHT: 1 solo frame/columna con toda la info -->
+        <article class="product-info">
+          <h2 class="product-title">Resumen</h2>
+          <p class="product-text">
+            La <strong>WiFi Pineapple Tetra</strong> es la plataforma de pentesting Wi-Fi desarrollada por Hak5,
+            diseñada para realizar ataques dirigidos de tipo <em>man-in-the-middle</em>, reconocimiento avanzado,
+            recopilación de credenciales y recopilación de inteligencia de código abierto — todo desde una interfaz
+            web simple e intuitiva. Basada en la sexta generación de plataformas Pineapple, está pensada para
+            despliegues móviles y persistentes, apoyada por más de una década de experiencia en ataques Wi-Fi.
+          </p>
+
+          <!-- Banner centrado adaptado al ancho del frame -->
+          <div style="text-align:center; margin:20px 0;">
+            <img src="assets/img/products/pineapplenano/banner.jpeg" alt="Banner WiFi Pineapple" style="max-width:100%; border-radius:10px;">
+          </div>
+
+          <h3 class="block-title">Qué puedes hacer</h3>
+          <ul class="list">
+            <li>Realizar ataques avanzados <strong>MITM</strong> imitando redes objetivo con precisión.</li>
+            <li>Recolectar inteligencia sobre redes a las que se han conectado los objetivos.</li>
+            <li>Visualizar el panorama Wi-Fi en tiempo real con monitoreo pasivo continuo.</li>
+            <li>Capturar credenciales WPA/WPA-Enterprise en formatos pcap, hashcat, JTR o texto plano.</li>
+            <li>Operar desde una interfaz web multiplataforma sin afectar vecinos fuera del alcance.</li>
+          </ul>
+
+          <h3 class="block-title">Características principales</h3>
+          <ul class="list">
+            <li>SoC de red de doble banda 2.4/5 GHz, ~533 MHz</li>
+            <li>Cuatro antenas de largo alcance, hasta 800 mW por radio</li>
+            <li>Puertos: USB Ethernet, USB Serial, USB Host y Ethernet</li>
+            <li>2 GB NAND Flash</li>
+            <li>Alimentación por USB o DC (también compatible con power bank)</li>
+            <li>Suite PineAP patentada para ataques Wi-Fi avanzados y focalizados</li>
+          </ul>
+
+          <h3 class="block-title">Incluye</h3>
+          <ul class="list">
+            <li>1× WiFi Pineapple Tetra (unidad principal)</li>
+            <li>4× Antenas externas</li>
+            <li>Cable USB y adaptadores según modelo</li>
+            <li>Manual básico y acceso a actualizaciones de firmware</li>
+          </ul>
+
+          <h3 class="block-title">Especificaciones</h3>
+          <ul class="list">
+            <li><strong>CPU:</strong> SoC Qualcomm, 800 MHz</li>
+            <li><strong>Memoria:</strong> 128 MB RAM; almacenamiento ampliable vía USB</li>
+            <li><strong>Interfaz:</strong> 2 × USB 2.0, puerto Ethernet, Micro USB, botón RESET, LED de sistema</li>
+            <li><strong>WiFi:</strong> Doble banda (2.4 GHz y 5 GHz), hasta 1200 Mbps en AC</li>
+            <li><strong>Alimentación:</strong> Adaptador 5 V ó power bank</li>
+            <li><strong>Antenas:</strong> Antena externa 6 dB con cuatro elementos; tarjeta de red interna doble</li>
+            <li><strong>Dimensiones:</strong> 80 × 80 × 21 mm (antena 20 cm)</li>
+            <li><strong>Firmware:</strong> Versión oficial más reciente, actualización online y restauración de fábrica</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+<!-- ======= FOOTER (Web Component) ======= -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
+
+  <script>
+    // Carrusel con tamaño estable + autoplay
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.querySelector(".carousel");
+      if (!root) return;
+      const imgs = root.querySelectorAll(".carousel-images img");
+      const prev = root.querySelector(".carousel-btn.prev");
+      const next = root.querySelector(".carousel-btn.next");
+      let i = 0, timer;
+
+      const show = idx => imgs.forEach((img,k)=> img.classList.toggle("active", k === idx));
+      const goNext = () => { i = (i + 1) % imgs.length; show(i); }
+      const goPrev = () => { i = (i - 1 + imgs.length) % imgs.length; show(i); }
+
+      prev?.addEventListener("click", ()=>{ goPrev(); restart(); });
+      next?.addEventListener("click", ()=>{ goNext(); restart(); });
+
+      const restart = () => { clearInterval(timer); timer = setInterval(goNext, 4000); };
+
+      show(i); restart();
+    });
+  </script>
+</body>
+
+</html>
+

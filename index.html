@@ -1,0 +1,325 @@
+<!-- File: productos.html (refactor con Web Components) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Productos | Namastech</title>
+
+  <!-- Fuente global para el contenido (los componentes cargan su propia fuente en Shadow) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <!-- Web Components Header + Footer (con Cyber Bar) -->
+  <script type="module" src="/assets/js/namastech-ui.js"></script>
+
+  <style>
+    /* ============ THEME TOKENS ============ */
+    :root {
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#b9c7c7;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc;
+      --glow:0 0 15px var(--cyan); --radius:14px; --shadow:0 0 18px rgba(0,255,231,.35);
+    }
+
+    /* ============ BASE ============ */
+    html, body { height:100%; }
+    * { box-sizing:border-box; }
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      line-height:1.35; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    a{ color:var(--cyan); text-decoration:none; }
+    a:hover{ color:var(--magenta); }
+    img{ max-width:100%; height:auto; display:block; }
+    .container{ width:min(1100px,100% - 2rem); margin:0 auto; }
+    :where(a,button,[role="button"],[tabindex]):focus-visible{ outline:2px solid var(--magenta); outline-offset:2px; border-radius:8px; }
+    @media (prefers-reduced-motion:reduce){ *{ animation:none!important; transition:none!important; } }
+
+    /* ============ WRAPPER ============ */
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(20px,4vw,40px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
+      width:min(1100px,100% - 2rem);
+    }
+    .main-title{
+      text-align:center; font-size:clamp(1.5rem,5.5vw,3rem); letter-spacing:.1em;
+      margin:0 0 28px; color:#fff; text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+    }
+    .category-wrapper{ text-align:center; }
+    .category-title{
+      display:inline-block; margin:40px auto 18px; padding:10px 18px;
+      background:#011f2b; border:2px solid var(--cyan); border-radius:10px;
+      font-size:clamp(1rem,3.5vw,1.4rem);
+    }
+
+    /* ============ PRODUCT GRID (FLEX) ============ */
+    .product-grid{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center; /* centra todas las filas */
+      gap:22px;
+      margin-bottom:36px;
+    }
+
+    .product-card{
+      width:260px;                 /* todas iguales */
+      background:var(--panel);
+      border:2px solid var(--cyan);
+      border-radius:10px;
+      padding:14px;
+      text-align:center;
+      box-shadow:0 0 15px var(--cyan);
+      transition:transform .25s, filter .25s, box-shadow .25s;
+      position:relative; overflow:hidden;
+    }
+    .product-card:hover{ transform:translateY(-4px); filter:brightness(1.08); box-shadow:0 0 20px rgba(0,255,231,.7); }
+
+    .image-wrapper{ position:relative; overflow:hidden; border-radius:8px; aspect-ratio:4 / 3; }
+    .image-wrapper img{ width:100%; height:100%; object-fit:cover; border-radius:8px; }
+    .image-overlay{
+      position:absolute; inset:0; display:grid; place-items:center;
+      background:rgba(0,255,231,.2); color:var(--cyan); font-weight:700; font-size:1rem; text-shadow:0 0 10px var(--cyan);
+      opacity:0; transition:opacity .25s; pointer-events:none;
+    }
+    .product-card:hover .image-overlay{ opacity:1; }
+    .is-touch .image-overlay{ opacity:.9; } /* CTA visible en táctiles */
+
+    .product-description{ color:var(--cyan); font-weight:700; margin:10px 0 6px; font-size:1.05rem; }
+    .product-text{ font-size:.92rem; color:#cfcfcf; min-height:42px; }
+    .product-price{ margin:10px 0; color:var(--magenta); font-weight:700; }
+    .original-price{ text-decoration:line-through; color:#777; margin-right:6px; }
+
+    .cyber-blink{
+      display:inline-block; margin-top:8px; font-weight:700; color:var(--magenta);
+      text-shadow:0 0 5px var(--magenta),0 0 10px var(--cyan); animation:blink 1.2s infinite alternate;
+    }
+    @keyframes blink{
+      0%{opacity:1; text-shadow:0 0 5px var(--magenta),0 0 15px var(--cyan)}
+      50%{opacity:.35; text-shadow:0 0 2px var(--magenta)}
+      100%{opacity:1; text-shadow:0 0 8px var(--cyan),0 0 20px var(--magenta)}
+    }
+
+    /* Seguridad extra en pantallas ultra estrechas */
+    @media (max-width:340px){ .product-card{ width:92vw; } }
+  </style>
+</head>
+<body>
+
+  <!-- ======= HEADER (Web Component con Cyber Bar integrada) ======= -->
+  <namastech-header
+    logo-src="/assets/img/profile2.png"
+    video-src="/assets/banner.mp4"
+    poster-src="/assets/img/profile2.png">
+  </namastech-header>
+
+  <!-- ======= PRODUCTOS ======= -->
+  <main class="neon-box" id="productos">
+    <h1 class="main-title">PRODUCTOS</h1>
+
+    <!-- Category: WI-FI — Auditoría y análisis inalámbrico -->
+    <div class="category-wrapper">
+      <h2 class="category-title">WI-FI — Auditoría y análisis inalámbrico</h2>
+    </div>
+    <section class="product-grid" aria-label="Wi-Fi — Auditoría y análisis inalámbrico">
+      <!-- catnugget.html -->
+      <article class="product-card">
+        <a href="catnugget.html" aria-label="Ver HakCat WiFi Nugget">
+          <div class="image-wrapper">
+            <img src="assets/img/products/catnugget.png" alt="HakCat WiFi Nugget" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">HakCat WiFi Nugget</p>
+        <p class="product-text">Permite editar y ejecutar payloads en tiempo real.</p>
+        <p class="product-price"><span class="original-price">$200.000</span>$159.000</p>
+        <a href="catnugget.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- pineapple.html -->
+      <article class="product-card">
+        <a href="pineapple.html" aria-label="Ver WiFi Pineapple Mark VII">
+          <div class="image-wrapper">
+            <img src="assets/img/products/pineapple.png" alt="WiFi Pineapple Mark VII" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">WiFi Pineapple Mark VII</p>
+        <p class="product-text">Hackea conexiones y descubre vulnerabilidades.</p>
+        <p class="product-price"><span class="original-price">$280.000</span>$249.990</p>
+        <a href="pineapple.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- pineappletetra.html (nuevo) -->
+      <article class="product-card">
+        <a href="pineappletetra.html" aria-label="Ver WiFi Pineapple TETRA">
+          <div class="image-wrapper">
+            <img src="assets/img/products/pineapplenano/pineapplenano01.jpeg" alt="WiFi Pineapple TETRA" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">WiFi Pineapple TETRA</p>
+        <p class="product-text">Plataforma dual-band para auditorías Wi-Fi avanzadas.</p>
+        <p class="product-price">$129.990</p>
+        <a href="pineappletetra.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- cydmarauder.html -->
+      <article class="product-card">
+        <a href="cydmarauder.html" aria-label="Ver CYD-WiFi Marauder">
+          <div class="image-wrapper">
+            <img src="assets/img/products/marauder.jpg" alt="CYD WiFi Marauder" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">CYD-WiFi Marauder</p>
+        <p class="product-text">Una herramienta para todos los hackers éticos.</p>
+        <p class="product-price"><span class="original-price">$120.990</span>$99.990</p>
+        <a href="cydmarauder.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- dstike.html -->
+      <article class="product-card">
+        <a href="dstike.html" aria-label="Ver DSTIKE Deauther V3 / Mini V3">
+          <div class="image-wrapper">
+            <img src="assets/img/products/dstike.webp" alt="DSTIKE Deauther Mini V3" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">DSTIKE Deauther Mini V3</p>
+        <p class="product-text">Placa basada en ESP8266 para pruebas Wi-Fi 2.4 GHz.</p>
+        <p class="product-price">$54.990</p>
+        <a href="dstike.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <!-- Category: KITS / BUNDLES — Paquetes y sets preconfigurados -->
+    <div class="category-wrapper">
+      <h2 class="category-title">KITS / BUNDLES — Paquetes y sets preconfigurados</h2>
+    </div>
+    <section class="product-grid" aria-label="Kits / Bundles">
+      <!-- hackerkit.html (nuevo) -->
+      <article class="product-card">
+        <a href="hackerkit.html" aria-label="Ver Hacker Kit">
+          <div class="image-wrapper">
+            <img src="assets/img/products/kit_hacker/kit1.png" alt="Hacker Kit — bundle de inicio" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Pentester Kit</p>
+        <p class="product-text">Paquete de inicio con herramientas y guías para tu laboratorio.</p>
+        <p class="product-price">$169.990</p>
+        <a href="hackerkit.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <!-- Category: RF & SDR — Radiofrecuencia y replay/captura Sub-GHz -->
+    <div class="category-wrapper">
+      <h2 class="category-title">RF & SDR — Radiofrecuencia y replay/captura Sub-GHz</h2>
+    </div>
+    <section class="product-grid" aria-label="RF & SDR">
+      <!-- evilcrow.html -->
+      <article class="product-card">
+        <a href="evilcrow.html" aria-label="Ver Evil Crow RF V2">
+          <div class="image-wrapper">
+            <img src="assets/img/products/evilcrow.jpg" alt="Evil Crow RF V2" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Evil Crow RF V2</p>
+        <p class="product-text">RF hacking para pentesting y Red Team.</p>
+        <p class="product-price"><span class="original-price">$90.000</span>$74.990</p>
+        <a href="evilcrow.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <!-- Category: USB & HID — Ataques por USB / HID -->
+    <div class="category-wrapper">
+      <h2 class="category-title">USB & HID — Ataques por USB / HID</h2>
+    </div>
+    <section class="product-grid" aria-label="USB & HID">
+      <!-- ducky.html -->
+      <article class="product-card">
+        <a href="ducky.html" aria-label="Ver USB Rubber Ducky">
+          <div class="image-wrapper">
+            <img src="assets/img/products/ducky.png" alt="USB Rubber Ducky" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">USB Rubber Ducky</p>
+        <p class="product-text">Dispositivo HID para pruebas automatizadas.</p>
+        <p class="product-price"><span class="original-price">$180.000</span>$149.900</p>
+        <a href="ducky.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <!-- Category: MULTI-HERRAMIENTAS / PORTÁTILES — Herramientas todo-en-uno -->
+    <div class="category-wrapper">
+      <h2 class="category-title">MULTI-HERRAMIENTAS / PORTÁTILES — Herramientas todo-en-uno y dispositivos portátiles</h2>
+    </div>
+    <section class="product-grid" aria-label="Multi-herramientas / Portátiles">
+      <!-- flipper.html -->
+      <article class="product-card">
+        <a href="flipper.html" aria-label="Ver Flipper Zero">
+          <div class="image-wrapper">
+            <img src="assets/img/products/flipperzero2.jpg" alt="Flipper Zero" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Flipper Zero</p>
+        <p class="product-text">La herramienta todo-en-uno para hacking.</p>
+        <p class="product-price"><span class="original-price">$300.990</span>$214.990</p>
+        <a href="flipper.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- m5stick.html -->
+      <article class="product-card">
+        <a href="m5stick.html" aria-label="Ver M5Stick Plus C">
+          <div class="image-wrapper">
+            <img src="assets/img/products/m5stickplus.webp" alt="M5Stick Plus C" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">M5Stick Plus C</p>
+        <p class="product-text">Dispositivo portátil para pentesting Wi-Fi.</p>
+        <p class="product-price"><span class="original-price">$55.000</span>$45.000</p>
+        <a href="m5stick.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <!-- Category: AI & AUTOMATION — Dispositivos orientados a IA -->
+    <div class="category-wrapper">
+      <h2 class="category-title">AI & AUTOMATION — Dispositivos orientados a IA / captura automatizada</h2>
+    </div>
+    <section class="product-grid" aria-label="AI & Automation">
+      <!-- pwnagotchi.html -->
+      <article class="product-card">
+        <a href="pwnagotchi.html" aria-label="Ver Pwnagotchi">
+          <div class="image-wrapper">
+            <img src="assets/img/products/pwnagotchi2.jpeg" alt="Pwnagotchi" loading="lazy" decoding="async" />
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Pwnagotchi</p>
+        <p class="product-text">AI que aprende capturando handshakes para auditorías WPA.</p>
+        <p class="product-price">$99.990</p>
+        <a href="pwnagotchi.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+  </main>
+
+  <!-- ======= FOOTER (Web Component) ======= -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
+
+  <script>
+    // Añade .is-touch en móviles (mejora overlay sin hover)
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      document.documentElement.classList.add('is-touch');
+    }
+  </script>
+</body>
+</html>

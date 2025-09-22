@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tutorial ESP32-DIV</title>
+	<!-- css files -->
+<link rel="stylesheet" href="assets/css/product-style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+	<link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+	<meta name="author" content="Abraham Leiva">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+	<body>
+		<!-- Navbar -->
+		<nav class="nav container void-background">
+			<div class="nav-left">
+		<a href="http://github.com/hak5" class="nav-item">
+					<span class="icon">
+						<i class="fa fa-github"></i>
+					</span>	
+			</div>
+
+			<div class="nav-right nav-menu">
+				<a class="nav-item" href="index.html">Inicio</a>
+				<a class="nav-item" href="about.html">Quienes Somos</a>
+				<a class="nav-item" href="contacto.html">Contactanos</a>
+  				<a class="nav-item" href="envios.html">Envios</a>
+			</div>
+
+			<span class="nav-toggle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+		</nav>
+				
+		<section id="about" class="section section-1" style="position: relative; overflow: hidden;">
+    
+    <!-- Video de fondo -->
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assets/banner.mp4" type="video/mp4">
+        Tu navegador no soporta video en HTML5.
+    </video>
+    
+    <!-- Contenido encima del video -->
+    <div class="container has-text-centered" style="position: relative; z-index: 1;">
+        <img class="avatar" src="assets/img/profile2.png">
+    </div>
+    
+<div class="container" style="position: relative; z-index: 1; text-align: center;">
+    <br>
+    <p style="
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #00ffcc;
+        text-shadow: 0px 0px 12px rgba(0, 255, 200, 0.8);
+        letter-spacing: 2px;
+        ">
+        Bienvenido a Namastech<br>
+        Ciberseguridad, gadgets y hardware al alcance de tu mano.
+    </p>
+</div>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+</section>
+<style>
+  /* Mantiene títulos en verde cian */
+  .custom-bg h1 strong,
+  .custom-bg h2 strong,
+  .custom-bg h3 strong,
+  .custom-bg h4 strong,
+  .custom-bg h5 strong,
+  .custom-bg h6 strong {
+    color: #00ffcc !important; /* verde cian */
+  }
+
+  /* Solo cambia el <strong> dentro de párrafos a naranja oscuro */
+  .custom-bg p strong {
+    color: #ff6600 !important; /* naranja oscuro */
+  }
+</style>
+<style>
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  opacity: 0.7;
+}
+</style>
+<style>
+  /* Mantiene títulos en verde cian */
+  .custom-bg h1 strong,
+  .custom-bg h2 strong,
+  .custom-bg h3 strong,
+  .custom-bg h4 strong,
+  .custom-bg h5 strong,
+  .custom-bg h6 strong {
+    color: #00ffcc !important; /* verde cian */
+  }
+
+  /* Solo cambia el <strong> dentro de párrafos a naranja oscuro */
+  .custom-bg p strong {
+    color: #ff6600 !important; /* naranja oscuro */
+  }
+</style>
+<!-- Contact Form Section -->
+<section class="section section-product custom-bg">
+  <div class="columns is-centered">
+    <div class="column is-8 has-text-centered">
+
+      <h1 class="title is-2 product-title">ESP32DIV Tutorial</h1>
+
+      <!-- Video -->
+      <p>
+        <iframe width="985" height="554" src="https://www.youtube.com/embed/jVp1zlcsrOY"
+          title="Tu navaja suiza para redes inalámbricas - ESP32-DIV"
+          frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+          gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen="allowfullscreen"></iframe>
+      </p>
+<p>.</p>
+      <p>👋 Soy <strong>Luke!</strong> y, después de meses de anticipación, por fin puedo presentarte el
+      <strong>ESP32DIV</strong>: una versión mejorada de mi proyecto original que vengo puliendo desde hace años.
+      Si te entusiasma la tecnología inalámbrica, la ciberseguridad y el hardware de código abierto,
+      ¡este proyecto es para ti! Hoy te mostraré sus nuevas funciones y el hardware que hace posible este increíble dispositivo.</p>
+<p>-</p>
+<h1><strong>RECUERDA QUE TENEMOS EL PROYECTO ARMADO EN VENTA!</strong></h1>
+<div class="column">
+  <div class="box project-text">
+    <article>
+      
+        <!-- VENTA -->
+
+
+<!-- Aviso de venta -->
+<div class="project-sale">
+  <div class="image-container">
+    <a href="esp32div.html" class="image-link">
+      <img src="assets/tutoriales/esp32_DIV.jpeg" alt="ESP32DIV">
+      <div class="overlay-text">🛒 Ver en Tienda</div>
+    </a>
+  </div>
+
+  <!-- Contenido centrado -->
+  <div class="project-content">
+    <p class="product-description"><strong>ESP32DIV</strong></p>
+    <p class="centered-text">
+      Una herramienta que puede alterar y manipular desde redes Wi-Fi hasta señales RF de un portón eléctrico.
+    </p>
+    <p class="product-price">
+      <span class="original-price">$230.000</span>
+    </p>
+
+    <!-- Botón MercadoPago -->
+
+  </div>
+</div>
+
+<style>
+/* Contenedor principal */
+.project-sale {
+  max-width: 50%;          /* Mitad del ancho */
+  margin: 0 auto;          /* Centrado */
+  text-align: center;
+}
+
+/* Imagen con overlay */
+.image-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.image-container img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+/* Texto overlay */
+.overlay-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #00ffcc; /* Verde cian para destacar */
+  font-size: 1.3rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.image-link:hover .overlay-text {
+  opacity: 1;  /* Aparece al pasar el mouse */
+}
+</style>
+
+<p>-</p>
+      <h3>🔥 La evolución del ESP32DIV</h3>
+      <p>El proyecto ESP32DIV comenzó hace algunos años. La primera versión gustó mucho, pero comparada con esta
+      nueva iteración, aquella era casi un “proyecto de jardín infantil”. La versión actual está llena de mejoras y es mucho más potente.
+      Mientras la versión anterior solo soportaba <strong>Wi-Fi</strong> y <strong>BLE</strong>, ahora el ESP32DIV añade soporte para
+      <strong>2.4&nbsp;GHz</strong> y <strong>Sub-GHz</strong>, ampliando sus capacidades mucho más allá de lo que imaginamos.</p>
+<p>.</p>
+      <p>Sobre el nombre — <strong>ESP32DIV</strong>. “ESP32” es obvio, pero “DIV” viene de la mitología persa:
+      <em>div</em> se refiere a un ser sobrenatural o demonio — poderoso y asociado al caos. Es un nombre perfecto
+      para una herramienta que puede <strong>alterar</strong> y <strong>manipular</strong> señales inalámbricas. 😈</p>
+<p>.</p>
+      <!-- Imagen local -->
+      <p>
+        <img src="/assets/tutoriales/esp32div/MVI_7956.00_09_14_18.Still013-1024x576.jpg"
+          alt="ESP32DIV presentación" width="960" height="540">
+      </p>
+<p>.</p>
+      <h3>🌐 Explorando las funciones</h3>
+      <p>Dividí las funcionalidades en varios menús, cada uno con herramientas únicas para manipulación y análisis inalámbrico. 🧭</p>
+
+      <p><strong>Menú Wi-Fi:</strong><br>
+      <strong>•&nbsp;</strong><strong>Packet Monitor</strong>:<br>
+      Muestra el tráfico en vivo de los 14 canales Wi-Fi como un gráfico <em>waterfall</em>.</p>
+
+      <p><strong>•&nbsp;</strong><strong>Beacon Spammer</strong>:<br>
+      Envía APs falsos para inundar el aire con redes ficticias. ⚠️</p>
+
+      <p><strong>•&nbsp;</strong><strong>Deauth Detector</strong>:<br>
+      Escanea ataques de desautenticación y actividad sospechosa.</p>
+
+      <p><strong>•&nbsp;</strong><strong>Wi-Fi Scanner</strong>:<br>
+      Lista completa de redes cercanas con detalles de cada una.</p>
+
+      <p><strong>Menú Bluetooth:</strong><br>
+      <strong>•&nbsp;</strong><strong>BLE Jammer</strong>: Inunda los canales BLE.<br>
+      <strong>•&nbsp;</strong><strong>BLE Spoofer</strong>: Imita dispositivos BLE.<br>
+      <strong>•&nbsp;</strong><strong>Sour Apple</strong>: Explota BLE en Apple 🍏.<br>
+      <strong>•&nbsp;</strong><strong>BLE Scanner</strong>: Escanea dispositivos BLE ocultos.</p>
+
+      <p><strong>Menú 2.4&nbsp;GHz:</strong><br>
+      <strong>•&nbsp;</strong><strong>2.4&nbsp;GHz Scanner</strong>: Recorre los 128 canales.<br>
+      <strong>•&nbsp;</strong><strong>Protokill</strong>: Jamming de Zigbee, Wi-Fi y más. 🧪</p>
+
+      <p><strong>Menú Sub-GHz:</strong><br>
+      <strong>•&nbsp;</strong><strong>Replay Attack</strong>: Captura y reproduce señales.<br>
+      <strong>•&nbsp;</strong><strong>Sub-GHz Jammer</strong>: Interrumpe Sub-GHz (portones, IoT). 📻<br>
+      <strong>•&nbsp;</strong><strong>Saved Profiles</strong>: Guarda señales capturadas.</p>
+
+      <h3>🛠️ El hardware del ESP32DIV</h3>
+      <p>El ESP32DIV se compone de dos secciones principales: la <strong>placa principal</strong> y el <strong>shield</strong>.</p>
+
+      <p><strong>Main Board:</strong><br>
+      <strong>•&nbsp;</strong><strong>LF33</strong>: regulador 3.3V.<br>
+      <strong>•&nbsp;</strong><strong>TP4056</strong>: cargador de batería Li-ion.<br>
+      <strong>•&nbsp;</strong><strong>CP2102</strong>: USB-Serial.<br>
+      <strong>•&nbsp;</strong><strong>PCF8574</strong>: expansor de E/S.<br>
+      <strong>•&nbsp;</strong><strong>Ranura SD</strong>: guarda señales.<br>
+      <strong>•&nbsp;</strong><strong>ESP32-U (16MB)</strong>: microcontrolador central.<br>
+      <strong>•&nbsp;</strong><strong>Conector antena</strong>: antenas externas.<br>
+      <strong>•&nbsp;</strong><strong>Pantalla TFT ILI9341</strong> 2.8″.<br>
+      <strong>•&nbsp;</strong><strong>Botones</strong> de navegación.</p>
+
+      <p>
+        <img src="/assets/tutoriales/esp32div/MVI_7956.00_09_14_18.Still013-1024x576.jpg"
+          alt="ESP32DIV main board" width="960" height="540">
+      </p>
+
+      <p><strong>Shield:</strong><br>
+      <strong>•&nbsp;</strong><strong>3 × NRF24</strong>: operaciones 2.4&nbsp;GHz.<br>
+      <strong>•&nbsp;</strong><strong>CC1101</strong>: transceptor Sub-GHz.</p>
+
+      <p>
+        <img src="/assets/tutoriales/esp32div/MVI_7956.00_09_46_11.Still015-1024x576.jpg"
+          alt="ESP32DIV shield" width="960" height="540">
+      </p>
+
+      <h3>⚙ Esquemáticos
+      <p><h3>•&nbsp;Pantalla TFT</h3> + ESP32</p>
+      <p><img src="/assets/tutoriales/esp32div/esp32div-tft.jpeg" alt="TFT con ESP32"></p>
+
+      <p><h3>•&nbsp;XPT2046</h3> + ESP32</p>
+      <p><img src="/assets/tutoriales/esp32div/esp32div-xpt.jpeg" alt="XPT2046 con ESP32"></p>
+
+      <p><h3>📡 NRF24 Modules</h3> – Conexiones al ESP32</p>
+      <p><img src="/assets/tutoriales/esp32div/esp32div-nrf.jpeg" alt="NRF24 conexiones"></p>
+
+
+      <p><h3>💾 Tarjeta SD</h3> – Conexiones al ESP32</p>
+      <p><img src="/assets/tutoriales/esp32div/esp32div-sd.jpeg" alt="SD conexiones"></p>
+
+      <h3>💻 Construye tu propio ESP32DIV</h3>
+      <p><strong>Es sencillo si sigues estos pasos:</strong></p>
+      <p><strong>•&nbsp;</strong>Abre Arduino IDE.<br>
+      <strong>•&nbsp;</strong>Selecciona <strong>ESP32 Dev Module</strong>.<br>
+      <strong>•&nbsp;</strong>Configura <strong>Partition Scheme</strong> en <strong>Huge App</strong>.<br>
+      <strong>•&nbsp;</strong>Selecciona el puerto <strong>COM</strong> correcto.<br>
+      <strong>•&nbsp;</strong>Instala <strong>ESP32 core 2.0.11</strong>.<br>
+      <strong>•&nbsp;</strong>Descarga librerías TFT de GitHub.<br>
+      <strong>•&nbsp;</strong>Presiona <strong>Upload</strong> y listo. ✅</p>
+
+      <p>
+        <img src="/assets/tutoriales/esp32div/MVI_7956.00_11_33_16.Still016-1024x576.jpg"
+          alt="Construcción ESP32DIV" width="960" height="540">
+      </p>
+
+      <h3>🎬 Conclusiones</h3>
+      <p>¡Eso es todo por ahora con el ESP32DIV! ✅ Vimos funciones, hardware y cómo empezar. Estate atento a futuras actualizaciones y nuevas capacidades.</p>
+      <p>Si te gustó el proyecto, deja un <strong>like</strong>, comenta y suscríbete para no perderte nada. Y como siempre, cualquier duda o feedback es bienvenido. 🙌</p>
+      <p>¡Hasta la próxima, y sigue <h3>hackeando! 🧑‍💻</h3></p>
+
+      <!-- Imagen decorativa -->
+      <div style="text-align:center; margin:20px 0;">
+        <img src="assets/img/profile2.png" alt="Namastech Contacto" style="max-width:80%;">
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  body { background-color: #000; color: #ddd; }
+
+  .custom-bg {
+    background-color: #0a3d46;
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px auto;
+    width: 80%;
+  }
+
+  .product-title { color: #00ffcc; }
+
+  /* Texto general naranja */
+  .custom-bg, .custom-bg p, .custom-bg li, .custom-bg a, .custom-bg em {
+    color: #ece6de;
+  }
+
+  /* Mantener títulos en verde cian */
+  .custom-bg h1, .custom-bg h2, .custom-bg h3 {
+    color: #00ffcc;
+  }
+
+  /* Destacar las etiquetas con • PALABRA: */
+  .custom-bg strong + strong {
+    color: #ffa940;
+    font-size: 1.15em;
+    letter-spacing: .2px;
+  }
+
+  /* Centrado de imágenes y videos */
+  .custom-bg img,
+  .custom-bg iframe {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .custom-bg iframe {
+    width: 100%;
+    max-width: 985px;
+    aspect-ratio: 16/9;
+  }
+</style>
+
+
+
+
+<!-- Footer -->
+<footer class="footer" style="background-color:#1a1f2b; color:white;">
+  <div class="container">
+    <div class="columns">
+
+      <div class="column has-text-centered">
+        <h3 class="title is-5 has-text-white">QUIÉNES SOMOS</h3>
+        <p class="is-size-6">
+          En <strong>Namastech</strong> acercamos la ciberseguridad, gadgets y hardware 
+          al alcance de todos, combinando innovación con aprendizaje.
+        </p>
+      </div>
+
+      <div class="column has-text-centered">
+        <h3 class="title is-5 has-text-white">CONTÁCTANOS</h3>
+        <p class="is-size-6">📧 contacto@namastech.studio</p>
+        <p class="is-size-6">📱 +56 9 3558 4876</p>
+      </div>
+
+      <div class="column has-text-centered">
+        <h3 class="title is-5 has-text-white">PRODUCTOS</h3>
+        <ul style="list-style:none; padding:0;">
+          <li><a href="catnugget.html" class="has-text-white">WiFi Nugget</a></li>
+          <li><a href="flipper.html" class="has-text-white">Flipper Zero</a></li>
+          <li><a href="pineapple.html" class="has-text-white">WiFi Pineapple</a></li>
+          <li><a href="portapack.html" class="has-text-white">PortaPack H2</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="has-text-centered" style="margin-top: 30px;">
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl" 
+        width="100%" 
+        height="300" 
+        style="border:0; border-radius: 10px;" 
+        allowfullscreen="" 
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="has-text-centered" style="margin-top: 20px;">
+      <p class="is-size-7">&copy; 2025 Namastech - Todos los derechos reservados</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

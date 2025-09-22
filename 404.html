@@ -1,0 +1,48 @@
+<!-- =================================================================== -->
+<!-- File: 404.html                                                      -->
+<!-- =================================================================== -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>404 | Namastech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --bg:#011019;--panel:#0c0c0c;--ink:#e8f7f7;--muted:#b9c7c7;
+      --cyan:#00ffe7;--cyan-dim:#00ffcc55;--magenta:#ff00cc;
+      --glow:0 0 15px var(--cyan);--radius:14px
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:'Orbitron',system-ui,Segoe UI,Roboto,sans-serif;line-height:1.4}
+    a{color:var(--cyan);text-decoration:none} a:hover{color:var(--magenta)}
+    .nx-container{width:min(1100px,100% - 2rem);margin:0 auto;padding:clamp(16px,4vw,32px)}
+    .card{background:#000;border:2px solid var(--cyan);border-radius:var(--radius);box-shadow:0 0 30px rgba(0,255,231,.25);padding:clamp(18px,3vw,32px);text-align:center}
+    .title{margin:0 0 .5rem;font-size:clamp(1.4rem,4vw,2rem);text-shadow:0 0 10px var(--cyan)}
+    .subtitle{color:#cfe;opacity:.9;margin:.25rem 0 1rem}
+    .row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border:2px solid var(--cyan);border-radius:10px;padding:.65rem 1rem;font-weight:700}
+    .btn:hover{border-color:var(--magenta)}
+  </style>
+  <script type="module" src="/assets/js/namastech.ui.js"></script>
+</head>
+<body>
+  <namastech-header active="none"></namastech-header>
+
+  <main class="nx-container">
+    <section class="card" role="alert">
+      <h1 class="title">404 — Página no encontrada</h1>
+      <p class="subtitle">La URL que buscas no existe o fue movida.</p>
+      <div class="row">
+        <a class="btn" href="/index.html">Volver al inicio</a>
+        <a class="btn" href="/productos.html">Ver productos</a>
+        <a class="btn" href="/contacto.html">Contáctanos</a>
+      </div>
+    </section>
+  </main>
+
+  <namastech-footer></namastech-footer>
+</body>
+</html>

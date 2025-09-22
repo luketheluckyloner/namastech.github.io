@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ESP32DIV</title>
+	<!-- css files -->
+<link rel="stylesheet" href="assets/css/product-style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/styles.css">
+
+	<link rel="icon" type="image/x-icon" href="assets/img/favicon.png">
+	<meta name="author" content="Abraham Leiva">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+	<body>
+		<!-- Navbar -->
+		<nav class="nav container void-background">
+			<!-- This "nav-menu" is hidden on mobile -->
+			<!-- Add the modifier "is-active" to display it on mobile -->
+			<div class="nav-left">
+		<a href="http://github.com/hak5" class="nav-item">
+					<span class="icon">
+						<i class="fa fa-github"></i>
+					</span>	
+			</div>
+
+			<div class="nav-right nav-menu">
+				<a class="nav-item" href="index.html">Inicio</a>
+				<a class="nav-item" href="about.html">Quienes Somos</a>
+				<a class="nav-item" href="contacto.html">Contactanos</a>
+				<a class="nav-item" href="tutoriales.html">Tutoriales</a>
+			</div>
+
+			<!-- This "nav-toggle" hamburger menu is only visible on mobile -->
+			<!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+			<span class="nav-toggle">
+				<span></span>
+				<span></span>
+				<span></span>
+			</span>
+		</nav>
+				
+		<section id="about" class="section section-1" style="position: relative; overflow: hidden;">
+    
+    <!-- Video de fondo -->
+    <video autoplay muted loop playsinline class="bg-video">
+        <source src="assets/banner.mp4" type="video/mp4">
+        Tu navegador no soporta video en HTML5.
+    </video>
+    
+    <!-- Contenido encima del video -->
+    <div class="container has-text-centered" style="position: relative; z-index: 1;">
+        <img class="avatar" src="assets/img/profile2.png">
+    </div>
+    
+<div class="container" style="position: relative; z-index: 1; text-align: center;">
+    <br>
+    <p style="
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #00ffcc;
+        text-shadow: 0px 0px 12px rgba(0, 255, 200, 0.8);
+        letter-spacing: 2px;
+        ">
+        Bienvenido a Namastech<br>
+        Ciberseguridad, gadgets y hardware al alcance de tu mano.
+    </p>
+</div>
+
+<!-- Fuente robótica desde Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+</section>
+
+<!-- Estilos integrados -->
+<style>
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: 0;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  opacity: 0.7; /* Cambia la transparencia si quieres */
+}
+</style>
+
+  <!-- Product section -->
+
+
+  <!-- Product section -->
+<section class="section section-product">
+  <div class="product-wrapper">
+  <div class="container">
+    <div class="columns is-vcentered">
+      <!-- Carrusel -->
+      <div class="column is-6">
+        <div class="carousel">
+          <div class="carousel-images">
+            <img src="assets/img/products/ESP32DIV1.gif" class="active">
+            <img src="assets/img/products/ESP32DIV3.jpg">
+            <img src="assets/img/products/ESP32DIV2.jpeg">
+            <img src="assets/img/products/ESP32DIV4.jpg">
+          </div>
+          <button class="carousel-btn prev">&#10094;</button>
+          <button class="carousel-btn next">&#10095;</button>
+        </div>
+        
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const carousels = document.querySelectorAll(".carousel");
+
+  carousels.forEach(carousel => {
+    const images = carousel.querySelectorAll(".carousel-images img");
+    const prevBtn = carousel.querySelector(".carousel-btn.prev");
+    const nextBtn = carousel.querySelector(".carousel-btn.next");
+
+    let currentIndex = 0;
+
+    function showImage(index) {
+      images.forEach((img, i) => {
+        img.classList.toggle("active", i === index);
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        showImage(currentIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+      });
+    }
+
+    // Autoplay cada 4s
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    }, 4000);
+
+    showImage(currentIndex);
+  });
+});
+</script>
+        <!-- Precio -->
+        <div class="product-price has-text-centered" style="margin-top: 15px;">
+          <h2 class="title is-4" style="margin-bottom: 5px;">$230.000 CLP</h2>
+          <p style="font-size: 0.9em; color: #666;">Envío gratis a todo Chile*</p>
+        </div>
+
+        <!-- Botón de pago -->
+        <div class="centered-button has-text-centered" style="margin-top: 15px;">
+<script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+data-preference-id="2646395895-7400dc1b-c15e-4cd1-a1e8-be79b0220ef7" data-source="button">
+</script>
+        </div>
+      </div>
+
+      <!-- Info del Producto -->
+      <div class="column is-6">
+        <h1 class="title is-2 product-title">ESP32DIV</h1>
+        <p class="product-presentation">
+          <strong>ESP32DIV</strong> es un <em>toolkit</em> inalámbrico <strong>multibanda</strong> y de <strong>código abierto</strong> basado en ESP32. 
+          Soporta <strong>Wi-Fi</strong>, <strong>BLE</strong>, <strong>2.4&nbsp;GHz</strong> y <strong>Sub-GHz</strong> para <strong>pruebas inalámbricas</strong>, 
+          <strong>análisis de señales</strong>, <strong>desarrollo de jammers</strong> y <strong>spoofing de protocolos</strong>. 
+          ⚠️ Uso educativo y de investigación. No lo utilices para actividades maliciosas o acceso no autorizado.
+        </p>
+      </div>
+    </div>
+
+    <!-- Sección centrada -->
+<div class="columns is-centered" style="margin-top: 40px;">
+
+  <!-- Columna izquierda -->
+  <div class="column is-half has-text-centered">
+    <h2 class="title is-4 product-subtitle">Incluye</h2>
+    <ul class="product-features has-text-left">
+      <li><strong>Main Board</strong> (ESP32-U 16MB, ranura microSD, botones, conector de antena)</li>
+      <li><strong>Pantalla TFT ILI9341</strong> 2.8″ para UI/datos</li>
+      <li><strong>Shield</strong> de expansión</li>
+      <li><strong>3× NRF24</strong> para 2.4&nbsp;GHz (jamming/spoofing)</li>
+      <li><strong>1× CC1101</strong> para Sub-GHz (jamming/replay)</li>
+      <li><strong>CP2102</strong> (USB-Serie), <strong>TP4056</strong> (carga Li-ion), <strong>LF33</strong> (3.3V), <strong>PCF8574</strong> (E/S)</li>
+    </ul>
+
+    <h2 class="title is-4 product-subtitle">Características principales</h2>
+    <ul class="product-features has-text-left">
+      <li>📡 <strong>Wi-Fi</strong>: Packet Monitor (waterfall), Beacon Spammer, Deauth Detector, Wi-Fi Scanner</li>
+      <li>📶 <strong>2.4&nbsp;GHz</strong>: Scanner de 128 canales, <strong>Protokill</strong> (Zigbee/Wi-Fi/etc.)</li>
+      <li>🔵 <strong>Bluetooth</strong>: BLE Jammer, BLE Spoofer, Sour Apple, BLE Scanner, BLE Sniffer</li>
+      <li>📻 <strong>Sub-GHz</strong>: Replay Attack, Sub-GHz Jammer, Saved Profiles</li>
+      <li>🧰 <strong>Extras</strong>: Wi-Fi Deauth Attack, Captive Portal</li>
+    </ul>
+
+    <h2 class="title is-4 product-subtitle">Aplicaciones</h2>
+    <ul class="product-features has-text-left">
+      <li>Auditorías y <strong>testing</strong> inalámbrico</li>
+      <li>Investigación y <strong>red-teaming</strong></li>
+      <li>Laboratorios y <strong>formación</strong> en ciberseguridad</li>
+    </ul>
+  </div>
+
+  <!-- Columna derecha -->
+  <div class="column is-half has-text-centered">
+    <h2 class="title is-4 product-subtitle">Funciones destacadas</h2>
+    <ul class="product-features has-text-left">
+      <li>Interfaz clara en <strong>TFT 2.8″</strong> y navegación con botones</li>
+      <li>Soporte de <strong>antenas externas</strong></li>
+      <li><strong>Perfiles guardados</strong> de señales (Sub-GHz)</li>
+      <li>Compatibilidad con <strong>sniffing/jamming</strong> en varias bandas</li>
+    </ul>
+
+    <h2 class="title is-4 product-subtitle">Especificaciones</h2>
+    <ul class="product-features has-text-left">
+      <li><strong>MCU:</strong> ESP32-U (16MB)</li>
+      <li><strong>Pantalla:</strong> ILI9341 TFT 2.8″</li>
+      <li><strong>Conectividad:</strong> Wi-Fi, BLE, 2.4&nbsp;GHz, Sub-GHz</li>
+      <li><strong>Almacenamiento:</strong> microSD (logs y capturas)</li>
+      <li><strong>Alimentación:</strong> Módulo de carga <strong>TP4056</strong></li>
+      <li><strong>USB-Serie:</strong> <strong>CP2102</strong></li>
+      <li><strong>Regulación:</strong> <strong>LF33</strong> (3.3V)</li>
+      <li><strong>E/S:</strong> <strong>PCF8574</strong> (expansor)</li>
+    </ul>
+  </div>
+
+</div>
+  </div>
+</section>
+
+
+
+
+
+
+    
+<!-- CSS -->
+<style>
+  body {
+    background-color: #000; /* Mantiene los lados en negro */
+  }
+
+  .custom-bg {
+    background-color: #0a3d46; /* Azul verdoso oscuro */
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px auto;
+    width: 80%; /* Ajusta el ancho de la franja */
+  }
+
+  .product-presentation {
+    color: #ddd;
+  }
+
+  .product-title {
+    color: #00ffcc; /* Verde cian como en el banner */
+  }
+</style>
+
+  <!-- Footer -->
+<!-- CSS -->
+
+
+
+  <!-- Footer -->
+
+<style>
+  .carousel {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .carousel-images img {
+    width: 100%;
+    flex-shrink: 0;
+    display: none;
+  }
+
+  .carousel-images img.active {
+    display: block;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 10px;
+    border-radius: 5px;
+  }
+
+  .carousel-btn.prev {
+    left: 10px;
+  }
+
+  .carousel-btn.next {
+    right: 10px;
+  }
+</style>
+
+<script>
+  const images = document.querySelectorAll('.carousel-images img');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+
+  let currentIndex = 0;
+
+  function showImage(index) {
+    images.forEach((img, i) => {
+      img.classList.toggle('active', i === index);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + images.length) % images.length;
+    showImage(currentIndex);
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  });
+
+  // Optional: autoplay every 4s
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % images.length;
+    showImage(currentIndex);
+  }, 4000);
+
+  // Show the first image on load
+  showImage(currentIndex);
+</script>
+
+  <!-- Footer -->
+  <!-- Footer -->
+  <footer class="footer" style="background-color:#1a1f2b; color:white;">
+    <div class="container">
+      <div class="columns">
+
+        <!-- Columna 1 -->
+        <div class="column has-text-centered">
+          <h3 class="title is-5 has-text-white">QUIÉNES SOMOS</h3>
+          <p class="is-size-6">
+            En <strong>Namastech</strong> acercamos la ciberseguridad, gadgets y hardware 
+            al alcance de todos, combinando innovación con aprendizaje.
+          </p>
+        </div>
+
+        <!-- Columna 2 -->
+        <div class="column has-text-centered">
+          <h3 class="title is-5 has-text-white">CONTÁCTANOS</h3>
+          <p class="is-size-6">📧 contacto@namastech</p>
+          <p class="is-size-6">📱 +56 9 3558 4876</p>
+        </div>
+
+        <!-- Columna 3 -->
+        <div class="column has-text-centered">
+          <h3 class="title is-5 has-text-white">PRODUCTOS</h3>
+          <ul style="list-style:none; padding:0;">
+            <li><a href="catnugget.html" class="has-text-white">WiFi Nugget</a></li>
+            <li><a href="flipper.html" class="has-text-white">Flipper Zero</a></li>
+            <li><a href="pineapple.html" class="has-text-white">WiFi Pineapple</a></li>
+            <li><a href="portapack.html" class="has-text-white">PortaPack H2</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Mapa -->
+      <div class="has-text-centered" style="margin-top: 30px;">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl" 
+          width="100%" 
+          height="300" 
+          style="border:0; border-radius: 10px;" 
+          allowfullscreen="" 
+          loading="lazy">
+        </iframe>
+      </div>
+
+      <!-- Línea final -->
+      <div class="has-text-centered" style="margin-top: 20px;">
+        <p class="is-size-7">&copy; 2025 Namastech - Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>

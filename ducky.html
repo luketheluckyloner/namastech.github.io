@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>USB Rubber Ducky | Namastech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ================= THEME (unificado) ================= */
+    :root{
+      --bg:#011019;--panel:#0c0c0c;--ink:#e8f7f7;--muted:#b9c7c7;
+      --cyan:#00ffe7;--cyan-dim:#00ffcc55;--magenta:#ff00cc;
+      --radius:14px;--glow:0 0 15px var(--cyan);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--ink);
+      font-family:'Orbitron',system-ui,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+      line-height:1.4;
+    }
+    a{color:var(--cyan);text-decoration:none} a:hover{color:var(--magenta)}
+    .nx-container{width:min(1100px,100% - 2rem);margin:0 auto;padding:clamp(16px,4vw,32px)}
+    .stack{display:grid;gap:clamp(14px,2.8vw,22px)}
+
+    /* ================= PANEL PRODUCTO ================= */
+    .panel{
+      background:#000;border:2px solid var(--cyan);border-radius:var(--radius);
+      padding:clamp(18px,3.5vw,32px);box-shadow:0 0 30px rgba(0,255,231,.25)
+    }
+    h1{margin:0 0 .6rem;font-size:clamp(1.6rem,5vw,2.4rem);text-shadow:0 0 10px var(--cyan)}
+    h2{margin:1rem 0 .4rem;color:var(--cyan);font-size:clamp(1.1rem,3.5vw,1.3rem)}
+    p,li{color:#dfe}
+    .muted{color:var(--muted)}
+    .center{display:grid;place-items:center}
+
+    /* ================= PRECIO / INFO ================= */
+    .price{text-align:center;margin-top:10px}
+    .price h3{margin:.2rem 0;font-size:clamp(1.1rem,3.6vw,1.4rem);color:#fff}
+    .note{font-size:.9rem;color:#a9bcbc}
+
+    /* ================= CARRUSEL (alto fijo) ================= */
+    .carousel{position:relative;margin:auto;border-radius:10px;overflow:hidden;background:#000}
+    .carousel-rail{display:grid;place-items:center}
+    .carousel img{
+      display:none;max-width:100%;max-height:360px;
+      object-fit:contain;background:#000
+    }
+    .carousel img.active{display:block}
+    .cbtn{
+      position:absolute;top:50%;transform:translateY(-50%);
+      border:none;background:rgba(0,0,0,.55);color:#fff;
+      font-size:2rem;cursor:pointer;border-radius:6px;padding:.15rem .55rem
+    }
+    .cbtn.prev{left:8px} .cbtn.next{right:8px}
+
+    /* ================= LISTAS ================= */
+    ul.features{margin:.25rem 0 .75rem 1.1rem}
+    ul.features li{margin:.25rem 0}
+
+    /* ================= MEDIA ================= */
+    img.block{display:block;max-width:100%;height:auto;border-radius:10px}
+    .section{margin-top:clamp(8px,2vw,12px)}
+  </style>
+
+  <!-- Web Components (header + footer + cyber bar) -->
+  <script type="module" src="/assets/js/namastech.ui.js"></script>
+</head>
+<body>
+  <!-- Header unificado -->
+  <namastech-header active="productos"></namastech-header>
+
+  <main class="nx-container">
+    <article class="panel stack" aria-labelledby="product-title">
+      <header>
+        <h1 id="product-title">USB Rubber Ducky</h1>
+      </header>
+
+      <!-- Carrusel + Precio + Pago -->
+      <section class="section" aria-label="Galería de imágenes del producto">
+        <div class="carousel" id="crs-usb-ducky">
+          <div class="carousel-rail">
+            <img src="assets/img/products/usbduck_education.webp" class="active" alt="USB Rubber Ducky educación">
+            <img src="assets/img/products/usbduck_compatibility.avif" alt="Compatibilidad de USB Rubber Ducky">
+            <img src="assets/img/products/usbduck_hw.jpg" alt="Hardware USB Rubber Ducky">
+            <img src="assets/img/products/usbduck_framework.gif" alt="Framework de USB Rubber Ducky">
+            <img src="assets/img/products/usbduck_keystroke.webp" alt="Inyección de teclas del USB Rubber Ducky">
+          </div>
+          <button class="cbtn prev" aria-label="Anterior">❮</button>
+          <button class="cbtn next" aria-label="Siguiente">❯</button>
+        </div>
+
+        <div class="price">
+          <h3>$149.900 CLP</h3>
+          <div class="note">Envío gratis a todo Chile*</div>
+        </div>
+
+        <!-- Botón de pago (EXACTO) -->
+        <div class="center" style="margin-top:12px;">
+          <script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+          data-preference-id="2646395895-4bdd38d9-1ea0-4154-82bd-0691d70d4b89" data-source="button">
+          </script>
+        </div>
+      </section>
+
+      <!-- Descripción corta -->
+      <section class="section">
+        <p>
+          Para un humano, parece una memoria USB común. Para un computador, es un
+          teclado que escribe a velocidades sobrehumanas, permitiendo realizar
+          <em>hotplug</em> creativos y complejos. Desde películas y series hasta el
+          corazón de profesionales de ciberseguridad, el <strong>USB Rubber Ducky</strong>
+          es un ícono de la cultura hacker.
+        </p>
+      </section>
+
+      <!-- Secciones (una columna) -->
+      <section class="section">
+        <h2>Introducción</h2>
+        <p>
+          Los computadores confían en los humanos y los humanos usan teclados.
+          El <strong>USB Rubber Ducky</strong>, que se ve como una memoria USB normal,
+          aprovecha esta confianza para inyectar payloads a velocidades sobrehumanas.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Nuevo Framework de Hotplug</h2>
+        <p>
+          Herramienta probada y actualizada que revolucionó la inyección de teclas.
+          Incluye <strong>DuckyScript™ 3.0</strong> avanzado, Payload Studio, extensiones
+          reutilizables y <strong>PayloadHub</strong> para compartir y descubrir payloads.
+        </p>
+        <div class="center">
+          <img src="assets/img/products/usbduck_framework.gif" alt="Nuevo framework del USB Rubber Ducky" class="block" />
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Evadir contramedidas</h2>
+        <ul class="features">
+          <li><strong>Clonación de ID de hardware:</strong> imita cualquier dispositivo USB (VID/PID, fabricante, serie y cadenas) con un solo comando.</li>
+          <li><strong>Modos de ataque dinámicos:</strong> cambia la emulación en caliente (teclado, almacenamiento o ambos).</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2>Brute-Force & Educación</h2>
+        <p>
+          Testea sistemas de autenticación mediante ataques programados de fuerza bruta
+          y aprende con cientos de payloads, guías y material didáctico con ejercicios paso a paso.
+        </p>
+      </section>
+
+      <section class="section">
+        <h2>Compatibilidad amplia</h2>
+        <p>
+          Modernizado con USB-C y A, compatible con desktop y móviles. Retrocompatible con
+          DuckyScript clásico: usa y crea cientos de payloads para aprendizaje y pruebas de seguridad.
+        </p>
+      </section>
+    </article>
+  </main>
+
+  <!-- Footer unificado -->
+  <namastech-footer></namastech-footer>
+
+  <!-- JS del carrusel (alto estable, autoplay, accesible) -->
+  <script>
+    (function(id){
+      const root = document.getElementById(id);
+      if(!root) return;
+      const imgs = [...root.querySelectorAll('img')];
+      const prev = root.querySelector('.prev');
+      const next = root.querySelector('.next');
+      let i = 0;
+
+      const show = idx => imgs.forEach((im,k)=>im.classList.toggle('active', k===idx));
+
+      prev.addEventListener('click', ()=>{ i = (i-1+imgs.length)%imgs.length; show(i); });
+      next.addEventListener('click', ()=>{ i = (i+1)%imgs.length; show(i); });
+
+      setInterval(()=>{ i = (i+1)%imgs.length; show(i); }, 4000);
+      show(i);
+    })('crs-usb-ducky');
+  </script>
+</body>
+</html>

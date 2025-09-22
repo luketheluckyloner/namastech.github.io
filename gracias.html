@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>Gracias por tu compra | Namastech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Namastech UI (header + footer con cyber bar y banner) -->
+  <script type="module" src="/assets/js/namastech.ui.js"></script>
+
+  <style>
+    /* ============ THEME (mismo que index/páginas adaptadas) ============ */
+    :root{
+      --bg:#011019; --panel:#000; --ink:#e8f7f7; --muted:#b9c7c7;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc;
+      --radius:14px; --glow:0 0 18px rgba(0,255,231,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--ink);
+      font-family:'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.4;
+    }
+    a{color:var(--cyan);text-decoration:none} a:hover{color:var(--magenta)}
+    .container{width:min(960px, 100% - 2rem); margin:0 auto; padding:clamp(18px,4vw,32px)}
+
+    /* ============ PANEL DE GRACIAS ============ */
+    .panel{
+      background:var(--panel);
+      border:2px solid var(--cyan);
+      border-radius:var(--radius);
+      box-shadow:0 0 30px rgba(0,255,231,.25);
+      padding:clamp(20px, 4vw, 40px);
+      text-align:center;
+    }
+    .title{
+      margin:0 0 .6rem 0;
+      font-size:clamp(1.4rem, 5vw, 2.2rem);
+      color:#fff;
+      text-shadow:0 0 12px rgba(0,255,231,.8), 0 0 8px var(--magenta);
+      letter-spacing:.04em;
+    }
+    .lead{
+      color:#dfe; font-size:clamp(1rem,3.6vw,1.15rem); margin:.2rem 0 1rem 0;
+    }
+    .muted{color:var(--muted)}
+    .tracking-wrap{
+      display:inline-grid; gap:.4rem; justify-items:center;
+      border:2px solid var(--cyan);
+      border-radius:12px;
+      padding:16px 22px;
+      margin:18px 0;
+      box-shadow:0 0 18px rgba(0,255,231,.25);
+      min-width:min(100%, 320px);
+    }
+    .label{font-size:.95rem; color:var(--muted)}
+    .tracking{
+      font-size:clamp(1.25rem,5.2vw,1.9rem);
+      color:#fff;
+      text-shadow:0 0 10px var(--cyan);
+      word-break:break-word;
+    }
+    .actions{
+      display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px;
+    }
+    .btn{
+      appearance:none; border:1px solid var(--cyan-dim);
+      background:#041d22; color:var(--ink);
+      font-weight:700; letter-spacing:.02em;
+      padding:.6rem .9rem; border-radius:10px; cursor:pointer;
+      transition:transform .15s ease, box-shadow .2s ease, border-color .2s ease, color .2s ease;
+      text-decoration:none; display:inline-flex; align-items:center; gap:.5rem;
+    }
+    .btn:hover{ color:var(--magenta); border-color:var(--magenta); box-shadow:var(--glow) }
+    .btn:active{ transform:translateY(1px) }
+
+    /* ============ AYUDA / INFO ============ */
+    .help{
+      margin-top:18px; font-size:.95rem; color:#cfe; text-wrap:balance;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header global con barra + banner -->
+  <namastech-header active=""></namastech-header>
+
+  <main class="container">
+    <section class="panel" aria-labelledby="gracias-title">
+      <h1 id="gracias-title" class="title">¡Gracias por tu compra! 🎉</h1>
+      <p class="lead">Hemos recibido tus datos correctamente.</p>
+      <p class="muted">Te contactaremos por correo con la confirmación y detalles del despacho.</p>
+
+      <div class="tracking-wrap" aria-live="polite">
+
+        <div class="actions">
+          <a class="btn" href="../index.html">Seguir viendo productos.</a>
+          <a class="btn" href="../envios.html">Ver info de envíos</a>
+          <a class="btn" href="../contacto.html">Contactanos</a>
+        </div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Footer global -->
+  <namastech-footer></namastech-footer>
+
+  <script>
+    // Lee ?tracking=XXXX del URL y muestra un fallback si no existe
+    (function () {
+      const el = document.getElementById('trackingNumber');
+      const params = new URLSearchParams(location.search);
+      const tracking = params.get('tracking');
+
+      el.textContent = tracking && tracking.trim()
+        ? tracking.trim()
+        : 'Pronto recibirás tu número por correo.';
+
+      // Copiar al portapapeles
+      const copyBtn = document.getElementById('copyBtn');
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(el.textContent.trim());
+          copyBtn.textContent = '¡Copiado!';
+          setTimeout(() => (copyBtn.textContent = 'Copiar código'), 1400);
+        } catch {
+          // Fallback
+          const rng = document.createRange();
+          rng.selectNode(el);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(rng);
+          document.execCommand('copy');
+          sel.removeAllRanges();
+          copyBtn.textContent = '¡Copiado!';
+          setTimeout(() => (copyBtn.textContent = 'Copiar código'), 1400);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

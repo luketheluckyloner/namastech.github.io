@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <title>WiFi Pineapple Mark VII | Namastech</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/assets/img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <!-- Namastech UI (header + footer con cyber bar y banner) -->
+  <script type="module" src="/assets/js/namastech.ui.js"></script>
+
+  <style>
+    /* ======= THEME (igual a index) ======= */
+    :root{
+      --bg:#011019; --panel:#000; --ink:#e8f7f7; --muted:#b9c7c7;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc;
+      --radius:14px; --glow:0 0 18px rgba(0,255,231,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.4;
+    }
+    a{color:var(--cyan);text-decoration:none} a:hover{color:var(--magenta)}
+    .container{width:min(1100px, 100% - 2rem); margin:0 auto; padding:clamp(18px,3.5vw,28px)}
+
+    /* ======= PRODUCT LAYOUT ======= */
+    .product-hero{
+      display:grid; gap:clamp(16px,3vw,24px);
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 900px){
+      .product-hero{ grid-template-columns: 1fr 1fr; align-items:start; }
+    }
+    .panel{
+      background:var(--panel);
+      border:2px solid var(--cyan);
+      border-radius:var(--radius);
+      box-shadow:0 0 30px rgba(0,255,231,.25);
+      padding:clamp(16px,3vw,24px);
+    }
+
+    /* ======= CAROUSEL (tamaño estable) ======= */
+    .carousel{
+      position:relative; overflow:hidden; border-radius:12px; background:#000;
+      border:1px solid var(--cyan-dim);
+    }
+    .carousel-viewport{
+      display:grid; place-items:center; background:#000;
+      width:100%; height: clamp(240px, 42vw, 420px); /* altura estable y responsive */
+    }
+    .carousel-viewport img{
+      display:none; max-width:100%; max-height:100%;
+      object-fit:contain; background:#000; border-radius:8px;
+    }
+    .carousel-viewport img.active{ display:block; }
+    .carousel-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(0,0,0,.5); color:#fff; border:0;
+      font-size:2rem; padding:.1rem .6rem; cursor:pointer; border-radius:8px;
+    }
+    .carousel-btn.prev{ left:10px; } .carousel-btn.next{ right:10px; }
+
+    .price{
+      margin-top:12px; text-align:center;
+      color:var(--ink); font-weight:700;
+    }
+    .price .amount{
+      font-size:clamp(1.15rem, 4.6vw, 1.6rem); color:#fff;
+      text-shadow:0 0 10px var(--cyan);
+    }
+    .subtle{ color:var(--muted); font-size:.95rem }
+
+    /* Mantener el botón de pago EXACTO y separado del precio */
+    .pay-wrap{ margin-top:14px; text-align:center; }
+
+    /* ======= INFO (una sola columna) ======= */
+    .title{
+      margin:0 0 .4rem 0; color:#fff;
+      text-shadow:0 0 12px rgba(0,255,231,.8), 0 0 8px var(--magenta);
+      font-size:clamp(1.4rem, 5vw, 2.2rem);
+      letter-spacing:.04em;
+    }
+    .lead{ color:#dfe; font-size:clamp(1rem,3.2vw,1.12rem); margin:.2rem 0 1rem 0; }
+    .info{
+      margin-top:clamp(12px,2.4vw,18px);
+      border:1px solid var(--cyan-dim);
+      border-radius:12px; padding:clamp(12px,2.6vw,18px);
+      background:rgba(0,0,0,.55); box-shadow:0 0 18px rgba(0,255,231,.12);
+    }
+    .info h2{
+      margin:0 0 .35rem 0; font-size:clamp(1.05rem,3.8vw,1.35rem);
+      color:var(--cyan);
+    }
+    .info p{ margin:.25rem 0 .6rem 0; color:#cfe; line-height:1.7 }
+    ul.clean{ margin:.25rem 0 .6rem 0; padding-left:1rem; color:#cfe; }
+    ul.clean li{ margin:.25rem 0 }
+
+    /* Accessibility / motion */
+    :where(a,button,[role="button"],[tabindex]):focus-visible{
+      outline:2px solid var(--magenta); outline-offset:2px; border-radius:8px;
+    }
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header global (incluye cyber bar + banner) -->
+  <namastech-header active="productos"></namastech-header>
+
+  <main class="container">
+    <section class="product-hero">
+      <!-- LEFT: Galería + precio + pago -->
+      <div class="panel">
+        <div class="carousel" aria-label="Galería del producto">
+          <div class="carousel-viewport">
+            <img src="assets/img/products/pineapple1.png" alt="WiFi Pineapple vista frontal" class="active">
+            <img src="assets/img/products/pineapple2.jpg" alt="WiFi Pineapple accesorios y empaquetado">
+            <img src="assets/img/products/pineapple3.webp" alt="WiFi Pineapple interfaz y uso">
+          </div>
+          <button class="carousel-btn prev" aria-label="Anterior">❮</button>
+          <button class="carousel-btn next" aria-label="Siguiente">❯</button>
+        </div>
+
+        <div class="price">
+          <div class="amount">$249.000 CLP</div>
+          <div class="subtle">Envío gratis a todo Chile*</div>
+        </div>
+
+        <!-- Botón de pago (mantener exactamente igual y separado del precio) -->
+        <div class="pay-wrap">
+<script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+data-preference-id="2646395895-e274802d-c7df-45cd-a997-45fea0656dc0" data-source="button">
+</script>
+        </div>
+      </div>
+
+      <!-- RIGHT: Título + resumen -->
+      <div class="panel">
+        <h1 class="title">WiFi Pineapple Mark VII</h1>
+        <p class="lead">
+          La <strong>WiFi Pineapple</strong> es la herramienta más avanzada para auditorías inalámbricas y pruebas
+          de penetración en redes Wi-Fi. Con una interfaz intuitiva y campañas automatizadas, permite
+          identificar vulnerabilidades, ejecutar ataques <em>Man-in-the-Middle</em> y generar reportes
+          profesionales con un solo clic.
+        </p>
+
+        <!-- INFO en una sola columna -->
+        <div class="info">
+          <h2>Incluye</h2>
+          <p>
+            La <strong>WiFi Pineapple Mark VII</strong> viene lista para auditorías inalámbricas: compatibilidad con
+            adaptador <strong>MK7AC Dual-Band</strong>, interfaz web intuitiva y multiplataforma, además de integración con
+            <strong>Hak5 Cloud C²</strong> para gestión remota y simulaciones persistentes.
+          </p>
+        </div>
+
+        <div class="info">
+          <h2>Funciones principales</h2>
+          <p>
+            La <strong>PineAP Suite</strong> permite imitar redes preferidas para ataques MITM, realizar ataques WPA/WPA-Enterprise
+            con captura de credenciales, aplicar filtros de SSID y MAC para pentests controlados, ejecutar reconocimiento
+            avanzado del entorno y crear campañas automatizadas con reportes personalizados.
+          </p>
+        </div>
+
+        <div class="info">
+          <h2>Novedades versión 2.0</h2>
+          <ul class="clean">
+            <li>Compatibilidad <strong>Dual-Band 2.4 + 5 GHz</strong>.</li>
+            <li>Captura automática de handshakes y mejoras en WPA-Enterprise.</li>
+            <li>Firewall integrado en la interfaz web.</li>
+            <li>50+ fixes y nuevas funciones para optimizar tus pruebas.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer global -->
+  <namastech-footer></namastech-footer>
+
+  <script>
+    // Carrusel con tamaño estable (object-fit: contain) + autoplay
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.querySelector(".carousel");
+      if (!root) return;
+      const imgs = root.querySelectorAll(".carousel-viewport img");
+      const prev = root.querySelector(".carousel-btn.prev");
+      const next = root.querySelector(".carousel-btn.next");
+      let i = 0, timer;
+
+      const show = idx => imgs.forEach((img,k)=> img.classList.toggle("active", k === idx));
+      const goNext = () => { i = (i + 1) % imgs.length; show(i); }
+      const goPrev = () => { i = (i - 1 + imgs.length) % imgs.length; show(i); }
+
+      prev?.addEventListener("click", ()=>{ goPrev(); restart(); });
+      next?.addEventListener("click", ()=>{ goNext(); restart(); });
+
+      const restart = () => { clearInterval(timer); timer = setInterval(goNext, 4500); };
+
+      show(i); restart();
+    });
+  </script>
+</body>
+</html>

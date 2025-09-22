@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CURSOS GADGETS HACKING | Namastech</title>
+
+  <!-- Fonts / Icons (optional for page content) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+
+  <!-- Namastech UI (header + cyberbar + footer) -->
+  <link rel="preload" as="script" href="/assets/js/namastech-ui.js?v=20">
+  <script type="module" src="/assets/js/namastech-ui.js?v=20"></script>
+
+  <style>
+    :root{
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#cbd5d6;
+      --cyan:#00ffe7; --magenta:#ff00cc; --cyan-dim:#00ffcc55;
+      --radius:14px;
+    }
+    html,body{height:100%} *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+    /* Page main wrapper */
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(20px,4vw,40px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
+      width:min(1100px,100% - 2rem);
+    }
+    .main-title{
+      text-align:center; font-size:clamp(1.5rem,5.5vw,3rem); letter-spacing:.1em; margin:0 0 22px; color:#fff;
+      text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+    }
+    .intro{
+      text-align:center; width:min(800px,100%); margin:12px auto 24px; color:#ddd;
+      font-size:clamp(1rem,2.5vw,1.2rem); line-height:1.6;
+    }
+    .category-wrapper{text-align:center}
+    .category-title{
+      display:inline-block; margin:34px auto 18px; padding:10px 18px; background:#011f2b;
+      border:2px solid var(--cyan); border-radius:10px; font-size:clamp(1rem,3.5vw,1.4rem);
+    }
+
+    /* Product grid */
+    .product-grid{
+      display:grid; gap:18px; margin-bottom:36px;
+      grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    }
+    .product-card{
+      background:var(--panel); border:2px solid var(--cyan); border-radius:10px; padding:14px;
+      text-align:center; box-shadow:0 0 15px var(--cyan);
+      transition:transform .25s, filter .25s, box-shadow .25s; position:relative; overflow:hidden;
+    }
+    .product-card:hover{ transform:translateY(-4px); filter:brightness(1.08); box-shadow:0 0 20px rgba(0,255,231,.7) }
+    .image-wrapper{position:relative; overflow:hidden; border-radius:8px}
+    .image-wrapper img{width:100%; border-radius:8px}
+    .image-overlay{
+      position:absolute; inset:0; display:grid; place-items:center;
+      background:rgba(0,255,231,.2); color:var(--cyan); font-weight:700; text-shadow:0 0 10px var(--cyan);
+      opacity:0; transition:opacity .25s; pointer-events:none;
+    }
+    .product-card:hover .image-overlay{opacity:1}
+    .is-touch .image-overlay{opacity:.9}
+
+    .product-description{color:var(--cyan); font-weight:700; margin:10px 0 6px; font-size:1.05rem}
+    .product-text{font-size:.92rem; color:#cfcfcf; min-height:42px}
+    .product-price{margin:10px 0; color:var(--magenta); font-weight:700}
+    .original-price{text-decoration:line-through; color:#777; margin-right:6px}
+    .cyber-blink{
+      display:inline-block; margin-top:8px; font-weight:700; color:var(--magenta);
+      text-shadow:0 0 5px var(--magenta),0 0 10px var(--cyan); animation:blink 1.2s infinite alternate;
+    }
+    @keyframes blink{
+      0%{opacity:1; text-shadow:0 0 5px var(--magenta),0 0 15px var(--cyan)}
+      50%{opacity:.35; text-shadow:0 0 2px var(--magenta)}
+      100%{opacity:1; text-shadow:0 0 8px var(--cyan),0 0 20px var(--magenta)}
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared header + banner + cyberbar -->
+  <namastech-header></namastech-header>
+
+  <main class="neon-box">
+    <h1 class="main-title">CURSOS GADGETS HACKING</h1>
+
+    <p class="intro">
+      En <strong style="color:#ff6600;">Namastech</strong> ⚡ transformamos tu pasión por el hacking en aprendizaje real.
+      Cada <strong style="color:#ff6600;">curso DIY</strong> 💻 incluye todo el hardware necesario y material online exclusivo con guías paso a paso para el montaje y configuración de tu propio gadget de ciberseguridad.
+      Una vez finalices tu proyecto, recibirás una <strong style="color:#ff6600;">Certificación Oficial Namastech</strong> 🔒 que avala tu experiencia y nuevas habilidades en el mundo del hacking ético.
+    </p>
+
+    <div class="category-wrapper">
+      <h2 class="category-title">📚 CURSOS DISPONIBLES</h2>
+    </div>
+
+    <section class="product-grid" aria-label="Cursos disponibles">
+      <!-- 1 -->
+      <article class="product-card">
+        <a href="/cursos/nugget_kit.html" aria-label="Ver Kit WiFi Nugget - Solda tú mismo">
+          <div class="image-wrapper">
+            <img src="/assets/img/products/catnugget.png" alt="WiFi Nugget DIY">
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Kit WiFi Nugget - Solda tú mismo</p>
+        <p class="product-text">Aprende a montar tu propio WiFi Nugget 🔧 con todo el hardware incluido.</p>
+        <p class="product-price"><span class="original-price">$230.000</span>$119.990</p>
+        <a href="/cursos/nugget_kit.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- 2 -->
+      <article class="product-card">
+        <a href="/cursos/pineapple_kit.html" aria-label="Ver Kit WiFi Pineapple DIY">
+          <div class="image-wrapper">
+            <img src="/assets/img/products/pineapple2.jpg" alt="WiFi Pineapple Shadow">
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Kit WiFi Pineapple DIY</p>
+        <p class="product-text">Crea tu propia WiFi Pineapple mejorada por un tercio del precio. 🔧 Con todo el hardware incluido.</p>
+        <p class="product-price"><span class="original-price">$140.000</span>$89.990</p>
+        <a href="/cursos/pineapple_kit.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <div class="category-wrapper">
+      <h2 class="category-title">⏳ PRONTO</h2>
+    </div>
+
+    <section class="product-grid" aria-label="Próximos cursos">
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/marauder.jpg" alt="ESP32 Marauder">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">ESP32 Marauder</p>
+        <p class="product-text">Pentesting inalámbrico: Wi-Fi, BLE y escaneo en tiempo real.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/wifideauther.jpg" alt="WiFi Deauther">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Wi-Fi Deauther</p>
+        <p class="product-text">ESP8266/ESP32 para desautenticación y ataques de beacons.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/portapack.jpg" alt="PortaPack H2 Clone">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">PortaPack H2 Clone</p>
+        <p class="product-text">HackRF con firmware abierto para replay y análisis RF.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/evilcrow.jpg" alt="Evil Crow RF">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Evil Crow RF</p>
+        <p class="product-text">Dual radio: captura y replay de señales RF (IoT, portones, mandos).</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/yardstick.jpg" alt="Yard Stick One">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Yard Stick One DIY</p>
+        <p class="product-text">Transceptor Sub-GHz con CC1101 para hacking de señales.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/pwnagotchi.jpeg" alt="Pwnagotchi">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Pwnagotchi</p>
+        <p class="product-text">AI que aprende capturando handshakes Wi-Fi con Raspberry Pi.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/ESP32DIV.jpeg" alt="ESP32DIV">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">ESP32DIV</p>
+        <p class="product-text">Toolkit multibanda (Wi-Fi, BLE, Sub-GHz) con pantalla TFT.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/ducky.png" alt="USB Rubber Ducky">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">USB Rubber Ducky</p>
+        <p class="product-text">Ataques HID automatizados con scripts de teclado.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/whid.jpeg" alt="WHID Injector">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">WHID Injector</p>
+        <p class="product-text">Inyector HID basado en ESP8266 controlado por Wi-Fi.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/bluesnarf.jpeg" alt="BlueSnarf Jammer">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">BlueSnarf Jammer</p>
+        <p class="product-text">ESP32 para análisis, spoofing y jamming de Bluetooth.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/rtl-sdr.jpg" alt="DIY GSM Sniffer">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">DIY GSM Sniffer</p>
+        <p class="product-text">Analizador de tráfico GSM usando SDR de bajo costo.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/pockethacker.jpg" alt="Pocket Hacker">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Pocket Hacker</p>
+        <p class="product-text">Raspberry Pi Zero con Kali ARM, tu toolkit portátil.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Shared footer -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
+
+  <script>
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      document.documentElement.classList.add('is-touch');
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CURSOS GADGETS HACKING | Namastech</title>
+
+  <!-- Fonts / Icons (optional for page content) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+
+  <!-- Namastech UI (header + cyberbar + footer) -->
+  <link rel="preload" as="script" href="/assets/js/namastech-ui.js?v=20">
+  <script type="module" src="/assets/js/namastech-ui.js?v=20"></script>
+
+  <style>
+    :root{
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#cbd5d6;
+      --cyan:#00ffe7; --magenta:#ff00cc; --cyan-dim:#00ffcc55;
+      --radius:14px;
+    }
+    html,body{height:100%} *{box-sizing:border-box}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+    /* Page main wrapper */
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(20px,4vw,40px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
+      width:min(1100px,100% - 2rem);
+    }
+    .main-title{
+      text-align:center; font-size:clamp(1.5rem,5.5vw,3rem); letter-spacing:.1em; margin:0 0 22px; color:#fff;
+      text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+    }
+    .intro{
+      text-align:center; width:min(800px,100%); margin:12px auto 24px; color:#ddd;
+      font-size:clamp(1rem,2.5vw,1.2rem); line-height:1.6;
+    }
+    .category-wrapper{text-align:center}
+    .category-title{
+      display:inline-block; margin:34px auto 18px; padding:10px 18px; background:#011f2b;
+      border:2px solid var(--cyan); border-radius:10px; font-size:clamp(1rem,3.5vw,1.4rem);
+    }
+
+    /* Product grid */
+    .product-grid{
+      display:grid; gap:18px; margin-bottom:36px;
+      grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+    }
+    .product-card{
+      background:var(--panel); border:2px solid var(--cyan); border-radius:10px; padding:14px;
+      text-align:center; box-shadow:0 0 15px var(--cyan);
+      transition:transform .25s, filter .25s, box-shadow .25s; position:relative; overflow:hidden;
+    }
+    .product-card:hover{ transform:translateY(-4px); filter:brightness(1.08); box-shadow:0 0 20px rgba(0,255,231,.7) }
+    .image-wrapper{position:relative; overflow:hidden; border-radius:8px}
+    .image-wrapper img{width:100%; border-radius:8px}
+    .image-overlay{
+      position:absolute; inset:0; display:grid; place-items:center;
+      background:rgba(0,255,231,.2); color:var(--cyan); font-weight:700; text-shadow:0 0 10px var(--cyan);
+      opacity:0; transition:opacity .25s; pointer-events:none;
+    }
+    .product-card:hover .image-overlay{opacity:1}
+    .is-touch .image-overlay{opacity:.9}
+
+    .product-description{color:var(--cyan); font-weight:700; margin:10px 0 6px; font-size:1.05rem}
+    .product-text{font-size:.92rem; color:#cfcfcf; min-height:42px}
+    .product-price{margin:10px 0; color:var(--magenta); font-weight:700}
+    .original-price{text-decoration:line-through; color:#777; margin-right:6px}
+    .cyber-blink{
+      display:inline-block; margin-top:8px; font-weight:700; color:var(--magenta);
+      text-shadow:0 0 5px var(--magenta),0 0 10px var(--cyan); animation:blink 1.2s infinite alternate;
+    }
+    @keyframes blink{
+      0%{opacity:1; text-shadow:0 0 5px var(--magenta),0 0 15px var(--cyan)}
+      50%{opacity:.35; text-shadow:0 0 2px var(--magenta)}
+      100%{opacity:1; text-shadow:0 0 8px var(--cyan),0 0 20px var(--magenta)}
+    }
+  </style>
+</head>
+<body>
+  <!-- Shared header + banner + cyberbar -->
+  <namastech-header></namastech-header>
+
+  <main class="neon-box">
+    <h1 class="main-title">CURSOS GADGETS HACKING</h1>
+
+    <p class="intro">
+      En <strong style="color:#ff6600;">Namastech</strong> ⚡ transformamos tu pasión por el hacking en aprendizaje real.
+      Cada <strong style="color:#ff6600;">curso DIY</strong> 💻 incluye todo el hardware necesario y material online exclusivo con guías paso a paso para el montaje y configuración de tu propio gadget de ciberseguridad.
+      Una vez finalices tu proyecto, recibirás una <strong style="color:#ff6600;">Certificación Oficial Namastech</strong> 🔒 que avala tu experiencia y nuevas habilidades en el mundo del hacking ético.
+    </p>
+
+    <div class="category-wrapper">
+      <h2 class="category-title">📚 CURSOS DISPONIBLES</h2>
+    </div>
+
+    <section class="product-grid" aria-label="Cursos disponibles">
+      <!-- 1 -->
+      <article class="product-card">
+        <a href="/cursos/nugget_kit.html" aria-label="Ver Kit WiFi Nugget - Solda tú mismo">
+          <div class="image-wrapper">
+            <img src="/assets/img/products/catnugget.png" alt="WiFi Nugget DIY">
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Kit WiFi Nugget - Solda tú mismo</p>
+        <p class="product-text">Aprende a montar tu propio WiFi Nugget 🔧 con todo el hardware incluido.</p>
+        <p class="product-price"><span class="original-price">$230.000</span>$119.990</p>
+        <a href="/cursos/nugget_kit.html" class="cyber-blink">VER MÁS</a>
+      </article>
+
+      <!-- 2 -->
+      <article class="product-card">
+        <a href="/cursos/pineapple_kit.html" aria-label="Ver Kit WiFi Pineapple DIY">
+          <div class="image-wrapper">
+            <img src="/assets/img/products/pineapple2.jpg" alt="WiFi Pineapple Shadow">
+            <div class="image-overlay">VER MÁS</div>
+          </div>
+        </a>
+        <p class="product-description">Kit WiFi Pineapple DIY</p>
+        <p class="product-text">Crea tu propia WiFi Pineapple mejorada por un tercio del precio. 🔧 Con todo el hardware incluido.</p>
+        <p class="product-price"><span class="original-price">$140.000</span>$89.990</p>
+        <a href="/cursos/pineapple_kit.html" class="cyber-blink">VER MÁS</a>
+      </article>
+    </section>
+
+    <div class="category-wrapper">
+      <h2 class="category-title">⏳ PRONTO</h2>
+    </div>
+
+    <section class="product-grid" aria-label="Próximos cursos">
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/marauder.jpg" alt="ESP32 Marauder">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">ESP32 Marauder</p>
+        <p class="product-text">Pentesting inalámbrico: Wi-Fi, BLE y escaneo en tiempo real.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/wifideauther.jpg" alt="WiFi Deauther">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Wi-Fi Deauther</p>
+        <p class="product-text">ESP8266/ESP32 para desautenticación y ataques de beacons.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/portapack.jpg" alt="PortaPack H2 Clone">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">PortaPack H2 Clone</p>
+        <p class="product-text">HackRF con firmware abierto para replay y análisis RF.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/evilcrow.jpg" alt="Evil Crow RF">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Evil Crow RF</p>
+        <p class="product-text">Dual radio: captura y replay de señales RF (IoT, portones, mandos).</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/yardstick.jpg" alt="Yard Stick One">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Yard Stick One DIY</p>
+        <p class="product-text">Transceptor Sub-GHz con CC1101 para hacking de señales.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/pwnagotchi.jpeg" alt="Pwnagotchi">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Pwnagotchi</p>
+        <p class="product-text">AI que aprende capturando handshakes Wi-Fi con Raspberry Pi.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/ESP32DIV.jpeg" alt="ESP32DIV">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">ESP32DIV</p>
+        <p class="product-text">Toolkit multibanda (Wi-Fi, BLE, Sub-GHz) con pantalla TFT.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/ducky.png" alt="USB Rubber Ducky">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">USB Rubber Ducky</p>
+        <p class="product-text">Ataques HID automatizados con scripts de teclado.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/whid.jpeg" alt="WHID Injector">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">WHID Injector</p>
+        <p class="product-text">Inyector HID basado en ESP8266 controlado por Wi-Fi.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/bluesnarf.jpeg" alt="BlueSnarf Jammer">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">BlueSnarf Jammer</p>
+        <p class="product-text">ESP32 para análisis, spoofing y jamming de Bluetooth.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/rtl-sdr.jpg" alt="DIY GSM Sniffer">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">DIY GSM Sniffer</p>
+        <p class="product-text">Analizador de tráfico GSM usando SDR de bajo costo.</p>
+      </article>
+
+      <article class="product-card">
+        <div class="image-wrapper">
+          <img src="/assets/img/products/pockethacker.jpg" alt="Pocket Hacker">
+          <div class="image-overlay" style="color:#ff6600;">PRONTO</div>
+        </div>
+        <p class="product-description">Pocket Hacker</p>
+        <p class="product-text">Raspberry Pi Zero con Kali ARM, tu toolkit portátil.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Shared footer -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
+
+  <script>
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      document.documentElement.classList.add('is-touch');
+    }
+  </script>
+</body>
+</html>
