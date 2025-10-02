@@ -1,0 +1,466 @@
+<!-- File: pineapple_kit.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kit WiFi Pineapple Shadow | Namastech</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <style>
+    :root{
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#cbd5d6;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc; --accent:#ff6600;
+      --radius:14px; --glow:0 0 15px var(--cyan);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; line-height:1.35;
+    }
+    a{color:var(--cyan); text-decoration:none}
+    a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+    .container{width:min(1100px,100% - 2rem); margin:0 auto}
+
+    /* Header */
+    .cyber-header{background:#000; color:var(--cyan); border-bottom:2px solid var(--cyan-dim)}
+    .nav-wrap{display:flex; align-items:center; justify-content:center; gap:.75rem; padding:.75rem 1rem; border-bottom:1px solid #00ffcc33}
+    .nav-toggle{display:none; background:transparent; color:var(--cyan); border:1px solid var(--cyan-dim); padding:.5rem .75rem; border-radius:10px; font-weight:700}
+    nav.primary{display:flex; gap:clamp(.75rem,2.2vw,2rem); flex-wrap:wrap; align-items:center; justify-content:center}
+    nav.primary a{text-transform:uppercase; font-weight:700; letter-spacing:.04em}
+    @media (max-width:768px){
+      .nav-wrap{justify-content:space-between}
+      .nav-toggle{display:inline-flex; align-items:center; gap:.5rem}
+      nav.primary{width:100%; display:grid; grid-template-columns:1fr; gap:.5rem; margin-top:.5rem}
+      nav.primary[data-collapsed="true"]{display:none}
+    }
+
+    /* Banner */
+    .cyber-banner{position:relative; width:100%; aspect-ratio:16/9; max-height:420px; min-height:200px; overflow:hidden; background:#000}
+    .cyber-banner video{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.6; z-index:1}
+    .cyber-banner .overlay{position:absolute; inset:0; display:grid; place-items:center; text-align:center; z-index:2; padding:1rem}
+    .logo-img{max-height:clamp(70px,12vw,120px); width:auto; margin-bottom:.5rem; opacity:.6; filter:drop-shadow(0 0 10px var(--cyan))}
+    .slogan-text{font-weight:700; color:var(--cyan); text-shadow:0 0 12px rgba(0,255,200,.8); letter-spacing:.04em; margin:0; font-size:clamp(1rem,3.3vw,1.6rem)}
+
+    /* Cyber bar */
+    .cyber-bar{background:#000; border-top:2px solid var(--cyan); border-bottom:2px solid var(--cyan); padding:.5rem 0; text-align:center; box-shadow:var(--glow)}
+    .cyber-bar ul{list-style:none; margin:0; padding:0; display:flex; justify-content:center; gap:clamp(16px,6vw,60px); flex-wrap:wrap}
+    .cyber-bar li{position:relative}
+    .dropdown-content{
+      position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%);
+      background:#0c0c0c; padding:12px; border:2px solid var(--cyan); border-radius:8px; box-shadow:var(--glow);
+      width:min(90vw,300px); color:#ddd; font-size:.95rem; text-align:left; display:none; z-index:1000;
+    }
+    .dropdown.open .dropdown-content, .dropdown:focus-within .dropdown-content, .dropdown:hover .dropdown-content{display:block}
+    @media (max-width:768px){ .dropdown-content{left:0; transform:none; width:92vw} }
+
+    /* Main */
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(20px,4vw,40px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan); width:min(1100px,100% - 2rem);
+    }
+    .main-title{text-align:center; font-size:clamp(1.5rem,5.5vw,2rem); letter-spacing:.05em; margin:0 0 10px; color:#fff; text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan)}
+    .sub-slogan{text-align:center; color:var(--accent); margin:10px auto 18px; font-size:clamp(1.05rem,3vw,1.2rem)}
+
+    /* Carrusel */
+    .carousel{position:relative; width:100%; max-width:720px; margin:30px auto; overflow:hidden; border-radius:10px; background:#000; text-align:center}
+    .carousel-images{display:flex; justify-content:center; align-items:center}
+    .carousel-images img{display:none; max-width:100%; max-height:340px; object-fit:contain; border-radius:10px; margin:0 auto; background:#000}
+    .carousel-images img.active{display:block}
+    .carousel-btn{position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,.5); color:#fff; border:none; font-size:2rem; cursor:pointer; padding:0 10px; border-radius:5px}
+    .carousel-btn.prev{left:10px} .carousel-btn.next{right:10px}
+
+    /* Compra + Precio */
+    .purchase-block{margin:20px auto 0; width:100%; display:block}
+    .centered-button{display:flex; justify-content:center; align-items:center}
+    .price-tag{
+      text-align:center; font-weight:700; color:var(--magenta);
+      font-size:clamp(1.2rem,4vw,1.5rem); margin:8px 0 18px;
+    }
+
+    /* Contenido */
+    .content{max-width:900px; margin:22px auto; text-align:center; color:#ddd; line-height:1.8; font-size:clamp(1rem,2.6vw,1.1rem)}
+    .content h2{color:var(--accent); margin:22px 0 8px; font-size:clamp(1.05rem,3.2vw,1.25rem)}
+    .content ul{list-style:none; padding:0; text-align:left; max-width:520px; margin:10px auto; font-size:.98rem; line-height:1.8; color:#ddd}
+    .content ol{max-width:700px; margin:10px auto; text-align:left; font-size:.98rem; line-height:1.8; color:#ddd}
+
+    /* Botón instrucciones */
+    .instructions-wrap{display:flex; justify-content:center; margin:18px 0 6px}
+    .instructions-btn{
+      display:inline-block; padding:.7rem 1rem; border:2px solid var(--cyan); border-radius:12px; text-align:center;
+      background:#0c0c0c; color:var(--cyan); text-shadow:0 0 6px var(--cyan); box-shadow:0 0 15px rgba(0,255,231,.35);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .instructions-btn strong{font-weight:800}
+    .instructions-btn:hover{color:var(--magenta); border-color:var(--magenta); box-shadow:0 0 18px rgba(255,0,204,.45); transform:translateY(-2px)}
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="cyber-header">
+    <div class="container nav-wrap">
+      <button id="navToggle" class="nav-toggle" aria-controls="primary-nav" aria-expanded="false">☰ Menú</button>
+      <nav id="primary-nav" class="primary" data-collapsed="true">
+        <a href="/index.html">Inicio</a>
+        <a href="/about.html">Quienes Somos</a>
+        <a href="/contacto.html">Contáctanos</a>
+        <a href="/envios.html">Envíos</a>
+        <a href="/productos.html">Productos</a>
+      </nav>
+    </div>
+
+    <div class="cyber-banner">
+      <video autoplay muted loop playsinline preload="none" poster="/assets/img/profile2.png">
+        <source src="/assets/banner.mp4" type="video/mp4" />
+        Tu navegador no soporta video en HTML5.
+      </video>
+      <div class="overlay">
+        <img src="/assets/img/profile2.png" alt="Namastech Logo" class="logo-img" />
+        <h1 class="slogan-text">Namastech: Ciberseguridad, gadgets y hardware al alcance de tu mano.</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== CYBER BAR ===== -->
+  <div class="cyber-bar" role="navigation" aria-label="Atajos">
+    <ul class="container">
+      <li class="dropdown">
+        <a href="cursos.html" aria-haspopup="true" aria-expanded="false">Cursos</a>
+        <div class="dropdown-content" role="region" aria-label="Información de Cursos">
+          <p>📚 Aprende en tu casa, hacemos llegar a tus manos las herramientas y el contenido para que crees tus propios gadgets de ciberseguridad.</p>
+        </div>
+      </li>
+      <li><a href="hackbox.html">Caja-Hacker Mensual</a></li>
+      <li class="dropdown">
+        <a href="certificaciones.html" aria-haspopup="true" aria-expanded="false">Certificaciones Ciberseguridad</a>
+        <div class="dropdown-content" role="region" aria-label="Información de Certificaciones">
+          <p>🛡️ Desde Burp Suite, Web Apps Pentesting, hackeo de hardware con ingeniería reversa, pruebas de redes inalámbricas, criptografía aplicada y mucho más.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- ===== MAIN ===== -->
+  <main class="neon-box">
+    <h1 class="main-title">KIT WiFi Pineapple Shadow - Arma tu propio dispositivo 🔥</h1>
+    <p class="sub-slogan">🚀 Arma tu propio laboratorio Wi-Fi y domina las auditorías inalámbricas 🔓</p>
+
+    <!-- Carrusel -->
+    <div class="carousel" aria-label="Galería del kit">
+      <div class="carousel-images">
+        <img loading="lazy" src="../cursos/pineapple_imgs/kit1.jpg" class="active" alt="Preparando el router" />
+        <img loading="lazy" src="../cursos/pineapple_imgs/kit2.jpg" alt="Proceso de flasheo" />
+        <img loading="lazy" src="../cursos/pineapple_imgs/kit3.jpg" alt="Configuración inicial" />
+        <img loading="lazy" src="../cursos/pineapple_imgs/kit4.jpg" alt="Conexión de antenas" />
+        <img loading="lazy" src="../cursos/pineapple_imgs/kit5.png" alt="Prueba de interfaces" />
+        <img loading="lazy" src="../cursos/pineapple_imgs/kit6.png" alt="WiFi Pineapple en uso" />
+      </div>
+      <button class="carousel-btn prev" aria-label="Imagen anterior">❮</button>
+      <button class="carousel-btn next" aria-label="Imagen siguiente">❯</button>
+    </div>
+
+    <!-- Bloque reutilizable: Pagar (snippet intacto) + Precio debajo -->
+    <section class="purchase-block" aria-label="Compra del producto">
+      <!-- Botón de compra -->
+      <div class="centered-button" style="margin:24px auto; text-align:center;">
+<script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
+data-preference-id="2646395895-e9dd5d94-903b-4722-8fef-b448ab58c91a" data-source="button">
+</script>
+      </div>
+      <!-- Precio (separado del snippet) -->
+      <p class="price-tag js-price" data-price="89990">$89.990</p>
+    </section>
+
+    <!-- Descripción -->
+    <div class="content">
+      <p><strong style="color:var(--accent)">⚠️ ESTE KIT REQUIERE CONFIGURACIÓN Y FLASHEO DE FIRMWARE</strong></p>
+
+      <p>
+        ¿Buscas un desafío práctico y emocionante en <strong style="color:var(--accent)">ciberseguridad</strong>?
+        Nuestro <strong style="color:var(--accent)">Kit WiFi Pineapple Shadow</strong> 🕶️ incluye todo lo que necesitas para montar y configurar tu propia versión de la herramienta de auditorías Wi-Fi más reconocida del mundo.
+      </p>
+
+      <h2>📦 ESTE KIT INCLUYE:</h2>
+      <ul>
+        <li>1️⃣ <strong style="color:var(--accent)">Gl.Inet GL-AR300M16 (SHADOW)</strong></li>
+        <li>2️⃣ <strong style="color:var(--accent)">Dock USB 3.0</strong></li>
+        <li>3️⃣ <strong style="color:var(--accent)">Dos Adaptadores de Red USB con chipset RT8188</strong></li>
+        <li>4️⃣ <strong style="color:var(--accent)">Pendrive Sandisk 16GB 3.0</strong></li>
+      </ul>
+
+      <h2>⚡ PASOS NECESARIOS</h2>
+      <ol>
+        <li>1️⃣ Flashear el firmware en el router <strong style="color:var(--accent)">GL-AR300M16</strong>.</li>
+        <li>2️⃣ Conectar correctamente los adaptadores Wi-Fi USB externos.</li>
+        <li>3️⃣ Configurar el pendrive como memoria adicional para logs y capturas.</li>
+        <li>4️⃣ Activar y probar las funciones principales: auditorías, ataques MITM y monitoreo.</li>
+      </ol>
+
+      <p style="font-size:.95rem; color:#aaa; margin-top:10px">
+        💡 Todos los componentes vienen listos para ensamblar y configurar, <strong style="color:var(--accent)">no necesitas soldadura</strong>.<br/>
+        Este kit es de nivel fácil a intermedio en hacking inalámbrico.
+        <br/><br/>
+        ❌ <em>Al ser un producto de armado propio, no se aceptan devoluciones si se daña durante la configuración.</em>
+      </p>
+    </div>
+
+    <!-- Botón de INSTRUCCIONES centrado -->
+    <div class="instructions-wrap">
+      <a class="instructions-btn" href="../cursos/pineapple_diy.html">
+        <strong>INSTRUCCIONES DEL KIT AQUI</strong>
+      </a>
+    </div>
+  </main>
+
+
+
+  
+  <!-- ===== SCRIPTS ===== -->
+  <script>
+    // Touch: mejora de overlays en móvil
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      document.documentElement.classList.add('is-touch');
+    }
+
+    // Nav móvil
+    const navToggle = document.getElementById('navToggle');
+    const primaryNav = document.getElementById('primary-nav');
+    if (navToggle && primaryNav) {
+      navToggle.addEventListener('click', () => {
+        const collapsed = primaryNav.getAttribute('data-collapsed') === 'true';
+        primaryNav.setAttribute('data-collapsed', collapsed ? 'false' : 'true');
+        navToggle.setAttribute('aria-expanded', collapsed ? 'true' : 'false');
+      });
+    }
+
+    // Dropdowns de la cyber-bar (tap en móvil)
+    document.querySelectorAll('.cyber-bar .dropdown > a').forEach(link => {
+      const container = link.parentElement;
+      link.addEventListener('click', (e) => {
+        if (window.matchMedia('(max-width:768px)').matches) {
+          e.preventDefault();
+          const isOpen = container.classList.contains('open');
+          document.querySelectorAll('.cyber-bar .dropdown.open').forEach(d => d.classList.remove('open'));
+          container.classList.toggle('open', !isOpen);
+          link.setAttribute('aria-expanded', (!isOpen).toString());
+        }
+      });
+    });
+
+    // Carrusel
+    (function(){
+      const images = document.querySelectorAll(".carousel-images img");
+      const prevBtn = document.querySelector(".carousel-btn.prev");
+      const nextBtn = document.querySelector(".carousel-btn.next");
+      if (!images.length) return;
+
+      let i = 0, timer;
+      const show = idx => images.forEach((img, k) => img.classList.toggle("active", k === idx));
+      const next = () => { i = (i + 1) % images.length; show(i); }
+      const prev = () => { i = (i - 1 + images.length) % images.length; show(i); }
+      const play = () => { stop(); timer = setInterval(next, 4000); }
+      const stop = () => timer && clearInterval(timer);
+
+      prevBtn?.addEventListener("click", () => { prev(); play(); });
+      nextBtn?.addEventListener("click", () => { next(); play(); });
+
+      show(i); play();
+    })();
+
+    // ===== Reusable: formatear precios CLP para todos los .js-price =====
+    (function formatAllPrices(){
+      const fmt = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
+      document.querySelectorAll('.js-price').forEach(el => {
+        const raw = el.getAttribute('data-price');
+        if (!raw) return;
+        const n = Number(raw);
+        if (!Number.isNaN(n)) el.textContent = fmt.format(n);
+      });
+    })();
+  </script>
+  <!-- === Namastech Footer (Drop-in, standalone) === -->
+<!-- (Opcional) Carga la fuente si tu página aún no la tiene -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+
+<footer class="nm-footer" data-component="namastech-footer">
+  <div class="nm-footer__container">
+    <div class="nm-footer__columns">
+      <!-- QUIÉNES SOMOS -->
+      <section class="nm-footer__col">
+        <h4 class="nm-footer__title">QUIÉNES SOMOS</h4>
+        <p class="nm-footer__text">
+          En Namastech acercamos la ciberseguridad, gadgets y hardware al alcance de todos,
+          combinando innovación con aprendizaje.
+        </p>
+      </section>
+
+      <!-- CONTÁCTANOS -->
+      <section class="nm-footer__col">
+        <h4 class="nm-footer__title">CONTÁCTANOS</h4>
+        <p class="nm-footer__text">
+          <a class="nm-footer__link" href="/contacto.html">📧 contacto@namastech.studio</a>
+        </p>
+        <p class="nm-footer__text">📱 +56 9 3558 4876</p>
+      </section>
+
+      <!-- PRODUCTOS -->
+      <section class="nm-footer__col">
+        <h4 class="nm-footer__title">PRODUCTOS</h4>
+        <button type="button" class="nm-footer__btn" aria-expanded="false">
+          Ver Lista
+        </button>
+        <div class="nm-footer__dropdown" hidden>
+          <ul class="nm-footer__list">
+            <li><a class="nm-footer__link" href="flipper.html">Flipper Zero</a></li>
+            <li><a class="nm-footer__link" href="catnugget.html">HakCat WiFi Nugget</a></li>
+            <li><a class="nm-footer__link" href="ducky.html">USB Rubber Ducky</a></li>
+            <li><a class="nm-footer__link" href="pineapple.html">WiFi Pineapple</a></li>
+            <li><a class="nm-footer__link" href="cydmarauder.html">CYD WiFi Marauder</a></li>
+            <li><a class="nm-footer__link" href="m5stick.html">M5Stick Plus C</a></li>
+            <li><a class="nm-footer__link" href="dstike.html">DSTIKE Deauther V3</a></li>
+            <li><a class="nm-footer__link" href="watch.html">DSTIKE Reloj Deauther</a></li>
+            <li><a class="nm-footer__link" href="pwnagotchi.html">Pwnagotchi</a></li>
+            <li><a class="nm-footer__link" href="evilcrow.html">Evil Crow RF V2</a></li>
+            <li><a class="nm-footer__link" href="hackrf.html">HackRF PortaPack</a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <!-- MAPA -->
+    <div class="nm-footer__map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl"
+        width="100%" height="300" style="border:0;" loading="lazy"
+        allowfullscreen="" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="nm-footer__bottom">
+      © 2025 Namastech. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ===== Namespaced styles: .nm-footer ===== */
+  .nm-footer {
+    --nm-bg: #0b0b0b;
+    --nm-cyan: #00ffe7;
+    --nm-cyan-dim: #00ffcc55;
+    --nm-magenta: #ff00cc;
+    --nm-ink-muted: #ccc;
+    --nm-ink-dimmer: #93a1a1;
+    --nm-shadow: 0 0 15px #00ffcc22;
+    --nm-radius: 10px;
+
+    background: var(--nm-bg);
+    color: var(--nm-cyan);
+    font-family: 'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    padding: 2.5rem 0 2rem;
+    border-top: 2px solid var(--nm-cyan-dim);
+  }
+
+  .nm-footer__container { width: min(1100px, 100% - 2rem); margin: 0 auto; }
+
+  .nm-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 1rem;
+    margin-bottom: .75rem;
+  }
+
+  .nm-footer__title {
+    font-size: 1.15rem;
+    margin: 0 0 .75rem;
+    color: var(--nm-cyan);
+    text-shadow: 0 0 6px rgba(0,255,204,.53);
+  }
+
+  .nm-footer__text,
+  .nm-footer__link {
+    color: var(--nm-ink-muted);
+    font-size: .95rem;
+    line-height: 1.6;
+    text-decoration: none;
+    transition: color .25s ease, text-shadow .25s ease;
+  }
+
+  .nm-footer__link:hover {
+    color: var(--nm-magenta);
+    text-shadow: 0 0 5px var(--nm-magenta);
+  }
+
+  .nm-footer__btn {
+    background: none;
+    border: 1px solid var(--nm-cyan-dim);
+    color: var(--nm-cyan);
+    cursor: pointer;
+    font-weight: 700;
+    padding: .4rem .7rem;
+    border-radius: 8px;
+    text-shadow: 0 0 3px var(--nm-cyan);
+  }
+  .nm-footer__btn:hover { color: var(--nm-magenta); border-color: var(--nm-magenta); }
+
+  .nm-footer__dropdown[hidden] { display: none !important; }
+  .nm-footer__dropdown {
+    background: #111;
+    border: 1px solid var(--nm-cyan-dim);
+    padding: .5rem;
+    margin-top: .5rem;
+    border-radius: 8px;
+  }
+  .nm-footer__list { list-style: none; padding-left: 0; margin: 0; }
+
+  .nm-footer__map {
+    border: 2px solid rgba(0,255,204,.27);
+    border-radius: var(--nm-radius);
+    overflow: hidden;
+    box-shadow: var(--nm-shadow);
+  }
+
+  .nm-footer__bottom {
+    text-align: center;
+    font-size: .9rem;
+    margin-top: 1.25rem;
+    color: var(--nm-ink-dimmer);
+  }
+
+  /* Focus visible (scoped) */
+  .nm-footer :where(a, button, [role="button"], [tabindex]):focus-visible {
+    outline: 2px solid var(--nm-magenta);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+</style>
+
+<script>
+  // Init just this footer (no global IDs)
+  document.querySelectorAll('.nm-footer').forEach(footerEl => {
+    const btn = footerEl.querySelector('.nm-footer__btn');
+    const panel = footerEl.querySelector('.nm-footer__dropdown');
+    if (!btn || !panel) return;
+
+    btn.addEventListener('click', () => {
+      const isHidden = panel.hasAttribute('hidden');
+      if (isHidden) {
+        panel.removeAttribute('hidden');
+        btn.setAttribute('aria-expanded', 'true');
+      } else {
+        panel.setAttribute('hidden', '');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

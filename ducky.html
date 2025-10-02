@@ -1,191 +1,319 @@
+<!-- File: m5stick-plus.html (refactor con namastech-ui) -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <title>USB Rubber Ducky | Namastech</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="/assets/img/favicon.png" />
+  <title>USB Rubber Ducky HAK5| Namastech</title>
+
+  <!-- Fuente para contenido fuera del Shadow DOM -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <!-- Web Components (Header + Footer con Cyber Bar) -->
+  <script type="module" src="/assets/js/namastech-ui.js"></script>
 
   <style>
-    /* ================= THEME (unificado) ================= */
+    /* ======= THEME (alineado a pineapple_kit) ======= */
     :root{
-      --bg:#011019;--panel:#0c0c0c;--ink:#e8f7f7;--muted:#b9c7c7;
-      --cyan:#00ffe7;--cyan-dim:#00ffcc55;--magenta:#ff00cc;
-      --radius:14px;--glow:0 0 15px var(--cyan);
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#b9c7c7;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc; --accent:#ff6600;
+      --radius:14px; --glow:0 0 15px var(--cyan);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
-      margin:0;background:var(--bg);color:var(--ink);
-      font-family:'Orbitron',system-ui,Segoe UI,Roboto,sans-serif;
-      -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-      line-height:1.4;
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.35;
     }
-    a{color:var(--cyan);text-decoration:none} a:hover{color:var(--magenta)}
-    .nx-container{width:min(1100px,100% - 2rem);margin:0 auto;padding:clamp(16px,4vw,32px)}
-    .stack{display:grid;gap:clamp(14px,2.8vw,22px)}
+    a{color:var(--cyan); text-decoration:none} a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
 
-    /* ================= PANEL PRODUCTO ================= */
-    .panel{
-      background:#000;border:2px solid var(--cyan);border-radius:var(--radius);
-      padding:clamp(18px,3.5vw,32px);box-shadow:0 0 30px rgba(0,255,231,.25)
+    /* ======= LAYOUT ======= */
+    .page{width:min(1100px,100% - 2rem); margin:0 auto}
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(18px,3.5vw,32px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
     }
-    h1{margin:0 0 .6rem;font-size:clamp(1.6rem,5vw,2.4rem);text-shadow:0 0 10px var(--cyan)}
-    h2{margin:1rem 0 .4rem;color:var(--cyan);font-size:clamp(1.1rem,3.5vw,1.3rem)}
-    p,li{color:#dfe}
-    .muted{color:var(--muted)}
-    .center{display:grid;place-items:center}
-
-    /* ================= PRECIO / INFO ================= */
-    .price{text-align:center;margin-top:10px}
-    .price h3{margin:.2rem 0;font-size:clamp(1.1rem,3.6vw,1.4rem);color:#fff}
-    .note{font-size:.9rem;color:#a9bcbc}
-
-    /* ================= CARRUSEL (alto fijo) ================= */
-    .carousel{position:relative;margin:auto;border-radius:10px;overflow:hidden;background:#000}
-    .carousel-rail{display:grid;place-items:center}
-    .carousel img{
-      display:none;max-width:100%;max-height:360px;
-      object-fit:contain;background:#000
+    .title-main{
+      text-align:center; color:#fff; margin:0 0 10px;
+      font-size:clamp(1.5rem,5.5vw,2rem);
+      text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+      letter-spacing:.05em;
     }
-    .carousel img.active{display:block}
-    .cbtn{
-      position:absolute;top:50%;transform:translateY(-50%);
-      border:none;background:rgba(0,0,0,.55);color:#fff;
-      font-size:2rem;cursor:pointer;border-radius:6px;padding:.15rem .55rem
+    .sub-note{ text-align:center; color:var(--accent); margin:6px 0 18px; font-size:clamp(1rem,3vw,1.1rem) }
+
+    .product-layout{
+      display:grid; gap:clamp(14px,3vw,24px);
+      grid-template-columns:1fr;
     }
-    .cbtn.prev{left:8px} .cbtn.next{right:8px}
+    @media (min-width: 900px){ .product-layout{ grid-template-columns: 1fr 1fr; } }
 
-    /* ================= LISTAS ================= */
-    ul.features{margin:.25rem 0 .75rem 1.1rem}
-    ul.features li{margin:.25rem 0}
+    /* ======= GALLERY / CARRUSEL ======= */
+    .gallery{display:flex; flex-direction:column; gap:12px}
+    .carousel{ position:relative; overflow:hidden; border-radius:12px; background:#000; box-shadow:0 0 18px rgba(0,255,231,.25); }
+    .carousel-viewport{ width:100%; aspect-ratio:4/3; display:grid; place-items:center; }
+    .carousel-images{ position:relative; width:100%; height:100%; }
+    .carousel-images img{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:contain; background:#000; display:none;
+    }
+    .carousel-images img.active{ display:block; }
+    .carousel-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(0,0,0,.5); color:#fff; border:none; font-size:2rem; cursor:pointer;
+      padding:2px 10px; border-radius:6px;
+    }
+    .carousel-btn.prev{ left:10px } .carousel-btn.next{ right:10px }
 
-    /* ================= MEDIA ================= */
-    img.block{display:block;max-width:100%;height:auto;border-radius:10px}
-    .section{margin-top:clamp(8px,2vw,12px)}
+    /* ======= PRICE + PAGO ======= */
+    .price-box{
+      text-align:center; border:1px solid var(--cyan-dim); border-radius:12px;
+      padding:12px 14px; background:#0a0a0a; box-shadow:0 0 12px rgba(0,255,231,.2);
+    }
+    .price{ color:var(--magenta); font-weight:800; font-size:clamp(1.2rem,4vw,1.6rem); margin:2px 0 6px }
+    .meta{ color:#93a1a1; font-size:.92rem; margin:2px 0 }
+    .pay-wrap{ display:flex; justify-content:center; margin-top:12px; text-align:center }
+
+    /* ======= INFO (1 SOLO FRAME) ======= */
+    .product-info{
+      border:1px solid var(--cyan-dim); border-radius:12px; padding:16px 16px; background:#0b0b0b;
+      box-shadow:0 0 12px rgba(0,255,231,.15);
+    }
+    .product-title{ margin:0 0 8px; color:var(--cyan); font-size:clamp(1.4rem,4.5vw,1.8rem) }
+    .product-text{ color:#ddd; line-height:1.7; font-size:clamp(.98rem,2.6vw,1.05rem); margin:8px 0 14px }
+    .block-title{ color:var(--accent); font-size:clamp(1.05rem,3.2vw,1.2rem); margin:14px 0 8px }
+    .list{ margin:0 0 12px; padding-left: 1rem; }
+    .list li{ color:#cfeeee; margin-bottom:6px }
+
   </style>
-
-  <!-- Web Components (header + footer + cyber bar) -->
-  <script type="module" src="/assets/js/namastech.ui.js"></script>
 </head>
 <body>
-  <!-- Header unificado -->
-  <namastech-header active="productos"></namastech-header>
 
-  <main class="nx-container">
-    <article class="panel stack" aria-labelledby="product-title">
-      <header>
-        <h1 id="product-title">USB Rubber Ducky</h1>
-      </header>
+  <!-- ======= HEADER (Web Component con Cyber Bar) ======= -->
+  <namastech-header
+    logo-src="/assets/img/profile2.png"
+    video-src="/assets/banner.mp4"
+    poster-src="/assets/img/profile2.png">
+    <!-- slots opcionales:
+    <a slot="nav" href="/blog.html">Blog</a>
+    <li slot="quicklinks"><a class="cb-link" href="/kits.html">Kits</a></li> -->
+  </namastech-header>
 
-      <!-- Carrusel + Precio + Pago -->
-      <section class="section" aria-label="Galería de imágenes del producto">
-        <div class="carousel" id="crs-usb-ducky">
-          <div class="carousel-rail">
-            <img src="assets/img/products/usbduck_education.webp" class="active" alt="USB Rubber Ducky educación">
-            <img src="assets/img/products/usbduck_compatibility.avif" alt="Compatibilidad de USB Rubber Ducky">
-            <img src="assets/img/products/usbduck_hw.jpg" alt="Hardware USB Rubber Ducky">
-            <img src="assets/img/products/usbduck_framework.gif" alt="Framework de USB Rubber Ducky">
-            <img src="assets/img/products/usbduck_keystroke.webp" alt="Inyección de teclas del USB Rubber Ducky">
+  <!-- ======= PRODUCTO ======= -->
+<!-- ======= PRODUCTO ======= -->
+  <main class="page">
+    <section class="neon-box">
+      <h1 class="title-main">USB Rubber Ducky</h1>
+      <p class="sub-note">Emulador de teclado (HID) para pruebas de seguridad; parece un pendrive, actúa como teclado y ejecuta payloads a velocidad sobrehumana.</p>
+
+      <div class="product-layout">
+        <!-- LEFT: Galería + Precio + Pago -->
+        <aside class="gallery">
+          <div class="carousel" aria-label="Galería del producto">
+            <div class="carousel-viewport">
+              <div class="carousel-images">
+                <img class="active" loading="lazy" decoding="async" src="assets/img/products/1.jpg"  alt="USB Rubber Ducky vista 1" />
+                <img loading="lazy" decoding="async" src="assets/img/products/2.jpg" alt="USB Rubber Ducky vista 2" />
+                <img loading="lazy" decoding="async" src="assets/img/products/3.jpg" alt="USB Rubber Ducky vista 3" />
+                <img loading="lazy" decoding="async" src="assets/img/products/4.jpg" alt="USB Rubber Ducky vista 4" />
+                <img loading="lazy" decoding="async" src="../assets/img/products/5.jpg" alt="USB Rubber Ducky vista 5" />
+              </div>
+            </div>
+            <button class="carousel-btn prev" aria-label="Imagen anterior">❮</button>
+            <button class="carousel-btn next" aria-label="Imagen siguiente">❯</button>
           </div>
-          <button class="cbtn prev" aria-label="Anterior">❮</button>
-          <button class="cbtn next" aria-label="Siguiente">❯</button>
-        </div>
 
-        <div class="price">
-          <h3>$149.900 CLP</h3>
-          <div class="note">Envío gratis a todo Chile*</div>
-        </div>
+          <div class="price-box">
+            <div class="price">$89.990</div>
+            <div class="meta">Envío gratis a todo Chile*</div>
+          </div>
 
-        <!-- Botón de pago (EXACTO) -->
-        <div class="center" style="margin-top:12px;">
+          <!-- Botón de pago (idéntico, sin cambios) -->
+          <div class="pay-wrap">
           <script src="https://www.mercadopago.cl/integrations/v1/web-payment-checkout.js"
           data-preference-id="2646395895-4bdd38d9-1ea0-4154-82bd-0691d70d4b89" data-source="button">
           </script>
-        </div>
-      </section>
+          </div>
+        </aside>
 
-      <!-- Descripción corta -->
-      <section class="section">
-        <p>
-          Para un humano, parece una memoria USB común. Para un computador, es un
-          teclado que escribe a velocidades sobrehumanas, permitiendo realizar
-          <em>hotplug</em> creativos y complejos. Desde películas y series hasta el
-          corazón de profesionales de ciberseguridad, el <strong>USB Rubber Ducky</strong>
-          es un ícono de la cultura hacker.
-        </p>
-      </section>
+        <!-- RIGHT: 1 solo frame/columna con toda la info -->
+        <article class="product-info">
+          <h2 class="product-title">Resumen</h2>
+          <p class="product-text">
+            El <strong>USB Rubber Ducky</strong> se ve como una memoria USB común para humanos,
+            pero para el computador es un <strong>teclado HID</strong> que inyecta <strong>payloads</strong>
+            a velocidades sobrehumanas. Modernizado con <strong>USB-C y USB-A</strong>, usa
+            <strong>DuckyScript™ 3.0</strong>, <strong>Payload Studio</strong> y <strong>PayloadHub</strong> para crear, compartir
+            y ejecutar ataques de hotplug creativos, ideal para profesionales de ciberseguridad y educación.
+          </p>
 
-      <!-- Secciones (una columna) -->
-      <section class="section">
-        <h2>Introducción</h2>
-        <p>
-          Los computadores confían en los humanos y los humanos usan teclados.
-          El <strong>USB Rubber Ducky</strong>, que se ve como una memoria USB normal,
-          aprovecha esta confianza para inyectar payloads a velocidades sobrehumanas.
-        </p>
-      </section>
+          <h3 class="block-title">Incluye</h3>
+          <ul class="list">
+            <li>1× USB Rubber Ducky</li>
+          </ul>
 
-      <section class="section">
-        <h2>Nuevo Framework de Hotplug</h2>
-        <p>
-          Herramienta probada y actualizada que revolucionó la inyección de teclas.
-          Incluye <strong>DuckyScript™ 3.0</strong> avanzado, Payload Studio, extensiones
-          reutilizables y <strong>PayloadHub</strong> para compartir y descubrir payloads.
-        </p>
-        <div class="center">
-          <img src="assets/img/products/usbduck_framework.gif" alt="Nuevo framework del USB Rubber Ducky" class="block" />
-        </div>
-      </section>
+          <h3 class="block-title">Características principales</h3>
+          <ul class="list">
+            <li>Emulación de teclado HID de alta velocidad</li>
+            <li><strong>DuckyScript™ 3.0</strong> avanzado (retrocompatible con clásico)</li>
+            <li><strong>Payload Studio</strong> para edición y <strong>PayloadHub</strong> para compartir/descubrir</li>
+            <li>Extensiones reutilizables y ecosistema de payloads</li>
+            <li>Clonación de ID USB (VID/PID, fabricante, serie y cadenas)</li>
+            <li>Modos dinámicos: teclado, almacenamiento masivo o híbrido</li>
+            <li>Conectividad dual: USB-A y USB-C</li>
+            <li>Compatible con Windows, macOS, Linux y móviles (modo host/OTG)</li>
+          </ul>
 
-      <section class="section">
-        <h2>Evadir contramedidas</h2>
-        <ul class="features">
-          <li><strong>Clonación de ID de hardware:</strong> imita cualquier dispositivo USB (VID/PID, fabricante, serie y cadenas) con un solo comando.</li>
-          <li><strong>Modos de ataque dinámicos:</strong> cambia la emulación en caliente (teclado, almacenamiento o ambos).</li>
-        </ul>
-      </section>
+          <h3 class="block-title">Aplicaciones</h3>
+          <ul class="list">
+            <li>Pruebas de penetración y red team</li>
+            <li>Evaluación de seguridad y concienciación</li>
+            <li>Educación: laboratorios y ejercicios paso a paso</li>
+            <li>Demostraciones, prototipado y payloads de fuerza bruta programados</li>
+          </ul>
 
-      <section class="section">
-        <h2>Brute-Force & Educación</h2>
-        <p>
-          Testea sistemas de autenticación mediante ataques programados de fuerza bruta
-          y aprende con cientos de payloads, guías y material didáctico con ejercicios paso a paso.
-        </p>
-      </section>
+          <h3 class="block-title">Especificaciones</h3>
+          <ul class="list"><!-- File: m5stick-plus.html (refactor con namastech-ui) -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USB Rubber Ducky HAK5| Namastech</title>
 
-      <section class="section">
-        <h2>Compatibilidad amplia</h2>
-        <p>
-          Modernizado con USB-C y A, compatible con desktop y móviles. Retrocompatible con
-          DuckyScript clásico: usa y crea cientos de payloads para aprendizaje y pruebas de seguridad.
-        </p>
-      </section>
-    </article>
+  <!-- Fuente para contenido fuera del Shadow DOM -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+
+  <!-- Web Components (Header + Footer con Cyber Bar) -->
+  <script type="module" src="/assets/js/namastech-ui.js"></script>
+
+  <style>
+    /* ======= THEME (alineado a pineapple_kit) ======= */
+    :root{
+      --bg:#011019; --panel:#0c0c0c; --ink:#e8f7f7; --muted:#b9c7c7;
+      --cyan:#00ffe7; --cyan-dim:#00ffcc55; --magenta:#ff00cc; --accent:#ff6600;
+      --radius:14px; --glow:0 0 15px var(--cyan);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font-family:'Orbitron',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; line-height:1.35;
+    }
+    a{color:var(--cyan); text-decoration:none} a:hover{color:var(--magenta)}
+    img{max-width:100%; height:auto; display:block}
+    :where(a,button,[tabindex]):focus-visible{outline:2px solid var(--magenta); outline-offset:2px; border-radius:10px}
+    @media (prefers-reduced-motion: reduce){ *{animation:none!important; transition:none!important} }
+
+    /* ======= LAYOUT ======= */
+    .page{width:min(1100px,100% - 2rem); margin:0 auto}
+    .neon-box{
+      border:2px solid var(--cyan); border-radius:var(--radius);
+      padding:clamp(18px,3.5vw,32px); margin:clamp(16px,4vw,40px) auto;
+      background:#000; box-shadow:0 0 30px var(--cyan);
+    }
+    .title-main{
+      text-align:center; color:#fff; margin:0 0 10px;
+      font-size:clamp(1.5rem,5.5vw,2rem);
+      text-shadow:0 0 15px var(--magenta),0 0 10px var(--cyan);
+      letter-spacing:.05em;
+    }
+    .sub-note{ text-align:center; color:var(--accent); margin:6px 0 18px; font-size:clamp(1rem,3vw,1.1rem) }
+
+    .product-layout{
+      display:grid; gap:clamp(14px,3vw,24px);
+      grid-template-columns:1fr;
+    }
+    @media (min-width: 900px){ .product-layout{ grid-template-columns: 1fr 1fr; } }
+
+    /* ======= GALLERY / CARRUSEL ======= */
+    .gallery{display:flex; flex-direction:column; gap:12px}
+    .carousel{ position:relative; overflow:hidden; border-radius:12px; background:#000; box-shadow:0 0 18px rgba(0,255,231,.25); }
+    .carousel-viewport{ width:100%; aspect-ratio:4/3; display:grid; place-items:center; }
+    .carousel-images{ position:relative; width:100%; height:100%; }
+    .carousel-images img{
+      position:absolute; inset:0; width:100%; height:100%;
+      object-fit:contain; background:#000; display:none;
+    }
+    .carousel-images img.active{ display:block; }
+    .carousel-btn{
+      position:absolute; top:50%; transform:translateY(-50%);
+      background:rgba(0,0,0,.5); color:#fff; border:none; font-size:2rem; cursor:pointer;
+      padding:2px 10px; border-radius:6px;
+    }
+    .carousel-btn.prev{ left:10px } .carousel-btn.next{ right:10px }
+
+    /* ======= PRICE + PAGO ======= */
+    .price-box{
+      text-align:center; border:1px solid var(--cyan-dim); border-radius:12px;
+      padding:12px 14px; background:#0a0a0a; box-shadow:0 0 12px rgba(0,255,231,.2);
+    }
+    .price{ color:var(--magenta); font-weight:800; font-size:clamp(1.2rem,4vw,1.6rem); margin:2px 0 6px }
+    .meta{ color:#93a1a1; font-size:.92rem; margin:2px 0 }
+    .pay-wrap{ display:flex; justify-content:center; margin-top:12px; text-align:center }
+
+    /* ======= INFO (1 SOLO FRAME) ======= */
+    .product-info{
+      border:1px solid var(--cyan-dim); border-radius:12px; padding:16px 16px; background:#0b0b0b;
+      box-shadow:0 0 12px rgba(0,255,231,.15);
+    }
+    .product-title{ margin:0 0 8px; color:var(--cyan); font-size:clamp(1.4rem,4.5vw,1.8rem) }
+    .product-text{ color:#ddd; line-height:1.7; font-size:clamp(.98rem,2.6vw,1.05rem); margin:8px 0 14px }
+    .block-title{ color:var(--accent); font-size:clamp(1.05rem,3.2vw,1.2rem); margin:14px 0 8px }
+    .list{ margin:0 0 12px; padding-left: 1rem; }
+    .list li{ color:#cfeeee; margin-bottom:6px }
+
+  </style>
+</head>
+<body>
+
+
+            <li><strong>Interfaz:</strong> USB-A y USB-C</li>
+            <li><strong>Compatibilidad SO:</strong> Windows, macOS, Linux, Android (OTG/host)</li>
+            <li><strong>Lenguaje de scripts:</strong> DuckyScript™ 3.0 (retrocompatible)</li>
+            <li><strong>Software:</strong> Payload Studio y acceso a PayloadHub</li>
+            <li><strong>Modos:</strong> Teclado HID, almacenamiento masivo, combinado</li>
+            <li><strong>Identidad USB:</strong> Clonación de VID/PID y cadenas de dispositivo</li>
+            <li><strong>Alimentación:</strong> Por puerto USB</li>
+          </ul>
+        </article>
+      </div>
+    </section>
   </main>
 
-  <!-- Footer unificado -->
-  <namastech-footer></namastech-footer>
+  <!-- ======= FOOTER (Web Component) ======= -->
+  <namastech-footer
+    map-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl">
+  </namastech-footer>
 
-  <!-- JS del carrusel (alto estable, autoplay, accesible) -->
   <script>
-    (function(id){
-      const root = document.getElementById(id);
-      if(!root) return;
-      const imgs = [...root.querySelectorAll('img')];
-      const prev = root.querySelector('.prev');
-      const next = root.querySelector('.next');
-      let i = 0;
+    // Carrusel con tamaño estable + autoplay
+    document.addEventListener("DOMContentLoaded", () => {
+      const root = document.querySelector(".carousel");
+      if (!root) return;
+      const imgs = root.querySelectorAll(".carousel-images img");
+      const prev = root.querySelector(".carousel-btn.prev");
+      const next = root.querySelector(".carousel-btn.next");
+      let i = 0, timer;
 
-      const show = idx => imgs.forEach((im,k)=>im.classList.toggle('active', k===idx));
+      const show = idx => imgs.forEach((img,k)=> img.classList.toggle("active", k === idx));
+      const goNext = () => { i = (i + 1) % imgs.length; show(i); }
+      const goPrev = () => { i = (i - 1 + imgs.length) % imgs.length; show(i); }
 
-      prev.addEventListener('click', ()=>{ i = (i-1+imgs.length)%imgs.length; show(i); });
-      next.addEventListener('click', ()=>{ i = (i+1)%imgs.length; show(i); });
+      prev?.addEventListener("click", ()=>{ goPrev(); restart(); });
+      next?.addEventListener("click", ()=>{ goNext(); restart(); });
 
-      setInterval(()=>{ i = (i+1)%imgs.length; show(i); }, 4000);
-      show(i);
-    })('crs-usb-ducky');
+      const restart = () => { clearInterval(timer); timer = setInterval(goNext, 4000); };
+
+      show(i); restart();
+    });
   </script>
 </body>
 </html>

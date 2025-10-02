@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>ESP32 DIV Marauder: Escaneo y Captura - NAMASTECH</title>
+  <!-- css files (MISMAS QUE EL TEMPLATE) -->
+  <link rel="stylesheet" href="../assets/css/product-style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon.png">
+  <meta name="author" content="Abraham Leiva">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Fuente Orbitron como en about.html -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Ajustes locales mínimos para tutorial conservando la estética */
+    .tutorial-hero {
+      background: #0a3d46;
+      border-radius: 12px;
+      padding: 22px;
+      margin: 20px auto;
+      width: 90%;
+    }
+    .tutorial-title { font-family: 'Orbitron', sans-serif; color: #00ffcc; letter-spacing: 1px; }
+    .toc { position: sticky; top: 1rem; border: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 1rem; border-radius: 10px; }
+    .callout { border-left: 4px solid #f1c40f; padding: .75rem 1rem; background: rgba(255,255,255,0.04); }
+    .danger { border-left-color: #e74c3c; }
+    pre { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08); padding: 1rem; overflow:auto; border-radius: 10px; }
+    .copy-btn { cursor: pointer; font-size: .85rem; }
+    .media-frame { position: relative; overflow: hidden; border-radius: 10px; border: 1px solid rgba(255,255,255,.06); }
+    .media-frame.image.is-21by9 { padding-top: 42.8571%; }
+    .media-frame video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+    /* Body colors iguales que template */
+    body { background-color: #000; color: #ddd; }
+    .product-title { color:#00ffcc; }
+    .product-presentation strong { color:#00ffcc; }
+  </style>
+</head>
+<body>
+  <!-- Navbar (MISMA QUE EL TEMPLATE, con rutas relativas) -->
+  <nav class="nav container void-background">
+    <div class="nav-left">
+      <a href="http://github.com/hak5" class="nav-item">
+        <span class="icon"><i class="fa fa-github"></i></span>
+      </a>
+    </div>
+    <div class="nav-right nav-menu">
+      <a class="nav-item" href="../index.html">Inicio</a>
+      <a class="nav-item" href="../about.html">Quienes Somos</a>
+      <a class="nav-item" href="../contacto.html">Contactanos</a>
+      <a class="nav-item" href="../envios.html">Envios</a>
+    </div>
+    <span class="nav-toggle"><span></span><span></span><span></span></span>
+  </nav>
+
+  <!-- HERO DEL TUTORIAL (sin video de fondo global, conservando colores y tipografía) -->
+  <section class="section tutorial-hero">
+    <div class="container">
+      <div class="columns is-vcentered">
+        <div class="column is-6 has-text-left">
+          <h1 class="title is-2 product-title tutorial-title" style="margin-bottom:.35rem;">ESP32 DIV Marauder: Escaneo y Captura</h1>
+          <p class="product-presentation" style="opacity:.9;">Desde preparar el firmware hasta tus primeros resultados: perfiles de escaneo, captura de handshakes y exportación a PC.</p>
+          <div class="tags" style="margin-top:.5rem;">
+            <span class="tag is-dark">ESP32</span>
+            <span class="tag is-warning">Nivel: Intermedio</span>
+            <span class="tag">Tiempo: ~25 min</span>
+          </div>
+        </div>
+        <div class="column is-6">
+          <figure class="image is-21by9 media-frame">
+            <video autoplay muted loop playsinline>
+              <source src="../assets/tutoriales/esp32_DIV3.mp4" type="video/mp4">
+            </video>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUERPO DEL TUTORIAL (misma sección-product para mantener estilo) -->
+  <section class="section section-product custom-bg" style="width:90%;">
+    <div class="columns is-variable is-6">
+      <!-- Índice -->
+      <aside class="column is-3 toc">
+        <p class="menu-label">Contenido</p>
+        <ul class="menu-list">
+          <li><a href="#prerrequisitos">Prerrequisitos</a></li>
+          <li><a href="#materiales">Materiales</a></li>
+          <li><a href="#instalacion">1) Flasheo e instalación</a></li>
+          <li><a href="#escanear">2) Primeros escaneos</a></li>
+          <li><a href="#captura">3) Captura de handshakes</a></li>
+          <li><a href="#exportar">4) Exportar resultados</a></li>
+          <li><a href="#buenas-practicas">Buenas prácticas</a></li>
+        </ul>
+      </aside>
+
+      <!-- Artículo -->
+      <div class="column is-9 content">
+        <h2 id="prerrequisitos" class="title is-4 product-title">Prerrequisitos</h2>
+        <ul class="product-presentation">
+          <li>ESP32 DIV (o equivalente) cargado con <em>Marauder</em>.</li>
+          <li>Cable USB de datos.</li>
+          <li>PC con drivers CP210x/CH34x instalados.</li>
+        </ul>
+        <div class="callout danger" style="margin-top:.75rem;">
+          <strong>Uso ético:</strong> realiza pruebas solo en tus propios equipos/redes o con autorización explícita.
+        </div>
+
+        <h2 id="materiales" class="title is-4 product-title" style="margin-top:2rem;">Materiales</h2>
+        <ul class="product-presentation">
+          <li>Firmware Marauder (binario estable).</li>
+          <li>Herramienta de flasheo (esptool.py o GUI recomendada).</li>
+          <li>Adaptador de batería/Power bank (opcional).</li>
+        </ul>
+
+        <h2 id="instalacion" class="title is-4 product-title" style="margin-top:2rem;">1) Flasheo e instalación</h2>
+        <p class="product-presentation">Conecta el ESP32 al PC y localiza el puerto serie. Con <code>esptool.py</code> puedes borrar y grabar el firmware:</p>
+        <div class="box" style="background:transparent;">
+          <button class="button is-warning is-light copy-btn" data-copy="#code-flash">Copiar comandos</button>
+          <pre id="code-flash"><code># Borrar flash (ajusta el puerto)
+esptool.py --chip esp32 --port COM5 --baud 460800 erase_flash
+
+# Grabar binario principal en 0x10000 (ejemplo)
+esptool.py --chip esp32 --port COM5 --baud 460800 \
+  write_flash -z 0x1000 bootloader.bin 0x8000 partitions.bin 0x10000 marauder.bin</code></pre>
+        </div>
+        <p class="product-presentation">Reinicia el dispositivo. Deberías ver el menú de Marauder en pantalla.</p>
+
+        <h2 id="escanear" class="title is-4 product-title" style="margin-top:2rem;">2) Primeros escaneos</h2>
+        <ol class="product-presentation">
+          <li>Abre <strong>Scan</strong> → <em>WiFi Scan</em>.</li>
+          <li>Ejecuta un escaneo pasivo de 10–20 s.</li>
+          <li>Marca los objetivos interesantes (SSID/BSSID/canal).</li>
+        </ol>
+        <p class="callout product-presentation">Consejo: limita canales para acelerar (1, 6, 11 en 2.4 GHz) si estás probando en interiores.</p>
+
+        <h2 id="captura" class="title is-4 product-title" style="margin-top:2rem;">3) Captura de handshakes</h2>
+        <ol class="product-presentation">
+          <li>Ve a <em>Attacks → Handshake</em> y selecciona el AP objetivo.</li>
+          <li>Inicia <em>deauth</em> controlado y espera la captura.</li>
+          <li>Guarda el archivo <code>.pcap</code> en la SD (o memoria interna si aplica).</li>
+        </ol>
+        <div class="callout danger product-presentation"><strong>Legal:</strong> la desautenticación es disruptiva. Úsala solo en laboratorios o con permiso.</div>
+
+        <h2 id="exportar" class="title is-4 product-title" style="margin-top:2rem;">4) Exportar resultados</h2>
+        <p class="product-presentation">Conecta el ESP32 por USB o monta la tarjeta SD para copiar los <code>.pcap</code>:</p>
+        <div class="box" style="background:transparent;">
+          <button class="button is-warning is-light copy-btn" data-copy="#code-export">Copiar comandos</button>
+          <pre id="code-export"><code># Ejemplo en Linux: listar dispositivo cuando conectas la SD
+lsblk
+# Montar y copiar a tu carpeta de trabajo
+sudo mount /dev/sdX1 /mnt/marauder
+cp /mnt/marauder/captures/*.pcap ~/capturas/
+# Desmontar
+sudo umount /mnt/marauder</code></pre>
+        </div>
+
+        <h2 id="buenas-practicas" class="title is-4 product-title" style="margin-top:2rem;">Buenas prácticas</h2>
+        <ul class="product-presentation">
+          <li>Mantén el firmware actualizado desde el repositorio oficial.</li>
+          <li>Guarda bitácoras de tus pruebas (fecha, objetivo, canal, notas).</li>
+          <li>Trabaja en cajas de Faraday o redes de laboratorio para ataques activos.</li>
+        </ul>
+
+        <hr>
+        <div class="columns is-vcentered">
+          <div class="column is-6">
+            <a class="button" href="../tutoriales.html">⬅ Volver a Tutoriales</a>
+          </div>
+          <div class="column is-6 has-text-right">
+            <a class="button is-warning" href="./duckyscript-intro.html">Siguiente: Intro a DuckyScript ➜</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer (MISMO DEL TEMPLATE, rutas relativas) -->
+  <footer class="footer" style="background-color:#1a1f2b; color:white;">
+    <div class="container">
+      <div class="columns">
+        <div class="column has-text-centered">
+          <h3 class="title is-5 has-text-white">QUIÉNES SOMOS</h3>
+          <p class="is-size-6">En <strong>Namastech</strong> acercamos la ciberseguridad, gadgets y hardware al alcance de todos, combinando innovación con aprendizaje.</p>
+        </div>
+        <div class="column has-text-centered">
+          <h3 class="title is-5 has-text-white">CONTÁCTANOS</h3>
+          <p class="is-size-6">📧 contacto@namastech</p>
+          <p class="is-size-6">📱 +56 9 3558 4876</p>
+        </div>
+        <div class="column has-text-centered">
+          <h3 class="title is-5 has-text-white">PRODUCTOS</h3>
+          <ul style="list-style:none; padding:0;">
+            <li><a href="../catnugget.html" class="has-text-white">WiFi Nugget</a></li>
+            <li><a href="../flipper.html" class="has-text-white">Flipper Zero</a></li>
+            <li><a href="../pineapple.html" class="has-text-white">WiFi Pineapple</a></li>
+            <li><a href="../portapack.html" class="has-text-white">PortaPack H2</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="has-text-centered" style="margin-top: 30px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl" width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <div class="has-text-centered" style="margin-top: 20px;">
+        <p class="is-size-7">&copy; 2025 Namastech - Todos los derechos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Copiar al portapapeles para bloques <pre>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sel = document.querySelector(btn.getAttribute('data-copy'));
+        if (!sel) return;
+        const range = document.createRange();
+        range.selectNode(sel);
+        const s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(range);
+        try { document.execCommand('copy'); btn.classList.add('is-success'); btn.textContent = 'Copiado!'; }
+        catch(e) {}
+        setTimeout(() => { btn.classList.remove('is-success'); btn.textContent = 'Copiar comandos'; }, 1200);
+        s.removeAllRanges();
+      });
+    });
+  </script>
+</body>
+</html>

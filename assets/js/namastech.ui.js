@@ -1,217 +1,282 @@
-// /assets/js/namastech-ui.js  (ES Module)
-
-// Ensure Orbitron is available once
-(() => {
-  if (!document.querySelector('link[data-namastech-font]')) {
-    const l = document.createElement('link');
-    l.rel = 'stylesheet';
-    l.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap';
-    l.setAttribute('data-namastech-font', '1');
-    document.head.appendChild(l);
-  }
-})();
-
-const styles = `
-:host { --bg:#011019; --panel:#000; --ink:#e8f7f7; --muted:#b9c7c7; --cyan:#00ffe7; --cyan2:#00ffcc; --magenta:#ff00cc; font-family:'Orbitron', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--ink); display:block; }
-* { box-sizing:border-box; }
-a { color:var(--cyan); text-decoration:none; }
-a:hover { color:var(--magenta); }
-
-/* container */
-.container { width:min(1200px, 100% - 2rem); margin:0 auto; }
-
-/* TOP BAR */
-.topbar { background:#000; border-bottom:2px solid #00ffcc55; position:sticky; top:0; z-index:999; }
-.topbar .row { display:flex; gap:1.1rem; align-items:center; justify-content:center; padding:.8rem 0; }
-.topbar a { text-transform:uppercase; font-weight:700; letter-spacing:.04em; position:relative; padding:.2rem .4rem; }
-
-/* Dropdown base */
-.dropdown { position:relative; }
-.dropdown > a::after { content:" ▾"; font-size:.85em; opacity:.9; }
-
-/* The menu */
-.menu {
-  position:absolute; left:50%; transform:translate(-50%, 0);
-  top:100%; /* no gap */
-  min-width:280px; max-height:70vh; overflow:auto;
-  background:#0c0c0c; border:2px solid var(--cyan2); border-radius:12px;
-  box-shadow:0 0 25px rgba(0,255,231,.45);
-  opacity:0; visibility:hidden; pointer-events:none;
-  transition:opacity .15s ease, transform .15s ease;
-}
-.menu a { display:block; padding:.7rem .9rem; white-space:nowrap; color:#dfe; border-bottom:1px solid #0c3a37; }
-.menu a:last-child { border-bottom:none; }
-.menu a:hover { background:#011f2b; color:var(--magenta); }
-
-/* Keep open on hover and when JS adds .open */
-.dropdown:hover .menu,
-.dropdown.open .menu { opacity:1; visibility:visible; pointer-events:auto; }
-
-/* Hover bridge to prevent flicker when moving from trigger to menu */
-.dropdown::after {
-  content:"";
-  position:absolute;
-  left:-10px; right:-10px;
-  top:100%;
-  height:16px;
-}
-
-/* Banner */
-.banner { position:relative; width:100%; background:#000; overflow:hidden; }
-.banner video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.6; z-index:1; }
-.banner .overlay { position:relative; z-index:2; display:grid; place-items:center; text-align:center; padding:18px 0; }
-.logo { max-height:110px; filter:drop-shadow(0 0 10px var(--cyan2)); opacity:.75; }
-.slogan { margin:.25rem 0 0; font-weight:700; color:var(--cyan2); text-shadow:0 0 12px rgba(0,255,200,.8); letter-spacing:.04em; font-size:clamp(1rem,3.3vw,1.6rem); }
-.banner.spaced { aspect-ratio:16/9; max-height:420px; min-height:220px; }
-
-/* Cyber Bar */
-.cyberbar { background:#000; border-top:2px solid var(--cyan2); border-bottom:2px solid var(--cyan2); box-shadow:0 0 15px var(--cyan2); }
-.cyberbar .row { display:flex; gap:clamp(18px, 6vw, 80px); justify-content:center; align-items:center; padding:.55rem 0; }
-.cyberbar a { font-weight:700; text-transform:uppercase; text-shadow:0 0 8px var(--cyan2); }
-.cyberbar a:hover { color:var(--magenta); text-shadow:0 0 10px var(--magenta); }
-
-/* Small dropdown for HackBox */
-.dropdown.small .menu { min-width:190px; }
-.note { display:block; padding:.7rem .9rem; color:#ccc; }
-
-/* Footer */
-footer { background:#0b0b0b; color:var(--cyan2); border-top:2px solid #00ffcc55; padding:2rem 0 1.5rem; }
-.footer-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem; }
-footer h4 { margin:0 0 .6rem; text-shadow:0 0 6px #00ffcc88; }
-footer p, footer a { color:#ccc; font-size:.95rem; }
-footer a:hover { color:var(--magenta); }
-
-@media (max-width: 820px) {
-  .topbar .row { flex-wrap:wrap; }
-}
-`;
-
-const productsList = [
-  { href:'/catnugget.html', label:'HakCat WiFi Nugget' },
-  { href:'/flipper.html', label:'Flipper Zero' },
-  { href:'/pineapple.html', label:'WiFi Pineapple Mark VII' },
-  { href:'/cydmarauder.html', label:'CYD-WiFi Marauder' },
-  { href:'/m5stick.html', label:'M5StickC PLUS 2' },
-  { href:'/ducky.html', label:'USB Rubber Ducky' },
-  { href:'/watch.html', label:'DSTIKE Deauther Watch X' },
-  { href:'/evilcrow.html', label:'EvilCrow RF V2' },
-  { href:'/productos.html', label:'Ver más…' },
-];
-
+// /assets/js/namastech-ui.js
 class NamastechHeader extends HTMLElement {
-  constructor(){ super(); this.attachShadow({mode:'open'}); }
-  connectedCallback(){ this.render(); this.wireDropdowns(); }
+  connectedCallback() {
+    const logo   = this.getAttribute('logo-src')   || '/assets/img/profile2.png';
+    const video  = this.getAttribute('video-src')  || '/assets/banner.mp4';
+    const poster = this.getAttribute('poster-src') || logo;
 
-  render(){
-    const productLinks = productsList.map(p=>`<a href="${p.href}">${p.label}</a>`).join("");
-    this.shadowRoot.innerHTML = `
-      <style>${styles}</style>
-      <header>
-        <div class="topbar">
-          <div class="container row">
-            <a href="/index.html">INICIO</a>
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.innerHTML = `
+<style>
+:host{
+  display:block;
+  position:relative;            /* eleva el header sobre el resto */
+  z-index:3000;
+  --bg:#011019; --panel:#0b0b0b; --ink:#e8f7f7;
+  --cyan:#00ffe7; --magenta:#ff00cc; --cyanDim:#00ffcc55;
+}
 
-            <div class="dropdown" id="products-dd">
-              <a href="/productos.html" data-slug="productos" aria-haspopup="true" aria-expanded="false">PRODUCTOS</a>
-              <div class="menu" role="menu" aria-label="Productos">${productLinks}</div>
-            </div>
+*,*:before,*:after{ box-sizing:border-box }
+a{ color:var(--cyan); text-decoration:none }
+a:hover{ color:var(--magenta) }
+ul,li{ margin:0; padding:0; list-style:none }
+.container{ width:min(1100px,100% - 24px); margin:0 auto }
 
-            <a href="/cursos.html">CURSOS</a>
-            <a href="/envios.html">ENVÍOS</a>
-            <a href="/about.html">QUIENES SOMOS</a>
-            <a href="/contacto.html">CONTÁCTANOS</a>
-          </div>
-        </div>
+/* ===== TOP NAV ===== */
+.topbar{
+  position:sticky; top:0; z-index:3100;
+  background:#000; border-bottom:1px solid var(--cyanDim);
+}
+.toprow{ display:flex; align-items:center; justify-content:center; gap:16px; padding:10px 0 }
+.menu-toggle{
+  display:none; margin-left:auto; background:#000; color:var(--cyan);
+  border:1px solid var(--cyanDim); border-radius:10px; padding:8px 12px; font-weight:800;
+}
+nav.primary{
+  display:flex; gap:26px; align-items:center; justify-content:center; flex-wrap:wrap;
+  padding:6px 0 10px;
+}
+nav.primary a{
+  color:var(--cyan); text-transform:uppercase; letter-spacing:.04em; font-weight:800;
+}
+nav.primary a:hover{ color:var(--magenta); text-shadow:0 0 6px var(--magenta) }
 
-        <div class="banner spaced">
-          <video autoplay muted loop playsinline>
-            <source src="/assets/banner.mp4" type="video/mp4">
-          </video>
-          <div class="overlay container">
-            <img class="logo" src="/assets/img/profile2.png" alt="Namastech Logo"/>
-            <p class="slogan">Namastech: Ciberseguridad, gadgets y hardware al alcance de tu mano.</p>
-          </div>
-        </div>
+/* ===== BANNER ===== */
+.banner{ position:relative; width:100%; overflow:hidden; background:#000; height:clamp(160px,28vw,260px) }
+.banner video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:.6 }
+.overlay{
+  position:relative; z-index:1; display:grid; place-items:center; gap:8px;
+  text-align:center; padding:24px 0;
+}
+.overlay img{ max-height:90px; width:auto; opacity:.75; filter:drop-shadow(0 0 10px var(--cyan)) }
+.overlay h1{
+  margin:0; color:var(--cyan); text-shadow:0 0 12px rgba(0,255,200,.8);
+  letter-spacing:.02em; font-size:clamp(16px,4.5vw,22px);
+}
 
-        <div class="cyberbar">
-          <div class="container row">
-            <a href="/cursos.html">CURSOS</a>
+/* ===== CYBER BAR ===== */
+.cyberbar{
+  background:#000; border-top:2px solid var(--cyan); border-bottom:2px solid var(--cyan);
+  box-shadow:0 0 15px var(--cyan); position:relative; z-index:3200;
+}
+.cb-wrap{ display:flex; align-items:center; justify-content:center; gap:40px; padding:10px 6px }
+.cb-link, .cb-btn{
+  color:var(--cyan); font-weight:800; text-transform:uppercase;
+  text-shadow:0 0 8px var(--cyan); background:none; border:none; cursor:pointer; font:inherit;
+}
+.cb-link:hover, .cb-btn:hover{ color:var(--magenta); text-shadow:0 0 10px var(--magenta) }
 
-            <div class="dropdown small" id="hackbox-dd">
-              <a href="#" aria-haspopup="true" aria-expanded="false">CAJA-HACKER MENSUAL</a>
-              <div class="menu" role="menu"><span class="note">Próximamente</span></div>
-            </div>
+.cb-drop{ position:relative }
+.cb-menu{
+  position:absolute; top:calc(100% + 10px); left:50%; transform:translateX(-50%);
+  background:#0b0b0b; border:2px solid var(--cyan); border-radius:10px;
+  box-shadow:0 0 16px var(--cyan); padding:10px; display:none;
+  min-width:260px; max-height:70vh; overflow:auto; z-index:10050;
+}
+.cb-menu a{ display:block; padding:8px 10px; white-space:nowrap }
+.cb-menu a:hover{ background:#07151a }
 
-            <a href="/certificaciones.html">CERTIFICACIONES</a>
-          </div>
-        </div>
-      </header>
-    `;
+.cb-drop:hover .cb-menu,
+.cb-drop:focus-within .cb-menu,
+.cb-drop.open .cb-menu{ display:block }
+
+/* Tooltip */
+.cb-tip{
+  position:absolute; left:50%; transform:translateX(-50%); top:calc(100% + 8px);
+  background:#0c0c0c; color:#ddd; border:2px solid var(--cyan); border-radius:8px;
+  padding:10px 12px; white-space:nowrap; display:none; z-index:10050;
+}
+.cb-drop.tip:hover .cb-tip,
+.cb-drop.tip:focus-within .cb-tip{ display:block }
+
+/* ===== MOBILE ===== */
+@media (max-width:860px){
+  .menu-toggle{ display:inline-flex }
+  nav.primary{ display:none; width:100% }
+  nav.primary.open{ display:grid; grid-template-columns:1fr; gap:10px; padding:8px 0 }
+  nav.primary a{ padding:10px 12px; text-align:center }
+
+  .cb-wrap{
+    justify-content:flex-start; gap:12px; overflow-x:auto; padding:10px 10px;
+    scroll-snap-type:x mandatory;
+  }
+  .cb-wrap::-webkit-scrollbar{ display:none }
+  .cb-link, .cb-btn{
+    border:1px solid var(--cyanDim); border-radius:999px; padding:10px 14px;
+    scroll-snap-align:center; line-height:1.15; white-space:normal; /* evita cortes de texto */
   }
 
-  wireDropdowns(){
-    const dd = this.shadowRoot.getElementById('products-dd');
-    if (dd){
-      let closeTimer;
-      const trigger = dd.querySelector('a[data-slug="productos"]');
-      const setOpen = (state) => {
-        clearTimeout(closeTimer);
-        dd.classList.toggle('open', state);
-        trigger.setAttribute('aria-expanded', String(state));
-      };
-      dd.addEventListener('mouseenter', () => setOpen(true));
-      dd.addEventListener('mouseleave', () => {
-        closeTimer = setTimeout(() => dd.classList.remove('open'), 180);
-        trigger.setAttribute('aria-expanded','false');
-      });
-      trigger.addEventListener('click', (e) => {
-        if (window.matchMedia('(max-width: 900px)').matches) {
-          e.preventDefault();
-          setOpen(!dd.classList.contains('open'));
-        }
-      });
-    }
+  /* El menú del dropdown se vuelve fijo y full-width (se ajusta por JS) */
+  .cb-menu{
+    position:fixed; left:12px; right:12px;
+    transform:none; min-width:auto; max-height:70vh; overflow:auto;
+  }
+}
+</style>
 
-    const hb = this.shadowRoot.getElementById('hackbox-dd');
-    if (hb){
-      let t;
-      const open = (s)=>{ clearTimeout(t); hb.classList.toggle('open', s); hb.querySelector('a').setAttribute('aria-expanded', String(s)); };
-      hb.addEventListener('mouseenter', ()=>open(true));
-      hb.addEventListener('mouseleave', ()=>{ t = setTimeout(()=>hb.classList.remove('open'), 180); hb.querySelector('a').setAttribute('aria-expanded','false'); });
-      hb.querySelector('a').addEventListener('click', (e)=>{ e.preventDefault(); open(!hb.classList.contains('open')); });
-    }
+<div class="topbar">
+  <div class="container toprow">
+    <button class="menu-toggle" aria-expanded="false" aria-controls="pri">☰ MENÚ</button>
+  </div>
+  <div class="container">
+    <nav id="pri" class="primary" role="navigation" aria-label="Principal">
+      <a href="/index.html">INICIO</a>
+      <a href="/cursos.html">CURSOS</a>
+      <a href="/envios.html">ENVÍOS</a>
+      <a href="/about.html">QUIENES SOMOS</a>
+      <a href="/contacto.html">CONTÁCTANOS</a>
+    </nav>
+  </div>
+</div>
+
+<div class="banner">
+  <video autoplay muted loop playsinline poster="${poster}">
+    <source src="${video}" type="video/mp4" />
+  </video>
+  <div class="overlay container">
+    <img src="${logo}" alt="Namastech">
+    <h1>Namastech: Ciberseguridad, gadgets y hardware al alcance de tu mano.</h1>
+  </div>
+</div>
+
+<div class="cyberbar">
+  <div class="container cb-wrap">
+    <!-- PRODUCTOS -->
+    <div class="cb-drop" id="cbProductos">
+      <button class="cb-btn" type="button" aria-haspopup="true" aria-expanded="false">PRODUCTOS ▾</button>
+      <div class="cb-menu" role="menu" aria-label="Lista de productos">
+        <a href="/catnugget.html">HakCat WiFi Nugget</a>
+        <a href="/flipper.html">Flipper Zero</a>
+        <a href="/pineapple.html">WiFi Pineapple Mark VII</a>
+        <a href="/pineappletetra.html">WiFi Pineapple TETRA</a>
+        <a href="/cydmarauder.html">CYD-WiFi Marauder</a>
+        <a href="/m5stick.html">M5StickC PLUS 2</a>
+        <a href="/ducky.html">USB Rubber Ducky</a>
+        <a href="/watch.html">DSTIKE Deauther Watch X</a>
+        <a href="/evilcrow.html">EvilCrow RF V2</a>
+        <!-- nuevos -->
+        <a href="/irblaster.html">IR Blaster</a>
+        <a href="/kiisuu.html">Kiisuu V4B</a>
+        <a href="/proxmark.html">Proxmark Clonador Tarjetas</a>
+        <a href="/esp32div.html">Desautenticador Armageddon</a>
+        <a href="/luck.html">Consola Luck X616 PRO</a>
+        <!-- cierre -->
+        <a href="/productos.html"><strong>Ver más…</strong></a>
+      </div>
+    </div>
+
+    <a class="cb-link" href="/cursos.html">Cursos</a>
+
+    <div class="cb-drop tip">
+      <button class="cb-btn" type="button" aria-haspopup="true" aria-expanded="false">Caja-Hacker Mensual ▾</button>
+      <div class="cb-tip">Próximamente</div>
+    </div>
+
+    <a class="cb-link" href="/certificaciones.html">Certificaciones</a>
+  </div>
+</div>
+    `;
+
+    // === Interacciones ===
+    const hostEl = this;
+    const btn = shadow.querySelector('.menu-toggle');
+    const nav = shadow.querySelector('nav.primary');
+    btn?.addEventListener('click', () => {
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+
+    const prodDrop = shadow.getElementById('cbProductos');
+    const prodBtn  = prodDrop?.querySelector('.cb-btn');
+    const prodMenu = prodDrop?.querySelector('.cb-menu');
+
+    // Abrir/cerrar en móvil con posicionamiento fijo
+    const placeMenuMobile = () => {
+      if (!prodBtn || !prodMenu) return;
+      if (!matchMedia('(max-width:860px)').matches) {
+        // desktop: limpiar estilos inline
+        prodMenu.style.top = '';
+        prodMenu.style.left = '';
+        prodMenu.style.right = '';
+        return;
+      }
+      const r = prodBtn.getBoundingClientRect();
+      prodMenu.style.top = `${Math.round(r.bottom + 8)}px`;
+      prodMenu.style.left = '12px';
+      prodMenu.style.right = '12px';
+    };
+
+    prodBtn?.addEventListener('click', (e) => {
+      if (matchMedia('(max-width:860px)').matches) {
+        e.preventDefault();
+        const open = !prodDrop.classList.contains('open');
+        prodDrop.classList.toggle('open', open);
+        prodBtn.setAttribute('aria-expanded', String(open));
+        if (open) placeMenuMobile();
+      }
+    });
+
+    // Reposicionar al hacer scroll/resize (solo móvil)
+    window.addEventListener('scroll', () => {
+      if (prodDrop?.classList.contains('open') && matchMedia('(max-width:860px)').matches) {
+        placeMenuMobile();
+      }
+    }, { passive:true });
+
+    window.addEventListener('resize', () => {
+      if (prodDrop?.classList.contains('open')) placeMenuMobile();
+    });
+
+    // Cerrar si se hace click fuera
+    document.addEventListener('click', (ev) => {
+      if (!matchMedia('(max-width:860px)').matches) return;
+      const insideHeader = hostEl.contains(ev.target);
+      // Si el click no fue sobre el dropdown productos, cerramos
+      if (!insideHeader || (insideHeader && prodDrop && !prodDrop.contains(ev.target))) {
+        prodDrop?.classList.remove('open');
+        prodBtn?.setAttribute('aria-expanded','false');
+      }
+    });
   }
 }
 
 class NamastechFooter extends HTMLElement {
-  constructor(){ super(); this.attachShadow({mode:'open'}); }
-  connectedCallback(){ this.render(); }
-  render(){
-    const mapSrc = this.getAttribute('map-src') || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.4567116433087!2d-70.64848092350427!3d-33.437109495057404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c5a64024a7af%3A0x4d0773f9d3a4fe0!2sEnrique%20Mac%20Iver%20412%2C%20Santiago%2C%20Chile!5e0!3m2!1ses!2scl!4v1693939542335!5m2!1ses!2scl';
-    this.shadowRoot.innerHTML = `
-      <style>${styles}</style>
-      <footer>
-        <div class="container footer-grid">
-          <div>
-            <h4>QUIÉNES SOMOS</h4>
-            <p>En Namastech acercamos la ciberseguridad, gadgets y hardware al alcance de todos, combinando innovación con aprendizaje.</p>
-          </div>
-          <div>
-            <h4>CONTÁCTANOS</h4>
-            <p><a href="/contacto.html">📧 contacto@namastech.studio</a></p>
-            <p>📱 +56 9 3558 4876</p>
-          </div>
-          <div>
-            <h4>UBICACIÓN</h4>
-            <div style="border:2px solid #00ffcc44;border-radius:10px;overflow:hidden;box-shadow:0 0 15px #00ffcc22;">
-              <iframe src="${mapSrc}" width="100%" height="210" style="border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-            </div>
-          </div>
-        </div>
-        <div class="container" style="text-align:center; margin-top:1rem; color:#93a1a1; font-size:.9rem;">
-          © ${new Date().getFullYear()} Namastech. Todos los derechos reservados.
-        </div>
-      </footer>
+  connectedCallback() {
+    const map = this.getAttribute('map-src') || '';
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.innerHTML = `
+<style>
+:host{ display:block }
+footer{ background:#0b0b0b; color:var(--ink); border-top:2px solid var(--cyan); padding:28px 0 }
+.container{ width:min(1100px,100% - 24px); margin:0 auto }
+.cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:16px }
+h4{ margin:0 0 10px; color:var(--cyan); text-shadow:0 0 6px #00ffcc88 }
+a{ color:#ccc } a:hover{ color:var(--magenta) }
+.map{ margin-top:16px; border:2px solid #00ffcc44; border-radius:10px; overflow:hidden; box-shadow:0 0 15px #00ffcc22 }
+.copy{ text-align:center; margin-top:12px; color:#93a1a1; font-size:.9rem }
+</style>
+
+<footer>
+  <div class="container">
+    <div class="cols">
+      <div>
+        <h4>QUIÉNES SOMOS</h4>
+        <p>En <strong>Namastech</strong> acercamos la ciberseguridad, gadgets y hardware al alcance de todos, combinando innovación con aprendizaje.</p>
+      </div>
+      <div>
+        <h4>CONTÁCTANOS</h4>
+        <p><a href="/contacto.html">📧 contacto@namastech.studio</a></p>
+        <p>📱 +56 9 3558 4876</p>
+      </div>
+      <div>
+        <h4>PRODUCTOS</h4>
+        <p><a href="/productos.html">Ver todos los productos</a></p>
+      </div>
+    </div>
+    ${map ? `<div class="map"><iframe src="${map}" width="100%" height="300" style="border:0" loading="lazy" allowfullscreen=""></iframe></div>` : ''}
+    <div class="copy">© 2025 Namastech. Todos los derechos reservados.</div>
+  </div>
+</footer>
     `;
   }
 }

@@ -1,0 +1,139 @@
+/* Uses your global tokens defined elsewhere */
+:root{
+  /* no overrides here on purpose */
+}
+
+/* Container: now HALF width (≈550px) and centered */
+.blog-rotator{
+  width: min(550px, 100% - 2rem);
+  margin: clamp(16px,4vw,40px) auto;
+}
+
+/* Center the title */
+.blog-title{
+  display: block;
+  width: fit-content;
+  margin: 0 auto 14px;
+  font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+  padding: 8px 14px;
+  border: 2px solid var(--cyan);
+  border-radius: 10px;
+  background: #011f2b;
+  color: var(--ink);
+  text-shadow: 0 0 10px var(--cyan);
+}
+
+/* Frame with neon border */
+.blog-frame{
+  position: relative;
+  border: 2px solid var(--cyan);
+  border-radius: 14px;
+  background: #000;
+  box-shadow: 0 0 24px rgba(0,255,231,.35);
+  overflow: hidden;
+}
+
+/* Track that slides */
+.blog-track{
+  display: flex;
+  width: 100%;
+  will-change: transform;
+  transition: transform .7s ease;
+}
+
+/* Each slide fills the frame */
+.blog-slide{
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr; /* image left / text right */
+  gap: clamp(14px, 3vw, 22px);
+  align-items: center;
+  padding: clamp(16px, 3vw, 26px);
+}
+
+/* Square media on left */
+.blog-media{
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--cyan);
+  box-shadow: 0 0 16px rgba(0,255,231,.3);
+}
+.blog-media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Text on right */
+.blog-content{
+  color: var(--ink);
+  display: grid;
+  align-content: center;
+  gap: .6rem;                /* spacing between title/desc/link */
+}
+.blog-hed{
+  margin: 0;
+  font-size: clamp(1.1rem, 3.6vw, 1.6rem);
+  color: #fff;
+  text-shadow: 0 0 8px var(--magenta), 0 0 6px var(--cyan);
+}
+.blog-dek{
+  margin: 0;
+  line-height: 1.55;
+  color: #cfe7e7;
+  font-size: clamp(.95rem, 2.6vw, 1.05rem);
+}
+
+/* Center the VER MÁS link */
+.blog-link{
+  display: inline-block;
+  justify-self: center;      /* << centers inside the content grid */
+  font-weight: 700;
+  color: var(--magenta);
+  text-shadow: 0 0 6px var(--magenta), 0 0 10px var(--cyan);
+}
+.blog-link:hover{ color:#fff; }
+
+/* Controls */
+.blog-nav{
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  background: rgba(0,0,0,.6);
+  color:#fff;
+  border: 2px solid var(--cyan);
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  display: grid; place-items: center;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.blog-nav.prev{ left: 10px; }
+.blog-nav.next{ right: 10px; }
+.blog-nav:hover{ box-shadow: 0 0 12px var(--cyan); }
+
+/* Dots */
+.blog-dots{
+  position: absolute;
+  bottom: 10px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 10px;
+}
+.blog-dots button{
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--cyan);
+  background: transparent; cursor: pointer;
+}
+.blog-dots button[aria-current="true"]{
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+/* Keep left/right layout until very small widths */
+@media (max-width: 560px){
+  .blog-slide{ grid-template-columns: 1fr; }
+  .blog-media{ max-width: 380px; margin: 0 auto; }
+  .blog-hed, .blog-dek{ text-align: center; }
+}
